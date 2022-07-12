@@ -15,7 +15,7 @@ import Chat from './components/body/chat/Chat';
 import INFChat from './components/body/chat/INFChat';
 import ADChat from './components/body/chat/ADChat';
 
-import InfluencerList from './components/body/influencerlist/influencerList';
+import InfluencerList from './components/body/inflist/influencerList';
 import Search from './components/body/search/Search';
 import UploadProfile from './components/body/profile/UploadProfile';
 
