@@ -30,12 +30,12 @@ import Footer from './components/footerfolder/Footer';
 import SearchResult from './components/body/searchfolder/SearchResult';
 import EditProfile from './components/body/editprofilefolder/EditProfile';
 import UploadProduct from './components/body/product/uploadproductfolder/UploadProduct';
-import Workspace from './components/body/workspace/Workspacecomponent';
+import Workspace from './components/body/workspacefolder/Workspace';
 // import Navbar from './components/body/workSpace/Navbar';
 // import InfNavBar from './components/navbar/InfNavBar';
 // import AdNavBar from './components/navbar/AdNavBar';
 // import HomeNavBar from './components/navbar/HomeNavBar';
-import DashMain from './components/body/workspace/Dashmain';
+import DashMain from './components/body/workspacefolder/Dashmain';
 import Layout from './layoutfolder/Layout'
 
 import Emailverify from './components/body/auth/Emailverify'

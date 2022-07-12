@@ -3,8 +3,8 @@ import './Main.css'
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ProdcutView from "../product/productviewfolder/ProductView";
-import Workspace from '../workspace/Workspacecomponent' 
-import Dashmain from '../workspace/Dashmain' 
+import Workspace from '../workspacefolder/Workspace' 
+import Dashmain from '../workspacefolder/Dashmain' 
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../state/index';
 

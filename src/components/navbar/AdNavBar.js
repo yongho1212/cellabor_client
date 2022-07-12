@@ -18,8 +18,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Drawer from "@mui/material/Drawer";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { mainListItems, secondaryListItems } from '../body/workspace/listItems';
-import Prdlistitems from '../body/workspace/Prdlistitem';
+import { mainListItems, secondaryListItems } from '../body/workspacefolder/listItems';
+import Prdlistitems from '../body/workspacefolder/Prdlistitem';
 import Button from "@mui/material/Button";
 
 const mdTheme = createTheme();
