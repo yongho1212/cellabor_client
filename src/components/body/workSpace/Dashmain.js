@@ -23,7 +23,7 @@ import Chart from "./Chart";
 import Deposits from "./Deposits";
 import Orders from "./Orders";
 import Myprd from "./Myprd";
-import UploadProduct from "../Product/UploadProduct/uploadProduct";
+import UploadProduct from "../product/uploadproduct/UploadProduct";
 
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";

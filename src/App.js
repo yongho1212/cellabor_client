@@ -15,7 +15,7 @@ import Chat from './components/body/chat/Chat';
 import INFChat from './components/body/chat/INFChat';
 import ADChat from './components/body/chat/ADChat';
 
-import InfluencerList from './components/body/influencerlist/InfluencerList';
+import InfluencerList from './components/body/influencerlist/influencerList';
 import Search from './components/body/search/Search';
 import UploadProfile from './components/body/profile/UploadProfile';
 
@@ -24,12 +24,12 @@ import ADProfile from './components/body/profile/ADProfile';
 import INFProfile from './components/body/profile/INFProfile';
 
 
-import DetailPage from './components/body/Product/ProductdetailPage/DetailPage';
+import DetailPage from './components/body/product/productdetailpage/DetailPage';
 import Main from './components/body/main/Main';
 import Footer from './components/footer/Footer';
 import SearchResult from './components/body/search/SearchResult';
 import EditProfile from './components/body/editprofile/EditProfile';
-import UploadProduct from './components/body/Product/UploadProduct/uploadProduct';
+import UploadProduct from './components/body/product/uploadproduct/UploadProduct';
 import Workspace from './components/body/workspace/Workspace';
 // import Navbar from './components/body/workSpace/Navbar';
 // import InfNavBar from './components/navbar/InfNavBar';
@@ -54,7 +54,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from './state/index';
-import EditDetailpage from './components/body/Product/ProductdetailPage/EditDetailPage';
+import EditDetailpage from './components/body/product/productdetailpage/EditDetailPage';
 import InfluencerProfile from './components/body/profile/InfluencerProfile';
 // import { db } from './firebase';
 

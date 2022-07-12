@@ -23,6 +23,7 @@
     "axios": "^0.26.1",
     "date-fns": "^2.28.0",
     "firebase": "^9.6.10",
+    "http-proxy-middleware": "^2.0.6",
     "react": "^17.0.2",
     "react-alice-carousel": "^2.5.1",
     "react-bootstrap": "^2.2.2",
@@ -72,5 +73,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://Cellabor-env.eba-zfztyyws.ap-northeast-2.elasticbeanstalk.com/"
+  "proxy": "https://Cellabor-env.eba-zfztyyws.ap-northeast-2.elasticbeanstalk.com"
 }
