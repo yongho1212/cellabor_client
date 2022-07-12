@@ -99,7 +99,7 @@ function App() {
     <>
       <HeaderLogin />
       
-      <Home/>
+      
     </>  
     }
 

@@ -14,9 +14,9 @@ const Myprd = () => {
 
   const auth = getAuth();
   
-
+  
   const [product, setProduct] = useState([]);
-  // console.log(product);
+   console.log(product);
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state)
@@ -31,9 +31,10 @@ const Myprd = () => {
        const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/products/getlistbyid`, 
        { params: { uid } })
        .then((res) => { 
-//        console.log(res.data);
-        setProduct(res.data);
-        return 0;
+        console.log(res.data);
+        const prddata = res.data
+        setProduct(prddata);
+        
       })
     } 
     catch (err) {
@@ -44,15 +45,15 @@ const Myprd = () => {
   useEffect(() => {
     getListById();
   }, []);
-  
 
+  
   return (
     <div className="main_Right_chan" style={{display: 'flex', flexWrap: 'wrap'}}>
       <div style={{width:'100%'}}>
       나의 상품리스트
       </div>
       
-      {product.map(item => {
+      {product.length > 0 ? product.map(item => {
         return (
           <div key={item._id} style={{ margin: '20px'}}>
             <Link to={`/EditDetailPage/${item._id}`} style={{ color: 'black', display: 'flex', flexDirection: 'column', width: '200px', height: '280px', alignItems: 'flex-start' }}>
@@ -81,7 +82,7 @@ const Myprd = () => {
             </Link>
           </div>
         )
-      }) }
+      }) : ''}
     </div> 
   )
 }
