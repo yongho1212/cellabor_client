@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import './Main.css'
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import ProdcutView from "../product/productview/ProductView";
-import Workspace from '../workspace/Workspace' 
+import ProdcutView from "../product/productviewfolder/ProductView";
+import Workspace from '../workspace/Workspacecomponent' 
 import Dashmain from '../workspace/Dashmain' 
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../state/index';
