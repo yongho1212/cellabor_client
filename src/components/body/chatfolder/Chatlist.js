@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../state/index';
 
 const Chatlist = (props) => {
-  const [channels, setChannels] = useState('')
+  const [channels, setChannels] = useState([])
   const dispatch = useDispatch();
   const state = useSelector((state) => state)
   const { loginUser, logoutUser, fbuser, nofbuser } = bindActionCreators(actionCreators, dispatch);

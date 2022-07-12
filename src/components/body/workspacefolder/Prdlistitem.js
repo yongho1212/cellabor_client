@@ -26,7 +26,7 @@ const Prdlistitems = ({chatlistopen, getlistopen, getChatData}) => {
 
   const auth = getAuth();
 
-  const [product, setProduct] = useState();
+  const [product, setProduct] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 

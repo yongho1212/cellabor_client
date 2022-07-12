@@ -15,7 +15,8 @@ const Myprd = () => {
   const auth = getAuth();
   
 
-  const [product, setProduct] = useState();
+  const [product, setProduct] = useState([]);
+  console.log(product);
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state)

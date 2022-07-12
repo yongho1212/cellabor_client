@@ -13,7 +13,7 @@ import { bindActionCreators } from "redux";
 import { actionCreators } from "../../../state/index";
 
 const ADChatlist = (props) => {
-  const [channels, setChannels] = useState("");
+  const [channels, setChannels] = useState([]);
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state);

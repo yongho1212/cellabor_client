@@ -5,7 +5,7 @@ import ProductRecommendSlider from '../productrecommendsliderfolder/ProductRecom
 
 
 const ProdcutView = ({ useParams }) => {
-  const [product, setProduct] = useState();
+  const [product, setProduct] = useState([]);
 
   const getPostList = async () => {
     try {

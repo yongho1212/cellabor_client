@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Link } from "react-router-dom";
 
 const InfluencerList = ({ useParams }) => {
-  const [list, setList] = useState();
+  const [list, setList] = useState([]);
 
   const getInfluencerList = async () => {
     try {
