@@ -96,7 +96,11 @@ function App() {
     { state.loggedin ?
       console.log('s')
     : 
+    <>
       <HeaderLogin />
+      
+      <Home/>
+    </>  
     }
 
     

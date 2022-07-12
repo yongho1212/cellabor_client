@@ -52,9 +52,7 @@ const Myprd = () => {
       나의 상품리스트
       </div>
       
-      {!product ?(
-       ''
-      ): product.map(item => {
+      {product ? product.map(item => {
         return (
           <div key={item._id} style={{ margin: '20px'}}>
             <Link to={`/EditDetailPage/${item._id}`} style={{ color: 'black', display: 'flex', flexDirection: 'column', width: '200px', height: '280px', alignItems: 'flex-start' }}>
@@ -83,7 +81,7 @@ const Myprd = () => {
             </Link>
           </div>
         )
-      })}
+      }) : <></>}
     </div> 
   )
 }

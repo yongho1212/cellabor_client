@@ -130,6 +130,8 @@ const Search = (props) => {
 
   const setList = () => {
     let temp = []
+    // 1. 태그입력을 하면 태그 배열이 생긴다. 
+    // 2. 성별,나이 
     if (sexText === 'All') temp = infList.filter(item => item.tags.includes(tagText));
     if (sexText !== 'All' && tagText !== '태그 전체') temp = infList.filter(item => item.tags.includes(tagText) && item.sex === sexText);
     if (tagText === '태그 전체') temp = infList.filter(item => item.sex === (sexText));
