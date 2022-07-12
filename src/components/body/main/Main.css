@@ -1,0 +1,16 @@
+.screenall {
+    
+    
+    width: 83vw;
+}
+
+
+.leftScreen {
+    border-right: solid 1px #aabbaa;
+}
+
+  .rightScreen {
+    border-left: solid 1px #aabbaa;
+    justify-content: 'center'
+    
+  }

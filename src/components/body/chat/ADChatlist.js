@@ -1,0 +1,50 @@
+import React, { useEffect, useState } from "react";
+
+import {
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+  deleteUser,
+} from "firebase/auth";
+import { updateProfile } from "firebase/auth";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../../state/index";
+
+const ADChatlist = (props) => {
+  const [channels, setChannels] = useState("");
+
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const { loginUser, logoutUser, fbuser, nofbuser } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
+  const navigate = useNavigate();
+
+  const chatinfo = state.advertiser.state.adloginData.joined_channel;
+
+  useEffect(() => {
+    setChannels(chatinfo);
+  });
+
+  console.log(state.advertiser.state.adloginData.joined_channel);
+
+  return (
+    <div>
+      <h1>My Chat list</h1>
+      <ul>
+        {channels &&
+          channels.map((item) => (
+            <li key={item}>
+              <Link to={`/Chat/${item}`}>{item}</Link>
+            </li>
+          ))}
+      </ul>
+    </div>
+  );
+};
+export default ADChatlist;
+
+

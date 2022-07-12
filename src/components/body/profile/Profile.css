@@ -1,0 +1,19 @@
+.screenall {
+    height: 100vh;
+    display: grid;
+}
+
+.splitScreen {
+    grid-template-columns: 19% 81%;
+    display: grid;
+}
+
+.leftScreen {
+    border-right: solid 1px #aabbaa;
+}
+
+.rightScreen {
+    border-left: solid 1px #aabbaa;
+}
+
+

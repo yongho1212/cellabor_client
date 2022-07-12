@@ -1,0 +1,13 @@
+.sent {
+    background-color: rebeccapurple;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.received {
+    background-color: red;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}

@@ -1,0 +1,76 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@date-io/date-fns": "^2.14.0",
+    "@date-io/dayjs": "^2.14.0",
+    "@date-io/luxon": "^2.14.0",
+    "@date-io/moment": "^2.14.0",
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.2",
+    "@mui/icons-material": "^5.5.0",
+    "@mui/material": "^5.6.0",
+    "@mui/x-date-pickers": "^5.0.0-beta.0",
+    "@react-spring/web": "^9.4.4",
+    "@reduxjs/toolkit": "^1.8.1",
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.3",
+    "@testing-library/user-event": "^13.5.0",
+    "aws-sdk": "^2.1135.0",
+    "axios": "^0.26.1",
+    "date-fns": "^2.28.0",
+    "firebase": "^9.6.10",
+    "react": "^17.0.2",
+    "react-alice-carousel": "^2.5.1",
+    "react-bootstrap": "^2.2.2",
+    "react-dom": "^17.0.2",
+    "react-facebook-login": "^4.1.1",
+    "react-firebase-hooks": "^5.0.3",
+    "react-google-button": "^0.7.2",
+    "react-google-places-autocomplete": "^3.3.4",
+    "react-icons": "^4.3.1",
+    "react-loader-spinner": "^6.0.0-0",
+    "react-redux": "^7.2.6",
+    "react-router-dom": "^6.2.2",
+    "react-scripts": "5.0.0",
+    "react-slick": "^0.29.0",
+    "react-tag-input-component": "^1.0.7",
+    "react-toastify": "^8.2.0",
+    "rechart": "^0.0.1",
+    "recharts": "^2.1.9",
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^6.0.0",
+    "slick-carousel": "^1.8.1",
+    "util": "^0.12.4",
+    "web-vitals": "^2.1.4",
+    "yarn": "^1.22.18"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "CI= react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "https://Cellabor-env.eba-zfztyyws.ap-northeast-2.elasticbeanstalk.com/"
+}
