@@ -31,7 +31,7 @@ const Myprd = () => {
        const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/products/getlistbyid`, 
        { params: { uid } })
        .then((res) => { 
-        console.log(res.data);
+        console.log("fucK" + res.data);
         const prddata = res.data
         setProduct(prddata);
         
