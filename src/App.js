@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes,Navigate } from "react-router-dom";
 // import Login from "./components/body/auth/Login";
 import Signup from "./components/body/auth/Signup";
 import Home from './components/body/homefolder/Home'
@@ -103,6 +103,8 @@ function App() {
         <Routes >
         { !state.loggedin ?
           <>
+          <Route path="/" element={<Navigate to="/Home" />} />
+
             <Route path="/Home" element={<Home />}  />
             {/* <Route path="/Login" element={<Login />} /> */}
             <Route path="/ADLogin" element={<ADLogin />} />
