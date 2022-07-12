@@ -16,7 +16,7 @@ const Myprd = () => {
   
 
   const [product, setProduct] = useState([]);
-  console.log(product);
+  // console.log(product);
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state)
@@ -52,7 +52,7 @@ const Myprd = () => {
       나의 상품리스트
       </div>
       
-      {product ?(
+      {!product ?(
        ''
       ): product.map(item => {
         return (

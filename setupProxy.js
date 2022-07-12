@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'http://localhost:5000',
+      target: 'https://Cellabor-env.eba-zfztyyws.ap-northeast-2.elasticbeanstalk.com',
       changeOrigin: true,
     })
   );

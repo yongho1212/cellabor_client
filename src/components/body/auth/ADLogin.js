@@ -63,7 +63,7 @@ function moveMain() {
         console.log(res.data)
         const adloginData = res.data
         adloginUser(adloginData);
-        loginUser(adloginData)
+        loginUser(adloginData);
         fbuser(true);
         getListById();
       })
