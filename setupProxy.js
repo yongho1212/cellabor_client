@@ -4,8 +4,9 @@ module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'https://Cellabor-env.eba-zfztyyws.ap-northeast-2.elasticbeanstalk.com',
+      target: 'http://Cellabor-env.eba-zfztyyws.ap-northeast-2.elasticbeanstalk.com/ad/getAdInfo',
       changeOrigin: true,
     })
   );
 };
+

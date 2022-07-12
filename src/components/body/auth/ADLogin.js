@@ -77,7 +77,7 @@ function moveMain() {
     const uid = auth.currentUser.uid
     console.log(uid)
     try {
-       const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/products/getlistbyid`, 
+       const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/ad/getAdInfo`, 
        { params: { uid } })
        .then((res) => { 
         console.log(res.data);
