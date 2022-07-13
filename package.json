@@ -73,5 +73,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://Cellabor-env.eba-zfztyyws.ap-northeast-2.elasticbeanstalk.com/ad/getAdInfo"
+  "proxy": "http://cellabor.ap-northeast-2.elasticbeanstalk.com"
 }
