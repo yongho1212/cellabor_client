@@ -25,8 +25,8 @@ const Layout = () => {
   const dispatch = useDispatch();
   const {loginUser, logoutUser, fbuser, nofbuser} = bindActionCreators(actionCreators, dispatch);
 
-// const myrole = state.auth.state.loginData.role
-const myrole = 'advertiser'
+ const myrole = state.auth.state.loginData.role
+//const myrole = 'advertiser'
 
 
 

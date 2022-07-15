@@ -44,6 +44,7 @@ const ADProfile = () => {
   const auth = getAuth();
   const user = auth.currentUser;
   const uid = state.advertiser.state.adloginData.uid;
+  
 
   const handleClickOpen = (scrollType) => () => {
     setOpen(true);

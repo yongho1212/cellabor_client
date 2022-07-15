@@ -1,13 +1,17 @@
 import React,{useState, useEffect} from 'react'
 import axios from 'axios'
 import { Link } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../state/index';
 
+
+
 import {
-  getAuth
+  getAuth,
+  signOut,
 } from "firebase/auth";
 
 const Myprd = () => {
@@ -18,11 +22,26 @@ const Myprd = () => {
   const [product, setProduct] = useState([]);
    console.log(product);
 
+   const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const state = useSelector((state) => state)
   const {loginUser, logoutUser, fbuser, nofbuser} = bindActionCreators(actionCreators, dispatch);
 
-  const uid = state.auth.state.loginData.uid;
+  const uid = state.advertiser.state.adloginData.uid;
+  
+
+  const handleLogout = async () => {
+    try {
+      navigate("/Home");
+      logoutUser();
+      nofbuser(false);
+      signOut(auth);
+      console.log("logout");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const getListById = async () => {
     
@@ -45,6 +64,9 @@ const Myprd = () => {
   useEffect(() => {
     getListById();
   }, []);
+
+
+  
 
   
   return (
