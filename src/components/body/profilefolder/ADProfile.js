@@ -43,7 +43,7 @@ const ADProfile = () => {
   const navigate = useNavigate();
   const auth = getAuth();
   const user = auth.currentUser;
-  const uid = state.advertiser.state.adloginData.uid;
+  const uid = "m8mU6Gzf74Vl55CmwDZYNFfIHbt1"
   
 
   const handleClickOpen = (scrollType) => () => {

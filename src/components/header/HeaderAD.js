@@ -256,7 +256,7 @@ const HeaderAD = () => {
             >
                 WORK SPACE
             </Button> */}
-            {/* <Button
+            <Button
               variant="contained"
               style={{
                 backgroundColor: "#03ff95",
@@ -267,7 +267,7 @@ const HeaderAD = () => {
               onClick={handleLogout}
             >
               로그아웃
-            </Button> */}
+            </Button>
           </Box>
         </Toolbar>
       </Container>
