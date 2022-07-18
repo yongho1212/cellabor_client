@@ -28,7 +28,8 @@ const Myprd = () => {
   const state = useSelector((state) => state)
   const {loginUser, logoutUser, fbuser, nofbuser} = bindActionCreators(actionCreators, dispatch);
 
-  const uid = state.advertiser.state.adloginData.uid;
+ // const uid = state.advertiser.state.adloginData.uid;
+ const uid = "m8mU6Gzf74Vl55CmwDZYNFfIHbt1"
   
 
   const handleLogout = async () => {
