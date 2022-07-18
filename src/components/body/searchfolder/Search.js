@@ -7,6 +7,9 @@ import axios from "axios";
 import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
 import { MenuItem, Menu, Autocomplete, Chip, TextField, styled } from "@mui/material";
+import { Box, style } from "@mui/system";
+import Slider from '@mui/material/Slider';
+import MuiInput from '@mui/material/Input';
 
 const StyledTextField = styled(TextField)({
   '& label': {
@@ -35,19 +38,15 @@ const StyledTextField = styled(TextField)({
   },
 });
 
+const Input = styled(MuiInput)`
+width: 42px;
+`;
+
 
 const Search = (props) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state)
-  const {loginUser, logoutUser, fbuser, nofbuser} = bindActionCreators(actionCreators, dispatch);
-  // const channels = state.auth.state.loginData.joinedChannel
-
-  // const lists = channels.map((chat) => 
-  // <li>{chat}</li>
-  // )
-
   const sexList = ['All','female', 'male'];
-  const tagList = ['태그 전체', '패션', '여행', '외국', '섹스']
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -59,18 +58,16 @@ const Search = (props) => {
   const [testOpen, setTestOpen] = React.useState(false);
 
   const [sexText, setSexText] = React.useState('All');
-  const [ageText, setAgeText] = React.useState('나이');
-  const [tagText, setTagText] = React.useState('태그 전체');
-  const [testText, setTestText] = React.useState('태그');
+  const [ageText, setAgeText] = React.useState('나이'); // 적용 예정
 
-  const [value, setValue] = React.useState();
-  const [placeholder, setPlaceholder] = React.useState('');
+  const ageValueText = (value) => {
+    return `${value}살`;
+  }
+  // 개발 중
+  const [ageValue, setAgeValue] = React.useState([10,100]);
+
+  const [tagvalue, setTagValue] = React.useState([]);
   const [inputValue, setInputValue] = React.useState('');
-  const [options, setOptions] = React.useState();
-  const [openOptionsMenu, setOpenOptionMenu] = React.useState(false); //안쓸듯
-
-  console.log(inputValue);
-  console.log(value); // 이거로 필터 해야함
 
   const taglist = [
     {title: '축구'},
@@ -90,21 +87,10 @@ const Search = (props) => {
     setAgeOpen(true);
   };
 
-  const tagFilterClick = (event) => {
-    setAnchorEl(event.currentTarget);
-    setTagOpen(true);
-  };
-
   const testFilterClick = (event) => {
     setAnchorEl(event.currentTarget);
     setTestOpen(true);
   };
-
-  const selectSexMenu = (item) => {
-    setSexText(item);
-    setSexOpen(false);
-  };
-
 
   const handleClose = () => {
     setSexOpen(false);
@@ -114,12 +100,52 @@ const Search = (props) => {
     setAnchorEl(null);
   };
 
+  const isAgeInclude = (value) => {
+    return value >= ageValue[0] && value <= ageValue[1];
+  };
+
+  const handleAgeChange = (event, newValue) => {
+    setAgeValue(newValue);
+    console.log('age filter value', ageValue);
+  };
+
+  // 필터 로직 성별, 나이, 태그
+  const setList = () => {
+    let temp = [];
+    if (sexText === 'All' && tagvalue.length === 0) temp = infList.filter(item => isAgeInclude(2022 - Number(item.birthday.slice(0,4)) + 1));
+    if (sexText !== 'All' && tagvalue.length === 0) temp = infList.filter(item => item.sex === sexText && isAgeInclude(2022 - Number(item.birthday.slice(0,4)) + 1));
+    if (sexText === 'All' && tagvalue.length !== 0) {
+      let temptemp = []
+      for (let i = 0; i < tagvalue.length; i += 1) {
+        temptemp.push(infList.filter(item => item.tags.includes(tagvalue[i].title)));
+      };
+      for (let j = 0; j < temptemp.length; j += 1) {
+        if (isAgeInclude(2022 - Number(temptemp[j][0].birthday.slice(0,4)) + 1)) {
+          temp.push(temptemp[j][0]);
+        }
+      }
+    }
+    if (sexText !== 'All' && tagvalue.length !== 0) {
+      let temptemp = []
+      for (let i = 0; i < tagvalue.length; i += 1) {
+        temptemp.push(infList.filter(item => item.tags.includes(tagvalue[i].title)));
+      };
+      for (let j = 0; j < temptemp.length; j += 1) {
+        if (isAgeInclude(2022 - Number(temptemp[j][0].birthday.slice(0,4)) + 1) && temptemp[j][0].sex === sexText) {
+          temp.push(temptemp[j][0]);
+        }
+      }
+    }
+    setFilteredList(temp);
+  };
+
   const getInfList = async () => {
     try {
-      const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/inf/getlist`)
+      const res = await axios.post(`http://localhost:1212/inf/getlist`)
         .then((res) => {
           console.log(res);
           setInfList(res.data);
+          setFilteredList(res.data);
           return 0;
         })
     }
@@ -128,33 +154,13 @@ const Search = (props) => {
     }
   }
 
-  const setList = () => {
-    let temp = []
-    // 1. 태그입력을 하면 태그 배열이 생긴다. 
-    // 2. 성별,나이 
-    if (sexText === 'All') temp = infList.filter(item => item.tags.includes(tagText));
-    if (sexText !== 'All' && tagText !== '태그 전체') temp = infList.filter(item => item.tags.includes(tagText) && item.sex === sexText);
-    if (tagText === '태그 전체') temp = infList.filter(item => item.sex === (sexText));
-    setFilteredList(temp);
-  };
-
-  const filterSelected = (a) => {
-    setSexText(a);
+  React.useEffect(() => {
     setList();
-    setAnchorEl(null);
-  }
+  }, [sexText, tagvalue]);
 
   React.useEffect(() => {
     getInfList();
   }, []);
-
-  React.useEffect(() => {
-    setList();
-  }, [sexText, tagText]);
-
-  console.log(sexText);
-  console.log(tagText);
-  console.log(filteredList);
   
   return (
     <div>
@@ -166,29 +172,36 @@ const Search = (props) => {
         <Button id="age-filter" onClick={ageFilterClick}>
           {ageText}
         </Button>
-        <Button id="tag-filter" onClick={tagFilterClick}>
-          {tagText}
-        </Button>
         <Button id="tag-filter" onClick={testFilterClick}>
-          텍스트 입력
+          {tagvalue.length === 0 ? '태그 입력' : '태그 입력됨'}
         </Button>
         <Menu open={sexOpen} anchorEl={anchorEl} onClose={handleClose}>
           {sexList.map(item => {
             return [
-            // <MenuItem onClick={()=>filterSelected(item)}>{item}</MenuItem>
             <MenuItem onClick={() => {setSexText(item); setSexOpen(false);}}>{item}</MenuItem>
             ]})}
         </Menu>
         <Menu open={ageOpen} anchorEl={anchorEl} onClose={handleClose}>
-          <MenuItem>20대</MenuItem>
-          <MenuItem>30대</MenuItem>
-          <MenuItem>30대</MenuItem>
-        </Menu>
-        <Menu open={tagOpen} anchorEl={anchorEl} onClose={handleClose}>
-          {tagList.map(item => {
-            return [
-            <MenuItem onClick={() => {setTagText(item); setTagOpen(false); }}>{item}</MenuItem>
-            ]})}
+          <Box sx={{width: '400px', height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Slider
+              getAriaLabel={() => 'ageFilter'}
+              style={{ width: '200px', marignLeft: '20px' }}
+              value={ageValue}
+              onChange={handleAgeChange}
+              valueLabelDisplay="auto"
+              getAriaValueText={ageValueText} 
+              disableSwap
+            />
+            <div className="age input field" style={{maringLeft: '30px'}}>
+              <div>start: {ageValue[0]} / end: {ageValue[1]}</div>
+            </div>
+            <Button onClick={() => {
+              setList();
+              setAgeOpen(false);
+            }}> 
+              적용
+            </Button>
+          </Box>
         </Menu>
         <Menu open={testOpen} anchorEl={anchorEl} onClose={handleClose}>
           <div style={{ width: '400px', height: '200px' }}>
@@ -199,9 +212,9 @@ const Search = (props) => {
               getOptionLabel={(option) => 
                 option.title
               }
-              value={value}
+              value={tagvalue}
               onChange={(event, selectedValue) => {
-                setValue(selectedValue);
+                setTagValue(selectedValue);
               }}
               onInputChange={(event, newInputValue) => {
                 setInputValue(newInputValue);
@@ -219,6 +232,7 @@ const Search = (props) => {
                 return selected.title === againstTo.title;
               }}
             />
+            <Button onClick={() => {setList(); setTestOpen(false);}}>적용</Button>
           </div>
         </Menu>
       </div>
