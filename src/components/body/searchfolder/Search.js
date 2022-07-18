@@ -44,8 +44,6 @@ width: 42px;
 
 
 const Search = (props) => {
-  const dispatch = useDispatch();
-  const state = useSelector((state) => state)
   const sexList = ['All','female', 'male'];
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -54,8 +52,8 @@ const Search = (props) => {
   const [filteredList, setFilteredList] = React.useState();
   const [sexOpen, setSexOpen] = React.useState(false);
   const [ageOpen, setAgeOpen] = React.useState(false);
-  const [tagOpen, setTagOpen] = React.useState(false);
   const [testOpen, setTestOpen] = React.useState(false);
+  const [tagText, setTagText] = React.useState('태그 입력');
 
   const [sexText, setSexText] = React.useState('All');
   const [ageText, setAgeText] = React.useState('나이'); // 적용 예정
@@ -64,7 +62,7 @@ const Search = (props) => {
     return `${value}살`;
   }
   // 개발 중
-  const [ageValue, setAgeValue] = React.useState([10,100]);
+  const [ageValue, setAgeValue] = React.useState([0,100]);
 
   const [tagvalue, setTagValue] = React.useState([]);
   const [inputValue, setInputValue] = React.useState('');
@@ -76,6 +74,22 @@ const Search = (props) => {
     {title: '음식'},
     {title: '일상'},
   ];
+
+  const changeTagText = () => {
+    console.log('tagList', tagvalue);
+    console.log('length', tagvalue.length);
+    if (tagvalue.length > 0) {
+      let temp = '';
+      for (let i = 0; i < tagvalue.length; i += 1) {
+        if (i !== tagvalue.length - 1) {
+          temp += tagvalue[i].title + ', ';
+        }
+        else temp += tagvalue[i].title;
+      }
+    console.log(temp);
+    setTagText(temp);
+    }
+  };
 
   const sexFilterClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -95,7 +109,6 @@ const Search = (props) => {
   const handleClose = () => {
     setSexOpen(false);
     setAgeOpen(false);
-    setTagOpen(false);
     setTestOpen(false);
     setAnchorEl(null);
   };
@@ -106,35 +119,39 @@ const Search = (props) => {
 
   const handleAgeChange = (event, newValue) => {
     setAgeValue(newValue);
+    // setAgeText(`${ageValue[0]} ~ ${ageValue[1]}`)
     console.log('age filter value', ageValue);
   };
 
   // 필터 로직 성별, 나이, 태그
   const setList = () => {
     let temp = [];
+    let temptemp = [];
     if (sexText === 'All' && tagvalue.length === 0) temp = infList.filter(item => isAgeInclude(2022 - Number(item.birthday.slice(0,4)) + 1));
     if (sexText !== 'All' && tagvalue.length === 0) temp = infList.filter(item => item.sex === sexText && isAgeInclude(2022 - Number(item.birthday.slice(0,4)) + 1));
     if (sexText === 'All' && tagvalue.length !== 0) {
-      let temptemp = []
       for (let i = 0; i < tagvalue.length; i += 1) {
         temptemp.push(infList.filter(item => item.tags.includes(tagvalue[i].title)));
       };
-      for (let j = 0; j < temptemp.length; j += 1) {
-        if (isAgeInclude(2022 - Number(temptemp[j][0].birthday.slice(0,4)) + 1)) {
-          temp.push(temptemp[j][0]);
+        for (let j = 0; j < temptemp.length; j += 1) {
+          if (temptemp[j].length > 0) {
+            if (isAgeInclude(2022 - Number(temptemp[j][0].birthday.slice(0,4)) + 1)) {
+              temp.push(temptemp[j][0]);
+            }
+          }
         }
-      }
     }
     if (sexText !== 'All' && tagvalue.length !== 0) {
-      let temptemp = []
       for (let i = 0; i < tagvalue.length; i += 1) {
         temptemp.push(infList.filter(item => item.tags.includes(tagvalue[i].title)));
       };
-      for (let j = 0; j < temptemp.length; j += 1) {
-        if (isAgeInclude(2022 - Number(temptemp[j][0].birthday.slice(0,4)) + 1) && temptemp[j][0].sex === sexText) {
-          temp.push(temptemp[j][0]);
+        for (let j = 0; j < temptemp.length; j += 1) {
+          if (temptemp[j].length > 0) {
+            if (isAgeInclude(2022 - Number(temptemp[j][0].birthday.slice(0,4)) + 1) && temptemp[j][0].sex === sexText) {
+              temp.push(temptemp[j][0]);
+            }
+          }
         }
-      }
     }
     setFilteredList(temp);
   };
@@ -156,6 +173,7 @@ const Search = (props) => {
 
   React.useEffect(() => {
     setList();
+    changeTagText();
   }, [sexText, tagvalue]);
 
   React.useEffect(() => {
@@ -173,7 +191,7 @@ const Search = (props) => {
           {ageText}
         </Button>
         <Button id="tag-filter" onClick={testFilterClick}>
-          {tagvalue.length === 0 ? '태그 입력' : '태그 입력됨'}
+          {tagvalue.length === 0 ? '태그 입력' : `${tagText}`}
         </Button>
         <Menu open={sexOpen} anchorEl={anchorEl} onClose={handleClose}>
           {sexList.map(item => {
@@ -182,7 +200,7 @@ const Search = (props) => {
             ]})}
         </Menu>
         <Menu open={ageOpen} anchorEl={anchorEl} onClose={handleClose}>
-          <Box sx={{width: '400px', height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Box sx={{width: '500px', height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Slider
               getAriaLabel={() => 'ageFilter'}
               style={{ width: '200px', marignLeft: '20px' }}
@@ -192,20 +210,20 @@ const Search = (props) => {
               getAriaValueText={ageValueText} 
               disableSwap
             />
-            <div className="age input field" style={{maringLeft: '30px'}}>
-              <div>start: {ageValue[0]} / end: {ageValue[1]}</div>
-            </div>
-            <Button onClick={() => {
+            <div style={{ marginLeft: '30px' }}>start: {ageValue[0]} / end: {ageValue[1]}</div>
+            <Button 
+            onClick={() => {
               setList();
               setAgeOpen(false);
-            }}> 
+            }}
+            style={{ marginLeft: '20px'}}
+            > 
               적용
             </Button>
           </Box>
         </Menu>
         <Menu open={testOpen} anchorEl={anchorEl} onClose={handleClose}>
           <div style={{ width: '400px', height: '200px' }}>
-            이찬휘의 입력칸
             <Autocomplete 
               multiple 
               options={taglist} 
@@ -224,7 +242,7 @@ const Search = (props) => {
                 <TextField
                   {...params}
                   variant='standard'
-                  label='Multiple values'
+                  label='태그를 입력 또는 선택하세요'
                   placeholder="tags"
                 />
               )}
