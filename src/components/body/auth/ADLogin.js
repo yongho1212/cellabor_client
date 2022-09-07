@@ -157,6 +157,7 @@ function moveMain() {
             <Button variant="primary" type="Submit">
               Log In
             </Button>
+            <div> 준비중입니다.</div>
           </div>
         </Form>
         <hr />
