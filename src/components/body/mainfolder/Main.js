@@ -15,8 +15,8 @@ const Main = () => {
   const navigate = useNavigate();
 
 
-// const userRole = state.auth.state.loginData.role
- const userRole = 'advertiser'
+const userRole = state.auth.state.loginData.role || 'influencer'
+// const userRole = 'influencer'
 
   console.log(userRole);
 

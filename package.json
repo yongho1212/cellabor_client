@@ -40,6 +40,7 @@
     "react-slick": "^0.29.0",
     "react-tag-input-component": "^1.0.7",
     "react-toastify": "^8.2.0",
+    "react-transition-group": "^4.4.5",
     "rechart": "^0.0.1",
     "recharts": "^2.1.9",
     "redux-logger": "^3.0.6",
@@ -73,5 +74,4 @@
       "last 1 safari version"
     ]
   }
-  
 }

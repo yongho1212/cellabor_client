@@ -26,7 +26,15 @@ const ProdcutView = ({ useParams }) => {
 
   return (
     <div style={{}}>
-      <ProductRecommendSlider />
+
+      {/* 내가 진행하고 있는 켐페인에 대한 리스트 */}
+      <div>
+        내가 참가한 켐페인 리스트
+      </div>
+
+
+             {/* 상품 추천 슬라이더  */}
+      {/* <ProductRecommendSlider /> */}
     <div className="main_Right_chan" style={{ display: 'flex', flexWrap: 'wrap', }}>
       {product ? product.map(item => {
         return (
