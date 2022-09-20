@@ -25,11 +25,11 @@ const ProdcutView = ({ useParams }) => {
   }, []);
 
   return (
-    <div style={{}}>
+    <div style={{justifyContent:'center', alignItems:'center'}}>
 
       {/* 내가 진행하고 있는 켐페인에 대한 리스트 */}
       <div>
-        내가 참가한 켐페인 리스트
+        
       </div>
 
 
