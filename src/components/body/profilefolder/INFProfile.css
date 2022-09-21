@@ -1,0 +1,79 @@
+
+
+.container {
+    display: flex;
+    justify-content: center;
+    background-color: #667;
+}
+
+.img-name-container {
+    
+    flex-direction: column;
+    
+    background-color: blue;
+}
+
+.top-blank-box {
+    height: 25vh;
+    background-color:cadetblue
+}
+
+.middle-blank-box {
+    height: 25vh;
+    background-color:coral;
+
+}
+
+.img-avatar {
+    margin-top: 10vh;
+    position: absolute;
+}
+
+.btm-box-info-container {
+    height: 25vh;
+    background-color:coral
+}
+
+.bottom-box-container {
+    background-color: crimson;
+}
+
+.bottom-box {
+    padding: 3px;
+    justify-content: flex-end;
+    display: flex;
+}
+
+.name-role-container {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    background-color: khaki;
+}
+
+.specified-info-container {
+    display: flex;
+    background-color: lightgray;
+}
+
+.info-icon {
+    background-color: limegreen;
+}
+
+.info-text-container {
+
+}
+
+.info-text-me {
+    background-color: lightpink;
+}
+
+.info-text-category {
+    background-color: lightskyblue;
+}
+
+
+
+@media screen and (max-width: 900px) {
+
+  }
