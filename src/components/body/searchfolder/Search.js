@@ -157,9 +157,9 @@ const Search = (props) => {
   console.log(filteredList);
   
   return (
-    <div>
-      <h1>Filtered Search Area</h1>
-      <div>
+    <div style={{display:'flex'}}>
+      {/* <h1>Filtered Search Area</h1> */}
+      <div style={{ width: '80vw', backgroundColor:'red', alignItems:'center'}}>
         <Button id="sex-filter" onClick={sexFilterClick}>
           {sexText}
         </Button>
@@ -221,6 +221,11 @@ const Search = (props) => {
             />
           </div>
         </Menu>
+
+        {/* 플랫폼 구분 버튼 */}
+        <div>
+              
+        </div>
       </div>
       {filteredList ? filteredList.map(item => {
         return (
@@ -245,7 +250,7 @@ const Search = (props) => {
             </Link>
           </div>
         )
-      }) : ''}
+      }) : <div>검색결과 없음</div>}
     </div> 
   );
 } 

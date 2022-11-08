@@ -120,7 +120,7 @@ const INFLogin = () => {
           alignItems: "center",
           display: "flex",
           flexDirection: "column",
-          height: "80vh",
+          height: "100vh",
         }}
       >
         <div>
