@@ -7,6 +7,7 @@ import GoogleButton from "react-google-button";
 import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
+  FacebookAuthProvider,
   signInWithPopup,
   getAuth,
   updateProfile,
@@ -30,11 +31,12 @@ const INFLogin = () => {
   const navigate = useNavigate();
   const auth = getAuth();
   const gprovider = new GoogleAuthProvider();
+  const fprovider = new FacebookAuthProvider();
   const [infor, setInfor] = useState("");
 
   useEffect(() => {
     if (state.loggedin) {
-      navigate("/MAIN");
+      navigate("/Main");
     }
   }, [state.loggedin, navigate]);
 
@@ -86,14 +88,18 @@ const INFLogin = () => {
       });
   };
 
-  const handleGoogleSignIn = () => {
-    signInWithPopup(auth, gprovider)
-      .then((result) => {
+  const handleGoogleSignIn = async (e) => {
+    
+    await signInWithPopup(auth, gprovider)
+      .then(async(result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
+        getinfo();
+        moveMain()
+
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -101,16 +107,42 @@ const INFLogin = () => {
         const email = error.customData.email;
         const credential = GoogleAuthProvider.credentialFromError(error);
       })
-      .then(() => {
-        getinfo();
+      .then(async() => {
+        console.log('check 1');
+        // getinfo();
+        // moveMain();
       })
       .then(() => {
-        moveMain();
+
+        console.log('check 2');
+        // moveMain();
       });
   };
 
   const handleFBSignIn = () => {
-    //dispatch(fbSignInInitiate());
+    signInWithPopup(auth, fprovider)
+  .then((result) => {
+    // The signed-in user info.
+    const user = result.user;
+
+    // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+    const credential = FacebookAuthProvider.credentialFromResult(result);
+    const accessToken = credential.accessToken;
+
+    // ...
+  })
+  .catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = FacebookAuthProvider.credentialFromError(error);
+
+    // ...
+  });
+//dispatch(fbSignInInitiate());
   };
 
   return (
@@ -139,7 +171,7 @@ const INFLogin = () => {
               alignItems: "center",
               marginBlock: "3vw",
             }}
-            onClick={() => console.log("LG")}
+            onClick={() => handleGoogleSignIn()}
           >
             <FcGoogle style={{ fontSize: 35 }} />
             <p
@@ -162,7 +194,7 @@ const INFLogin = () => {
               alignItems: "center",
               marginBlock: "3vw",
             }}
-            onClick={() => console.log("s")}
+            onClick={() => handleFBSignIn()}
           >
             <FaFacebook style={{ fontSize: 35 }} />
             <p
