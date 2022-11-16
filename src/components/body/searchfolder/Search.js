@@ -52,11 +52,23 @@ const Search = (props) => {
   const [filteredList, setFilteredList] = React.useState();
   const [sexOpen, setSexOpen] = React.useState(false);
   const [ageOpen, setAgeOpen] = React.useState(false);
-  const [testOpen, setTestOpen] = React.useState(false);
+  const [tagOpen, setTagOpen] = React.useState(false);
+  const [platformOpen, setPlatformOpen] = React.useState(false);
+
   const [tagText, setTagText] = React.useState('태그 입력');
+  const [platformText, setPlatformText] = React.useState('모두');
 
   const [sexText, setSexText] = React.useState('All');
   const [ageText, setAgeText] = React.useState('나이'); // 적용 예정
+
+  const platformList = [
+    {title: '모두'},
+    {title: '인스타그램'},
+    {title: '유튜브'},
+    {title: '트위터'},
+    {title: '페이스북'},
+    {title: '틱톡'},
+  ];
 
   const ageValueText = (value) => {
     return `${value}살`;
@@ -65,6 +77,7 @@ const Search = (props) => {
   const [ageValue, setAgeValue] = React.useState([0,100]);
 
   const [tagvalue, setTagValue] = React.useState([]);
+  const [platformValue, setPlatformValue] = React.useState([]);
   const [inputValue, setInputValue] = React.useState('');
 
   const taglist = [
@@ -91,6 +104,22 @@ const Search = (props) => {
     }
   };
 
+  const changePlatformText = () => {
+    if (platformValue.title) setPlatformText(platformValue.title);
+    else setPlatformText('모두');
+    // console.log('tagList', platformValue);
+    // if (platformValue.length >0) {
+    //   let temp = '';
+    //   for (let i = 0; i < platformValue.length; i += 1) {
+    //     if (i !== platformValue.length - 1) {
+    //       temp += platformValue[i].title + ', ';
+    //     }
+    //     else temp += platformValue[i].title;
+    //   }
+    // setPlatformText(temp);
+    // }
+  };
+
   const sexFilterClick = (event) => {
     setAnchorEl(event.currentTarget);
     setSexOpen(true);
@@ -101,15 +130,21 @@ const Search = (props) => {
     setAgeOpen(true);
   };
 
-  const testFilterClick = (event) => {
+  const tagFilterClick = (event) => {
     setAnchorEl(event.currentTarget);
-    setTestOpen(true);
+    setTagOpen(true);
+  };
+
+  const platformFilterClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    setPlatformOpen(true);
   };
 
   const handleClose = () => {
     setSexOpen(false);
     setAgeOpen(false);
-    setTestOpen(false);
+    setTagOpen(false);
+    setPlatformOpen(false);
     setAnchorEl(null);
   };
 
@@ -124,34 +159,82 @@ const Search = (props) => {
   };
 
   // 필터 로직 성별, 나이, 태그
-  const setList = () => {
+  const setList = async () => {
     let temp = [];
     let temptemp = [];
-    if (sexText === 'All' && tagvalue.length === 0) temp = infList.filter(item => isAgeInclude(2022 - Number(item.birthday.slice(0,4)) + 1));
-    if (sexText !== 'All' && tagvalue.length === 0) temp = infList.filter(item => item.sex === sexText && isAgeInclude(2022 - Number(item.birthday.slice(0,4)) + 1));
-    if (sexText === 'All' && tagvalue.length !== 0) {
-      for (let i = 0; i < tagvalue.length; i += 1) {
-        temptemp.push(infList.filter(item => item.tags.includes(tagvalue[i].title)));
-      };
-        for (let j = 0; j < temptemp.length; j += 1) {
-          if (temptemp[j].length > 0) {
-            if (isAgeInclude(2022 - Number(temptemp[j][0].birthday.slice(0,4)) + 1)) {
-              temp.push(temptemp[j][0]);
+    let temptempwithplatform = [];
+    if (platformText === '모두') {
+      if (sexText === 'All' && tagvalue.length === 0) temp = infList.filter(item => isAgeInclude(2022 - Number(item.birthday.slice(0,4)) + 1));
+      if (sexText !== 'All' && tagvalue.length === 0) temp = infList.filter(item => item.sex === sexText && isAgeInclude(2022 - Number(item.birthday.slice(0,4)) + 1));
+      if (sexText === 'All' && tagvalue.length !== 0) {
+        for (let i = 0; i < tagvalue.length; i += 1) {
+          temptemp.push(infList.filter(item => item.tags.includes(tagvalue[i].title)));
+        };
+          for (let j = 0; j < temptemp.length; j += 1) {
+            if (temptemp[j].length > 0) {
+              if (isAgeInclude(2022 - Number(temptemp[j][0].birthday.slice(0,4)) + 1)) {
+                temp.push(temptemp[j][0]);
+              }
             }
           }
-        }
+      }
+      if (sexText !== 'All' && tagvalue.length !== 0) {
+        for (let i = 0; i < tagvalue.length; i += 1) {
+          temptemp.push(infList.filter(item => item.tags.includes(tagvalue[i].title)));
+        };
+          for (let j = 0; j < temptemp.length; j += 1) {
+            if (temptemp[j].length > 0) {
+              if (isAgeInclude(2022 - Number(temptemp[j][0].birthday.slice(0,4)) + 1) && temptemp[j][0].sex === sexText) {
+                temp.push(temptemp[j][0]);
+              }
+            }
+          }
+      }
     }
-    if (sexText !== 'All' && tagvalue.length !== 0) {
-      for (let i = 0; i < tagvalue.length; i += 1) {
-        temptemp.push(infList.filter(item => item.tags.includes(tagvalue[i].title)));
-      };
-        for (let j = 0; j < temptemp.length; j += 1) {
-          if (temptemp[j].length > 0) {
-            if (isAgeInclude(2022 - Number(temptemp[j][0].birthday.slice(0,4)) + 1) && temptemp[j][0].sex === sexText) {
-              temp.push(temptemp[j][0]);
+    else if (platformText !== '모두') {
+      // 유저 플랫폼 비교 로직 필요
+      // if (플랫폼 검사)
+      if (platformText === '인스타그램') {
+        temptempwithplatform = infList.filter(item => item.insta !== '');
+      }
+      else if (platformText === '트위터') {
+        temptempwithplatform = infList.filter(item => item.twitter !== '');
+      }
+      else if (platformText === '틱톡') {
+        temptempwithplatform = infList.filter(item => item.tiktok !== '');
+      }
+      else if (platformText === '유튜브') {
+        temptempwithplatform = infList.filter(item => item.youtube !== '');
+      }
+      else if (platformText === '페이스북') {
+        temptempwithplatform = infList.filter(item => item.facebook !== '');
+      }
+      if (sexText === 'All' && tagvalue.length === 0) temp = temptempwithplatform.filter(item => isAgeInclude(2022 - Number(item.birthday.slice(0,4)) + 1));
+      if (sexText !== 'All' && tagvalue.length === 0) temp = temptempwithplatform.filter(item => item.sex === sexText && isAgeInclude(2022 - Number(item.birthday.slice(0,4)) + 1));
+      if (sexText === 'All' && tagvalue.length !== 0) {
+        for (let i = 0; i < tagvalue.length; i += 1) {
+          temptemp.push(temptempwithplatform.filter(item => item.tags.includes(tagvalue[i].title)));
+        };
+          for (let j = 0; j < temptemp.length; j += 1) {
+            if (temptemp[j].length > 0) {
+              if (isAgeInclude(2022 - Number(temptemp[j][0].birthday.slice(0,4)) + 1)) {
+                temp.push(temptemp[j][0]);
+              }
             }
           }
-        }
+      }
+      if (sexText !== 'All' && tagvalue.length !== 0) {
+        for (let i = 0; i < tagvalue.length; i += 1) {
+          temptemp.push(temptempwithplatform.filter(item => item.tags.includes(tagvalue[i].title)));
+        };
+          for (let j = 0; j < temptemp.length; j += 1) {
+            if (temptemp[j].length > 0) {
+              if (isAgeInclude(2022 - Number(temptemp[j][0].birthday.slice(0,4)) + 1) && temptemp[j][0].sex === sexText) {
+                temp.push(temptemp[j][0]);
+              }
+            }
+          }
+      }
     }
     setFilteredList(temp);
   };
@@ -160,7 +243,7 @@ const Search = (props) => {
     try {
       const res = await axios.post(`http://localhost:1212/inf/getlist`)
         .then((res) => {
-          console.log(res);
+          console.log('유저 리스트 필수', res);
           setInfList(res.data);
           setFilteredList(res.data);
           return 0;
@@ -174,7 +257,8 @@ const Search = (props) => {
   React.useEffect(() => {
     setList();
     changeTagText();
-  }, [sexText, tagvalue]);
+    changePlatformText();
+  }, [sexText, tagvalue, platformValue]);
 
   React.useEffect(() => {
     getInfList();
@@ -190,8 +274,11 @@ const Search = (props) => {
         <Button id="age-filter" onClick={ageFilterClick}>
           {ageText}
         </Button>
-        <Button id="tag-filter" onClick={testFilterClick}>
+        <Button id="tag-filter" onClick={tagFilterClick}>
           {tagvalue.length === 0 ? '태그 입력' : `${tagText}`}
+        </Button>
+        <Button id="platform-filter" onClick={platformFilterClick}>
+          {`${platformText}`}
         </Button>
         <Menu open={sexOpen} anchorEl={anchorEl} onClose={handleClose}>
           {sexList.map(item => {
@@ -222,7 +309,7 @@ const Search = (props) => {
             </Button>
           </Box>
         </Menu>
-        <Menu open={testOpen} anchorEl={anchorEl} onClose={handleClose}>
+        <Menu open={tagOpen} anchorEl={anchorEl} onClose={handleClose}>
           <div style={{ width: '400px', height: '200px' }}>
             <Autocomplete 
               multiple 
@@ -237,7 +324,7 @@ const Search = (props) => {
               onInputChange={(event, newInputValue) => {
                 setInputValue(newInputValue);
               }}
-              limitTags={3}
+              limitTags={2}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -250,7 +337,38 @@ const Search = (props) => {
                 return selected.title === againstTo.title;
               }}
             />
-            <Button onClick={() => {setList(); setTestOpen(false);}}>적용</Button>
+            <Button onClick={() => {setList(); setTagOpen(false);}}>적용</Button>
+          </div>
+        </Menu>
+        <Menu open={platformOpen} anchorEl={anchorEl} onClose={handleClose}>
+          <div style={{ width: '400px', height: '200px' }}>
+            <Autocomplete 
+              // multiple 
+              options={platformList} 
+              getOptionLabel={(option) => 
+                option.title
+              }
+              value={platformValue}
+              onChange={(event, selectedValue) => {
+                setPlatformValue(selectedValue);
+              }}
+              onInputChange={(event, newInputValue) => {
+                setInputValue(newInputValue);
+              }}
+              limitTags={1}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant='standard'
+                  label='플랫폼을 입력 또는 선택하세요'
+                  placeholder="platforms"
+                />
+              )}
+              isOptionEqualToValue={(againstTo, selected) => {
+                return selected.title === againstTo.title;
+              }}
+            />
+            <Button onClick={() => {setList(); setPlatformOpen(false);}}>적용</Button>
           </div>
         </Menu>
       </div>
