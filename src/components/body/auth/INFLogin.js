@@ -21,6 +21,11 @@ import axios from "axios";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
+import { infUserInfo, infPrd} from '../../../api';
+
+const queryClient = new QueryClient()
+
 const INFLogin = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -40,9 +45,27 @@ const INFLogin = () => {
     }
   }, [state.loggedin, navigate]);
 
+  useEffect(()=> {
+
+  })
+
   const moveMain = () => {
     navigate("/Main");
   };
+
+  const uid = 'CzVwyQLh08YLFHFfixL2uuzmnOw1'
+
+
+  const {data, status} = useQuery({queryKey:['inf'], queryFn: () => infUserInfo(uid)})
+
+  if (status === "loading") console.log('loading')
+  if (status === "error") console.log('err')
+  console.log(data)
+  
+
+  
+
+ 
 
   const getinfo = async () => {
     const uid = auth.currentUser.uid;
@@ -304,3 +327,4 @@ const INFLogin = () => {
 };
 
 export default INFLogin;
+

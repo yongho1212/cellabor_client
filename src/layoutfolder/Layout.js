@@ -41,8 +41,8 @@ const Layout = () => {
   //     }
   //   }
   // }
-  const myrole = state.auth.state.loginData.role 
-  console.log(state.auth.state.loginData )
+  const myrole =  'influencer'
+  
 
 
 

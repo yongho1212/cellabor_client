@@ -150,7 +150,7 @@ const HeaderINF = () => {
             {click ? <FaTimes /> : <FaBars />}
           </div>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Input
                 variant="contained"
                 placeholder="검색어"
@@ -184,7 +184,7 @@ const HeaderINF = () => {
               >
                 검색
               </Link>
-            </li>
+            </li> */}
             <li className="nav-item">
               <Button
                 variant="contained"

@@ -35,11 +35,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../../state/index";
 
-// import "./INFProfile.css";
+import "./INFProfile.css";
 
 import { BsPersonFill } from "react-icons/bs";
 import * as grd from "./prfcomponents";
 import styled from "styled-components";
+
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+
 
 const INFProfile = () => {
   const [open, setOpen] = React.useState(false);
@@ -101,21 +110,64 @@ const INFProfile = () => {
     navigate("/INFDeleteUser");
   };
 
+  // const dd = useQuery({ queryKey: ['inf'], ... })
+  // console.log(inf)
+
   return (
     // <div className="container">
     <>
       <grd.Container>
         <grd.SideBar>
-          사진 아이디 비즈니스이메일 태그 aboutme
+          <div style={{flexDirection:'column'}}>
+            <Avatar
+              alt="Remy Sharp"
+              src={state.influencer.state.infloginData.avatar}
+              sx={{ width: 179, height: 179 }}
+              style={{marginTop: '10vh', marginLeft: '1vh'}}
+            />
+            <div>{state.influencer.state.infloginData.nickname}</div>
+            <div>{state.influencer.state.infloginData.role}</div>
+            <div>{state.influencer.state.infloginData.aboutme}</div>
+          </div>
+            
+               
+             
         </grd.SideBar>
         <grd.Main>
         
-        개인정보 지역 등등   
+        개인정보 지역 등등   <br />
+        성별
+             {state.influencer.state.infloginData.sex}
+             <br />
+             생일
+             {state.influencer.state.infloginData.birthday}
+             <br />
+             
+             이메일
+             {state.influencer.state.infloginData.email}
+             <br />
+             조인체널
+             {state.influencer.state.infloginData.joined_channel}
+             <br />
+             번호
+             {state.influencer.state.infloginData.mobile}
+             <br />
+             태그
+             위치
+             {state.influencer.state.infloginData.location}
+             <br />
         </grd.Main>
-        <grd.ContentBox>
+        <grd.ContentBox>  
           <grd.Content1>
+          <div>Basic Information</div>
+          <div className="sns_conatiner">
+            <div className="sns_box">유튜브</div>
+            <div className="sns_box">인스타그램</div>
+            <div className="sns_box">페이스북</div>
+            <div className="sns_box">틱톡</div>
+            <div className="sns_box">트위터</div>
+          </div>
           
-          소셜 네트워크 정보(팔로워수 계정 정보) 및 연동 등
           </grd.Content1>
           <grd.Content2>
             

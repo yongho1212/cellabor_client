@@ -10,8 +10,6 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   getAuth,
-  updateProfile,
-  signOut,
 } from "firebase/auth";
 
 import { useDispatch, useSelector } from "react-redux";
