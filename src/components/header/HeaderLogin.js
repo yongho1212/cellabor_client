@@ -1,6 +1,7 @@
 import React, {useState,useEffect} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import { Link } from 'react-router-dom';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -13,6 +14,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import {useNavigate} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import GrLogin from 'react-icons/gr'
 
 
 
@@ -75,48 +77,63 @@ const HeaderLogin = () => {
   
 
   return (
-    <AppBar position="static" style={{backgroundColor:'#000', zIndex:100}}>
+    <AppBar position="static" style={{backgroundColor:'#fff', zIndex:100}}>
       <Container maxWidth="xl" >
-        <Toolbar disableGutters style={{justifyContent:'space-between'}}>
+        <div style={{justifyContent:'space-between', 
+        display:'flex', 
+        height:'7vh',
+        
+        alignItems:'center'}}>
         
         <Box>
-            <Button 
+            <div 
                 variant="contained"
-                style={{color:"#75fb9f", backgroundColor:"#75fb9f", color:"#000", marginInline:10}}
+                style={{ color:"#3E588C", marginInline:10, fontSize:25, fontWeight:'bold'}}
                 onClick={handleClickHome}
             >
-               HOME
+               Cellabor
             
           
-          </Button>
+          </div>
         </Box>
         
       
      
         
       
-        <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+        <div >
             <Button 
                 variant="contained"
-                style={{color:"#75fb9f", backgroundColor:"#75fb9f", color:"#000", marginInline:10}}
+                style={{
+                backgroundColor:"#77A1D9",
+                color:"#0D378C",
+                marginInline:3,
+                height:'31px',
+                width:'71px',
+                fontWeight:'bold'
+              }}
                 onClick={handleClickSignUp}
             >
-                회원가입
+                SignUp
             </Button>
             <Button 
                 variant="outlined"
-                style={{color:"#75fb9f", borderColor:"#75fb9f" , marginInline:10}}
+                style={{color:"#0D378C", borderColor:"#77A1D9" , marginInline:3,
+                height:'31px',
+                width:'71px',
+                fontWeight:'bold'}}
                 onClick={handleClickSignIn}
             >
-                로그인
+                Login
             </Button>
-        </Box>  
+            
+        </div>  
 
 
 
 
          
-        </Toolbar>
+        </div>
       </Container>
     </AppBar>
   );

@@ -80,14 +80,14 @@ function App() {
   // }, [])
   
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      fbuser(true);
-    } else {
-      nofbuser(false);
-    }
-  });
-  console.log(state.loggedin)
+  // onAuthStateChanged(auth, (user) => {
+  //   if (user) {
+  //     fbuser(true);
+  //   } else {
+  //     nofbuser(false);
+  //   }
+  // });
+  // console.log(state.loggedin)
   
   
 

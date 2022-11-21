@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ProdcutView from "../product/productviewfolder/ProductView";
 import Workspace from '../workspacefolder/Workspace' 
-import Dashmain from '../workspacefolder/Dashmain' 
+import Dashmain from '../workspacefolder/Dashmain';
+import Search from '../searchfolder/Search'
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../state/index';
 
@@ -15,8 +16,8 @@ const Main = () => {
   const navigate = useNavigate();
 
 
-// const userRole = state.auth.state.loginData.role
- const userRole = 'advertiser'
+// const userRole = state.auth.state.loginData.role  
+const userRole = 'influencer'
 
   console.log(userRole);
 
@@ -31,7 +32,7 @@ const Main = () => {
       { userRole === 'influencer' ?
       <ProdcutView />
       :
-      <Dashmain />
+      <Search />
       }
       
     </div>

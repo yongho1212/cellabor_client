@@ -29,6 +29,7 @@ const SearchResult = () => {
 
     return (
         <div>
+            검색결과
             {item ?
                 <div>
                     <div>

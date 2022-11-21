@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import './Layout.css'
 
 import InfNavBar from '../components/navbar/InfNavBar';
@@ -11,22 +11,39 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../state/index';
 import {
-  getAuth
+  getAuth,
+  signOut
 } from "firebase/auth";
+
+import handleLogout from '../components/body/auth/Logout'
 
 const Layout = () => {
 
   const [userRole, setUserRole] = useState('')
   const auth = getAuth();
-  
-  
 
   const state = useSelector((state) => state)
   const dispatch = useDispatch();
   const {loginUser, logoutUser, fbuser, nofbuser} = bindActionCreators(actionCreators, dispatch);
+  const navigate = useNavigate();
+  // const checker = state.auth.state.loginData 
+  // console.log(checker)
+  // if ( checker === false ){
+  //   async function handleLogout() {
+  //     try {
+  //       logoutUser();
+  //       nofbuser(false);
+  //       signOut(auth);
+  //       navigate("/Home");
+  //       console.log("logout");
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  // }
+  const myrole =  'influencer'
+  
 
-// const myrole = state.auth.state.loginData.role
-const myrole = 'advertiser'
 
 
 
