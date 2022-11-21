@@ -16,3 +16,4 @@ export const infPrd = async(uid) => {
     const response =  await authApi.get('/products/getlistbyid', { params: { uid }})
     return response
   }
+

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes,Navigate } from "react-router-dom";
 // import Login from "./components/body/auth/Login";
@@ -60,55 +60,35 @@ import InfluencerProfile from './components/body/profilefolder/InfluencerProfile
 
 function App() {
 
-  // const [userRole, setUserRole] = useState('')
-  // console.log(userRole);
   const state = useSelector((state) => state)
   const dispatch = useDispatch();
   const { fbuser, nofbuser} = bindActionCreators(actionCreators, dispatch);
 
   const auth = getAuth();
-  // const user = auth.currentUser;
+  const [loggedin , setLoggedin] = useState(false)
 
-  // const role = state.auth.role
-
-  // const searchRole = () => {
-  //   setUserRole(state.auth.role)
-  // }
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setLoggedin(true);
+    } else {
+      setLoggedin(false);
+    }
+  });
+  console.log(loggedin)
   
-  // useEffect(() => {
-  //   searchRole();
-  // }, [])
-  
-
-  // onAuthStateChanged(auth, (user) => {
-  //   if (user) {
-  //     fbuser(true);
-  //   } else {
-  //     nofbuser(false);
-  //   }
-  // });
-  // console.log(state.loggedin)
-  
-  
-
   return (
     <BrowserRouter>
-    { state.loggedin ?
-      console.log('s')
+    { loggedin ?
+      console.log('logged in')
     : 
     <>
       <HeaderLogin />
-      
-      
-    </>  
+    </>
     }
-
-    
         <Routes >
         { !state.loggedin ?
           <>
           <Route path="/" element={<Navigate to="/Home" />} />
-
             <Route path="/Home" element={<Home />}  />
             {/* <Route path="/Login" element={<Login />} /> */}
             <Route path="/ADLogin" element={<ADLogin />} />

@@ -26,50 +26,73 @@ import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../../state/index";
 
+import {
+  getAuth,
+  updateProfile,
+} from "firebase/auth";
+
+import {
+  useQuery,
+  useMutation,
+} from '@tanstack/react-query';
+import { infUserInfo, infPrd } from "../../../api"
+
 const UploadProfile = () => {
+  
+  const auth = getAuth();
+
+  const uid = auth?.currentUser?.uid || "undefined"
+  const infQuery = useQuery({queryKey:['inf'], queryFn: () => infUserInfo(uid)})
+  if (infQuery.isLoading === "loading") console.log('loading')
+  if (infQuery.status === "error") console.log('err')
+  console.log(infQuery.data)
+
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const { infloginUser } = bindActionCreators(actionCreators, dispatch);
 
-  const uid = state.influencer.state.infloginData.uid;
-  const email = state.influencer.state.infloginData.email;
-  const [about, setAbout] = useState(state.influencer.state.infloginData.about);
-  const role = state.influencer.state.infloginData.role;
+ 
+  
+  const email = infQuery?.data?.data?.email;
+  const [about, setAbout] = useState(infQuery?.data?.data?.about);
+  const role = infQuery?.data?.data?.role;
   const [location, setLocation] = useState(
-    state.influencer.state.infloginData.location
+    infQuery?.data?.data?.location
   );
   const [nickname, setNickname] = useState(
-    state.influencer.state.infloginData.nickname
+    infQuery?.data?.data?.nickname
   );
-  const [tags, setTags] = useState(state.influencer.state.infloginData.tags);
-  const [sex, setSex] = useState(state.influencer.state.infloginData.sex);
+  const [tags, setTags] = useState(infQuery?.data?.data?.tags);
+  const [sex, setSex] = useState(infQuery?.data?.data?.sex);
   const [birthday, setBirthday] = useState(
-    state.influencer.state.infloginData.birthday
+    infQuery?.data?.data?.birthday
   );
-  const [insta, setInsta] = useState(state.influencer.state.infloginData.insta);
+  const [insta, setInsta] = useState(infQuery?.data?.data?.insta);
   const [facebook, setFacebook] = useState(
-    state.influencer.state.infloginData.facebook
+    infQuery?.data?.data?.facebook
   );
   const [tiktok, setTiktok] = useState(
-    state.influencer.state.infloginData.tiktok
+    infQuery?.data?.data?.tiktok
   );
   const [twitter, setTwitter] = useState(
-    state.influencer.state.infloginData.twitter
+    infQuery?.data?.data?.twitter
   );
   const [youtube, setYoutube] = useState(
-    state.influencer.state.infloginData.youtube
+    infQuery?.data?.data?.youtube
   );
   const [avatar, setAvatar] = useState(
-    state.influencer.state.infloginData.avatar
+    infQuery?.data?.data?.avatar
   );
   const [mobile, setMobile] = useState(
-    state.influencer.state.infloginData.mobile
+    infQuery?.data?.data?.mobile
   );
-  const denied_prd = state.influencer.state.infloginData.denied_prd;
-  const wait_prd = state.influencer.state.infloginData.wait_prd;
-  const progress_prd = state.influencer.state.infloginData.progress_prd;
-  const history_prd = state.influencer.state.infloginData.history_prd;
-  const joined_channel = state.influencer.state.infloginData.joined_channel;
+  const denied_prd = infQuery?.data?.data?.denied_prd;
+  const wait_prd = infQuery?.data?.data?.wait_prd;
+  const progress_prd = infQuery?.data?.data?.progress_prd;
+  const history_prd = infQuery?.data?.data?.history_prd;
+  const joined_channel = infQuery?.data?.data?.joined_channel;
+
+
 
   AWS.config.update({
     region: "ap-northeast-2",
@@ -181,14 +204,14 @@ const UploadProfile = () => {
         </label>
         <img className="profile-img" src={avatar} />
 
-        <div> 안녕하세요 {state.influencer.state.infloginData.nickname} 님</div>
+        <div> 안녕하세요 {infQuery?.data?.data?.nickname} 님</div>
         <Form onSubmit={handlePost} id="my-form">
           <Form.Group className="mb-3" controlId="formBasicName">
             <TextField
               type="nickname"
               placeholder={nickname}
               onChange={(e) => setNickname(e.target.value)}
-              defaultValue={state.influencer.state.infloginData.nickname}
+              defaultValue={infQuery?.data?.data?.nickname}
             />
           </Form.Group>
 
@@ -197,7 +220,7 @@ const UploadProfile = () => {
               type="tags"
               placeholder="choose Tag!"
               onChange={(e) => setTags(e.target.value)}
-              defaultValue={state.influencer.state.infloginData.tags}
+              defaultValue={infQuery?.data?.data?.tags}
             />
           </Form.Group>
 
@@ -206,7 +229,7 @@ const UploadProfile = () => {
               type="Date"
               placeholder="how old?"
               onChange={(e) => setBirthday(e.target.value)}
-              defaultValue={state.influencer.state.infloginData.birthday}
+              defaultValue={infQuery?.data?.data?.birthday}
             />
           </Form.Group>
 
@@ -219,7 +242,7 @@ const UploadProfile = () => {
               value={sex}
               label="sex"
               onChange={(e) => setSex(e.target.value)}
-              defaultValue={state.influencer.state.infloginData.birthday}
+              defaultValue={infQuery?.data?.data?.birthday}
             >
               <MenuItem value={'male'}>male</MenuItem>
               <MenuItem value={'female'}>female</MenuItem>
@@ -238,9 +261,9 @@ const UploadProfile = () => {
           <Form.Group className="mb-3" controlId="formBasicName">
             <TextField
               type="InstaId"
-              placeholder={state.auth.state.loginData.insta}
+              placeholder={infQuery?.data?.data?.insta}
               onChange={(e) => setInsta(e.target.value)}
-              defaultValue={state.influencer.state.infloginData.insta}
+              defaultValue={infQuery?.data?.data?.insta}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicName">
@@ -248,13 +271,13 @@ const UploadProfile = () => {
               type="mobile"
               placeholder="your Mobile Number"
               onChange={(e) => setMobile(e.target.value)}
-              defaultValue={state.influencer.state.infloginData.mobile}
+              defaultValue={infQuery?.data?.data?.mobile}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicName">
             <TextField
               type="photo"
-              placeholder={state.influencer.state.infloginData.avatar}
+              placeholder={infQuery?.data?.data?.avatar}
               value={avatar}
             />
           </Form.Group>

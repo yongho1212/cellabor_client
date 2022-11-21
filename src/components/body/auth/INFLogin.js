@@ -31,7 +31,7 @@ import { infUserInfo, infPrd } from "../../../api";
 const INFLogin = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { loginUser, logoutUser, fbuser, nofbuser, prependprd, infloginUser } =
+  const { loginUser, fbuser, nofbuser, prependprd, infloginUser } =
     bindActionCreators(actionCreators, dispatch);
   const [email, setEmail] = useState("");
   const [testUid, setTestUid] = useState("");
@@ -45,13 +45,11 @@ const INFLogin = () => {
 
   const queryClient = new QueryClient();
 
-  useEffect(() => {
-    if (state.loggedin) {
-      navigate("/Main");
-    }
-  }, [state.loggedin, navigate]);
-
-  useEffect(() => {});
+  // useEffect(() => {
+  //   if (state.loggedin) {
+  //     navigate("/Main");
+  //   }
+  // }, [state.loggedin, navigate]);
 
   const moveMain = () => {
     navigate("/Main");
@@ -63,6 +61,7 @@ const INFLogin = () => {
   const infQuery = useQuery({
     queryKey: ["inf"],
     queryFn: () => infUserInfo(uid),
+    staleTime: 1000 * 60
   });
   if (infQuery.isLoading === "loading") console.log("loading");
   if (infQuery.status === "error") console.log("err");
@@ -80,7 +79,7 @@ const INFLogin = () => {
     //     const infloginData = res.data;
     //     infloginUser(infloginData);
     //     loginUser(infloginData);
-    fbuser(true);
+    // fbuser(true); ========================================================================
     //  getListById();
     // })
     // .catch((error) => {
