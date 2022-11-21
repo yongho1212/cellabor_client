@@ -1,45 +1,18 @@
 import React, { useEffect, useState } from "react";
-
-import {
-  reauthenticateWithCredential,
-  EmailAuthProvider,
-  signOut,
-  deleteUser,
-  getAuth,
-} from "firebase/auth";
-import { updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router";
-
-import TextField from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
 import Avatar from "@mui/material/Avatar";
-
-import { InputLabel, Typography } from "@mui/material";
-import { Input } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-
-import Inputpassword from "./INFDeleteUser";
-import UploadProfile from "./UploadProfile";
-
-import { async } from "@firebase/util";
-import axios from "axios";
+import {
+  getAuth,
+  updateProfile,
+  signOut,
+} from "firebase/auth";
 
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../../state/index";
 
 import "./INFProfile.css";
-
-import { BsPersonFill } from "react-icons/bs";
 import * as grd from "./prfcomponents";
-import styled from "styled-components";
 
 import {
   useQuery,
@@ -47,7 +20,9 @@ import {
   useQueryClient,
   QueryClient,
   QueryClientProvider,
-} from '@tanstack/react-query'
+} from '@tanstack/react-query';
+import { infUserInfo } from "../../../api";
+
 
 
 const INFProfile = () => {
@@ -61,8 +36,17 @@ const INFProfile = () => {
     bindActionCreators(actionCreators, dispatch);
   const navigate = useNavigate();
   const auth = getAuth();
-  const user = auth.currentUser;
-  const uid = state.influencer.state.infloginData.uid;
+  //const uid = data?.data?.uid;
+
+    const uid = auth?.currentUser?.uid || "undefined"
+    const { data, status } = useQuery({
+      queryKey: ["inf"],
+      queryFn: () => infUserInfo(uid),
+    });
+    if (status === "loading") console.log("loading");
+    if (status === "error") alert("some err occured");
+    console.log(data);
+  
 
   const handleClickOpen = (scrollType) => () => {
     setOpen(true);
@@ -72,7 +56,7 @@ const INFProfile = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  console.log(state.influencer.state.infloginData.role);
+  // console.log(data?.data?.role);
 
   const descriptionElementRef = React.useRef(null);
   useEffect(() => {
@@ -121,13 +105,14 @@ const INFProfile = () => {
           <div style={{flexDirection:'column'}}>
             <Avatar
               alt="Remy Sharp"
-              src={state.influencer.state.infloginData.avatar}
+              src={data?.data?.avatar}
               sx={{ width: 179, height: 179 }}
               style={{marginTop: '10vh', marginLeft: '1vh'}}
             />
-            <div>{state.influencer.state.infloginData.nickname}</div>
-            <div>{state.influencer.state.infloginData.role}</div>
-            <div>{state.influencer.state.infloginData.aboutme}</div>
+            <div>{data?.data?.nickname}</div>
+            <div>{data?.data?.sex}</div>
+            <div>{data?.data?.facebook}</div>
+            <div>{data?.data?.aboutme}</div>
           </div>
             
                
@@ -137,24 +122,24 @@ const INFProfile = () => {
         
         개인정보 지역 등등   <br />
         성별
-             {state.influencer.state.infloginData.sex}
+             {data?.data?.sex}
              <br />
              생일
-             {state.influencer.state.infloginData.birthday}
+             {data?.data?.birthday}
              <br />
              
              이메일
-             {state.influencer.state.infloginData.email}
+             {data?.data?.email}
              <br />
              조인체널
-             {state.influencer.state.infloginData.joined_channel}
+             {data?.data?.joined_channel}
              <br />
              번호
-             {state.influencer.state.infloginData.mobile}
+             {data?.data?.mobile}
              <br />
              태그
              위치
-             {state.influencer.state.infloginData.location}
+             {data?.data?.location}
              <br />
         </grd.Main>
         <grd.ContentBox>  
@@ -190,7 +175,7 @@ const INFProfile = () => {
     //         <div className="top-blank-box">
     //         <Avatar
     //             alt="Remy Sharp"
-    //             src={state.influencer.state.infloginData.avatar}
+    //             src={data?.data?.avatar}
     //             sx={{ width: 179, height: 179 }}
     //             style={{marginTop: '10vh', marginLeft: '1vh', position: 'absolute'}}
 
@@ -241,12 +226,12 @@ const INFProfile = () => {
     //           <div className="name-role-container">
     //             {/* 나의 닉네임 */}
     //             <div style={{ fontSize: "40px" }}>
-    //               {state.influencer.state.infloginData.nickname}
+    //               {data?.data?.nickname}
     //             </div>
 
     //             {/* 나의 롤 */}
     //             <div style={{ fontSize: "25px", color: "grey" }}>
-    //               {state.influencer.state.infloginData.role}
+    //               {data?.data?.role}
     //             </div>
     //           </div>
     //         </div>
@@ -261,7 +246,7 @@ const INFProfile = () => {
     //           </div>
     //           <div className="info-text-container">
     //             <div className="info-text-me">
-    //               {state.influencer.state.infloginData.sex}
+    //               {data?.data?.sex}
     //             </div>
     //             <div className="info-text-category">
     //               sex
@@ -272,28 +257,28 @@ const INFProfile = () => {
     //         </div>
 
     //         성별
-    //         {state.influencer.state.infloginData.sex}
+    //         {data?.data?.sex}
     //         <br />
     //         생일
-    //         {state.influencer.state.infloginData.birthday}
+    //         {data?.data?.birthday}
     //         <br />
     //         인스타
-    //         {state.influencer.state.infloginData.insta}
+    //         {data?.data?.insta}
     //         <br />
     //         이메일
-    //         {state.influencer.state.infloginData.email}
+    //         {data?.data?.email}
     //         <br />
     //         조인체널
-    //         {state.influencer.state.infloginData.joined_channel}
+    //         {data?.data?.joined_channel}
     //         <br />
     //         번호
-    //         {state.influencer.state.infloginData.mobile}
+    //         {data?.data?.mobile}
     //         <br />
     //         태그
-    //         {state.influencer.state.infloginData.tags}
+    //         {data?.data?.tags}
     //         <br />
     //         위치
-    //         {state.influencer.state.infloginData.location}
+    //         {data?.data?.location}
     //         <br />
     //       </div>
     //       <div></div>

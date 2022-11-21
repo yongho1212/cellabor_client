@@ -32,6 +32,8 @@ const INFLogin = () => {
   const { loginUser, logoutUser, fbuser, nofbuser, prependprd, infloginUser } =
     bindActionCreators(actionCreators, dispatch);
   const [email, setEmail] = useState("");
+  const [testUid, setTestUid] = useState("");
+  
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const auth = getAuth();
@@ -53,37 +55,39 @@ const INFLogin = () => {
     navigate("/Main");
   };
 
-  const uid = 'CzVwyQLh08YLFHFfixL2uuzmnOw1'
+  // const uid = 'CzVwyQLh08YLFHFfixL2uuzmnOw1'
+  const uid = testUid;
 
+  const Dd =() => {
+    const {data, status} = useQuery({queryKey:['inf'], queryFn: () => infUserInfo(uid)})
 
-  const {data, status} = useQuery({queryKey:['inf'], queryFn: () => infUserInfo(uid)})
-
-  if (status === "loading") console.log('loading')
-  if (status === "error") console.log('err')
-  console.log(data)
+    if (status === "loading") console.log('loading')
+    if (status === "error") console.log('err')
+    console.log(data)
+  }
   
-
   
-
- 
 
   const getinfo = async () => {
+    setTestUid(auth.currentUser.uid);
     const uid = auth.currentUser.uid;
-    const response = await axios
-      .get(`${process.env.REACT_APP_SERVER_URL}/inf/getInfInfo`, {
-        params: { uid: uid },
-      })
-      .then((res) => {
-        console.log(res.data);
-        const infloginData = res.data;
-        infloginUser(infloginData);
-        loginUser(infloginData);
-        fbuser(true);
-        getListById();
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
+    Dd();
+
+    // const response = await axios
+    //   .get(`${process.env.REACT_APP_SERVER_URL}/inf/getInfInfo`, {
+    //     params: { uid: uid },
+    //   })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     const infloginData = res.data;
+    //     infloginUser(infloginData);
+    //     loginUser(infloginData);
+    //     fbuser(true);
+    //     getListById();
+    //   })
+    //   .catch((error) => {
+    //     console.log(error.response);
+    //   });
   };
 
   const getListById = async () => {
@@ -105,10 +109,8 @@ const INFLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await signInWithEmailAndPassword(auth, email, password)
-      .then(() => getinfo())
-      .then(() => {
-        moveMain();
-      });
+      getinfo();
+      moveMain();
   };
 
   const handleGoogleSignIn = async (e) => {

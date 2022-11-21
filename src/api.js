@@ -13,6 +13,6 @@ export const infUserInfo = async(uid) => {
   }
 
 export const infPrd = async(uid) => {
-    const response =  await axios.get(`${process.env.REACT_APP_SERVER_URL}/products/getlistbyid`, { params: { uid }})
+    const response =  await authApi.get('/products/getlistbyid', { params: { uid }})
     return response
   }
