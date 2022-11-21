@@ -36,27 +36,13 @@ const INFProfile = () => {
     bindActionCreators(actionCreators, dispatch);
   const navigate = useNavigate();
   const auth = getAuth();
-  //const uid = data?.data?.uid;
+  //const uid = infQuery.data?.data?.uid;
 
     const uid = auth?.currentUser?.uid || "undefined"
-    const { data, status } = useQuery({
-      queryKey: ["inf"],
-      queryFn: () => infUserInfo(uid),
-    });
-    if (status === "loading") console.log("loading");
-    if (status === "error") alert("some err occured");
-    console.log(data);
-  
-
-  const handleClickOpen = (scrollType) => () => {
-    setOpen(true);
-    setScroll(scrollType);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-  // console.log(data?.data?.role);
+    const infQuery = useQuery({queryKey:['inf'], queryFn: () => infUserInfo(uid)})
+    if (infQuery.isLoading === "loading") console.log('loading')
+    if (infQuery.status === "error") console.log('err')
+    console.log(infQuery.data)
 
   const descriptionElementRef = React.useRef(null);
   useEffect(() => {
@@ -105,14 +91,14 @@ const INFProfile = () => {
           <div style={{flexDirection:'column'}}>
             <Avatar
               alt="Remy Sharp"
-              src={data?.data?.avatar}
+              src={infQuery.data?.data?.avatar}
               sx={{ width: 179, height: 179 }}
               style={{marginTop: '10vh', marginLeft: '1vh'}}
             />
-            <div>{data?.data?.nickname}</div>
-            <div>{data?.data?.sex}</div>
-            <div>{data?.data?.facebook}</div>
-            <div>{data?.data?.aboutme}</div>
+            <div>{infQuery.data?.data?.nickname}</div>
+            <div>{infQuery.data?.data?.sex}</div>
+            <div>{infQuery.data?.data?.facebook}</div>
+            <div>{infQuery.data?.data?.aboutme}</div>
           </div>
             
                
@@ -122,24 +108,24 @@ const INFProfile = () => {
         
         개인정보 지역 등등   <br />
         성별
-             {data?.data?.sex}
+             {infQuery.data?.data?.sex}
              <br />
              생일
-             {data?.data?.birthday}
+             {infQuery.data?.data?.birthday}
              <br />
              
              이메일
-             {data?.data?.email}
+             {infQuery.data?.data?.email}
              <br />
              조인체널
-             {data?.data?.joined_channel}
+             {infQuery.data?.data?.joined_channel}
              <br />
              번호
-             {data?.data?.mobile}
+             {infQuery.data?.data?.mobile}
              <br />
              태그
              위치
-             {data?.data?.location}
+             {infQuery.data?.data?.location}
              <br />
         </grd.Main>
         <grd.ContentBox>  
@@ -175,7 +161,7 @@ const INFProfile = () => {
     //         <div className="top-blank-box">
     //         <Avatar
     //             alt="Remy Sharp"
-    //             src={data?.data?.avatar}
+    //             src={infQuery.data?.data?.avatar}
     //             sx={{ width: 179, height: 179 }}
     //             style={{marginTop: '10vh', marginLeft: '1vh', position: 'absolute'}}
 
@@ -226,12 +212,12 @@ const INFProfile = () => {
     //           <div className="name-role-container">
     //             {/* 나의 닉네임 */}
     //             <div style={{ fontSize: "40px" }}>
-    //               {data?.data?.nickname}
+    //               {infQuery.data?.data?.nickname}
     //             </div>
 
     //             {/* 나의 롤 */}
     //             <div style={{ fontSize: "25px", color: "grey" }}>
-    //               {data?.data?.role}
+    //               {infQuery.data?.data?.role}
     //             </div>
     //           </div>
     //         </div>
@@ -246,7 +232,7 @@ const INFProfile = () => {
     //           </div>
     //           <div className="info-text-container">
     //             <div className="info-text-me">
-    //               {data?.data?.sex}
+    //               {infQuery.data?.data?.sex}
     //             </div>
     //             <div className="info-text-category">
     //               sex
@@ -257,28 +243,28 @@ const INFProfile = () => {
     //         </div>
 
     //         성별
-    //         {data?.data?.sex}
+    //         {infQuery.data?.data?.sex}
     //         <br />
     //         생일
-    //         {data?.data?.birthday}
+    //         {infQuery.data?.data?.birthday}
     //         <br />
     //         인스타
-    //         {data?.data?.insta}
+    //         {infQuery.data?.data?.insta}
     //         <br />
     //         이메일
-    //         {data?.data?.email}
+    //         {infQuery.data?.data?.email}
     //         <br />
     //         조인체널
-    //         {data?.data?.joined_channel}
+    //         {infQuery.data?.data?.joined_channel}
     //         <br />
     //         번호
-    //         {data?.data?.mobile}
+    //         {infQuery.data?.data?.mobile}
     //         <br />
     //         태그
-    //         {data?.data?.tags}
+    //         {infQuery.data?.data?.tags}
     //         <br />
     //         위치
-    //         {data?.data?.location}
+    //         {infQuery.data?.data?.location}
     //         <br />
     //       </div>
     //       <div></div>

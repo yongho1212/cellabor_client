@@ -21,10 +21,12 @@ import axios from "axios";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
-import { infUserInfo, infPrd} from '../../../api';
-
-const queryClient = new QueryClient()
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from "@tanstack/react-query";
+import { infUserInfo, infPrd } from "../../../api";
 
 const INFLogin = () => {
   const state = useSelector((state) => state);
@@ -33,7 +35,7 @@ const INFLogin = () => {
     bindActionCreators(actionCreators, dispatch);
   const [email, setEmail] = useState("");
   const [testUid, setTestUid] = useState("");
-  
+
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const auth = getAuth();
@@ -41,15 +43,15 @@ const INFLogin = () => {
   const fprovider = new FacebookAuthProvider();
   const [infor, setInfor] = useState("");
 
+  const queryClient = new QueryClient();
+
   useEffect(() => {
     if (state.loggedin) {
       navigate("/Main");
     }
   }, [state.loggedin, navigate]);
 
-  useEffect(()=> {
-
-  })
+  useEffect(() => {});
 
   const moveMain = () => {
     navigate("/Main");
@@ -58,21 +60,17 @@ const INFLogin = () => {
   // const uid = 'CzVwyQLh08YLFHFfixL2uuzmnOw1'
   const uid = testUid;
 
-  const Dd =() => {
-    const {data, status} = useQuery({queryKey:['inf'], queryFn: () => infUserInfo(uid)})
-
-    if (status === "loading") console.log('loading')
-    if (status === "error") console.log('err')
-    console.log(data)
-  }
-  
-  
+  const infQuery = useQuery({
+    queryKey: ["inf"],
+    queryFn: () => infUserInfo(uid),
+  });
+  if (infQuery.isLoading === "loading") console.log("loading");
+  if (infQuery.status === "error") console.log("err");
+  console.log(infQuery.data);
 
   const getinfo = async () => {
     setTestUid(auth.currentUser.uid);
-    const uid = auth.currentUser.uid;
-    Dd();
-
+    // const uid = auth.currentUser.uid;
     // const response = await axios
     //   .get(`${process.env.REACT_APP_SERVER_URL}/inf/getInfInfo`, {
     //     params: { uid: uid },
@@ -82,12 +80,12 @@ const INFLogin = () => {
     //     const infloginData = res.data;
     //     infloginUser(infloginData);
     //     loginUser(infloginData);
-    //     fbuser(true);
-    //     getListById();
-    //   })
-    //   .catch((error) => {
-    //     console.log(error.response);
-    //   });
+    fbuser(true);
+    //  getListById();
+    // })
+    // .catch((error) => {
+    //   console.log(error.response);
+    // });
   };
 
   const getListById = async () => {
@@ -109,65 +107,55 @@ const INFLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await signInWithEmailAndPassword(auth, email, password)
-      getinfo();
-      moveMain();
+      .then(() => getinfo())
+      .then(() => {
+        moveMain();
+      });
   };
 
   const handleGoogleSignIn = async (e) => {
-    
     await signInWithPopup(auth, gprovider)
-      .then(async(result) => {
+      .then(async (result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
         getinfo();
-        moveMain()
-
+        moveMain();
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         const email = error.customData.email;
         const credential = GoogleAuthProvider.credentialFromError(error);
-      })
-      .then(async() => {
-        console.log('check 1');
-        // getinfo();
-        // moveMain();
-      })
-      .then(() => {
-
-        console.log('check 2');
-        // moveMain();
       });
   };
 
   const handleFBSignIn = () => {
     signInWithPopup(auth, fprovider)
-  .then((result) => {
-    // The signed-in user info.
-    const user = result.user;
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user;
 
-    // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-    const credential = FacebookAuthProvider.credentialFromResult(result);
-    const accessToken = credential.accessToken;
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        const credential = FacebookAuthProvider.credentialFromResult(result);
+        const accessToken = credential.accessToken;
 
-    // ...
-  })
-  .catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = FacebookAuthProvider.credentialFromError(error);
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = FacebookAuthProvider.credentialFromError(error);
 
-    // ...
-  });
-//dispatch(fbSignInInitiate());
+        // ...
+      });
+    //dispatch(fbSignInInitiate());
   };
 
   return (
@@ -290,7 +278,7 @@ const INFLogin = () => {
                 label="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                style={{width:'80vw', marginBlock: "1vw"}}
+                style={{ width: "80vw", marginBlock: "1vw" }}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -307,14 +295,20 @@ const INFLogin = () => {
                 autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                style={{width:'80vw', marginBlock: "1vw",}}
+                style={{ width: "80vw", marginBlock: "1vw" }}
               />
             </Form.Group>
 
             <Button
               variant="primary"
               type="Submit"
-              style={{ width: "80vw", padding: 10, fontSize:19, fontWeight:'bold', marginBlock: "3vw", }}
+              style={{
+                width: "80vw",
+                padding: 10,
+                fontSize: 19,
+                fontWeight: "bold",
+                marginBlock: "3vw",
+              }}
             >
               Log In
             </Button>
@@ -329,4 +323,3 @@ const INFLogin = () => {
 };
 
 export default INFLogin;
-
