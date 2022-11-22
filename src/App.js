@@ -74,7 +74,7 @@ function App() {
       setLoggedin(false);
     }
   });
-  console.log(loggedin)
+  console.log(auth?.currentUser?.email)
   
   return (
     <BrowserRouter>
@@ -86,7 +86,7 @@ function App() {
     </>
     }
         <Routes >
-        { !state.loggedin ?
+        { !loggedin ?
           <>
           <Route path="/" element={<Navigate to="/Home" />} />
             <Route path="/Home" element={<Home />}  />

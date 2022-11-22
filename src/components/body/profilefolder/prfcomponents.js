@@ -34,23 +34,26 @@ export const Container = styled.div`
 `;
 
 export const Main = styled.div`
-  color: white;
+  
   grid-area: main;
   padding: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: green;
-  margin: 5px
+  background-color: #D9D9D9;
+  margin: 13px;
+  border-radius: 17px;
+  width: 95%;
 `;
 export const SideBar = styled.div`
-  background: #9aaab7;
+  background: #D9D9D9;
   grid-area: sidebar;
   padding: 0.25rem;
   display: flex;
   justify-content: center;
   // align-items: center;
-  margin: 5px;
+  margin: 13px;
+  border-radius: 17px;
 `;
 export const ContentBox = styled.div`
   display: flex;
@@ -61,18 +64,20 @@ export const ContentBox = styled.div`
   justify-content: space-around;
   @media only screen and (max-width: 600px) {
   flex-direction: column;
+  border-radius: 17px;
   }
 `;
 
 export const Content1 = styled.div`
   padding: 0.25rem;
   overflow-x: hidden;
-  background-color: red;
-  width: 100%;
+  background-color: #D9D9D9;
+  width: 95%;
   height: 100%;
-  margin: 5px;
   justify-content: center;
   align-items: center;
+  border-radius: 17px;
+  margin: 11px;
   
 `;
 export const Content2 = styled.div`

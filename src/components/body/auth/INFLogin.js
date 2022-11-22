@@ -8,6 +8,7 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   FacebookAuthProvider,
+  TwitterAuthProvider,
   signInWithPopup,
   getAuth,
   updateProfile,
@@ -41,6 +42,7 @@ const INFLogin = () => {
   const auth = getAuth();
   const gprovider = new GoogleAuthProvider();
   const fprovider = new FacebookAuthProvider();
+  const twprovider = new TwitterAuthProvider();
   const [infor, setInfor] = useState("");
 
   const queryClient = new QueryClient();
@@ -55,8 +57,9 @@ const INFLogin = () => {
     navigate("/Main");
   };
 
-  // const uid = 'CzVwyQLh08YLFHFfixL2uuzmnOw1'
+  
   const uid = testUid;
+  console.log(uid)
 
   const infQuery = useQuery({
     queryKey: ["inf"],
@@ -131,17 +134,16 @@ const INFLogin = () => {
       });
   };
 
-  const handleFBSignIn = () => {
-    signInWithPopup(auth, fprovider)
+  const handleFBSignIn = async() => {
+    await signInWithPopup(auth, fprovider)
       .then((result) => {
         // The signed-in user info.
         const user = result.user;
-
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
         const credential = FacebookAuthProvider.credentialFromResult(result);
         const accessToken = credential.accessToken;
-
-        // ...
+        getinfo();
+        moveMain();
       })
       .catch((error) => {
         // Handle Errors here.
@@ -151,7 +153,30 @@ const INFLogin = () => {
         const email = error.customData.email;
         // The AuthCredential type that was used.
         const credential = FacebookAuthProvider.credentialFromError(error);
+        // ...
+      });
+    //dispatch(fbSignInInitiate());
+  };
 
+  const handleTWSignIn = async() => {
+    await signInWithPopup(auth, twprovider)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user;
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        const credential = TwitterAuthProvider.credentialFromResult(result);
+        const accessToken = credential.accessToken;
+        getinfo();
+        moveMain();
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = TwitterAuthProvider.credentialFromError(error);
         // ...
       });
     //dispatch(fbSignInInitiate());
@@ -218,16 +243,31 @@ const INFLogin = () => {
               &nbsp;Login with Facebook
             </p>
           </div>
+          <div
+            style={{
+              border: "1px solid ",
+              borderRadius: 5,
+              width: "79vw",
+              height: "11vw",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginBlock: "3vw",
+            }}
+            onClick={() => handleTWSignIn()}
+          >
+            <FaFacebook style={{ fontSize: 35 }} />
+            <p
+              style={{
+                fontSize: 19,
+                fontWeight: "bold",
+              }}
+            >
+              &nbsp;Login with Twitter
+            </p>
+          </div>
 
-          {/*           
-          <GoogleButton
-            className="g-btn"
-            type="dark"
-            onClick={handleGoogleSignIn}
-          />
-          <Button variant="primary" onClick={handleFBSignIn}>
-            FACEBOOK
-          </Button> */}
+          
         </div>
 
         {/* 중간 경계선  */}

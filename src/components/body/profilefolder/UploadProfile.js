@@ -35,7 +35,7 @@ import {
   useQuery,
   useMutation,
 } from '@tanstack/react-query';
-import { infUserInfo, infPrd } from "../../../api"
+import { infUserInfo, infPrd, infEditUserProfile } from "../../../api"
 
 const UploadProfile = () => {
   
@@ -46,6 +46,20 @@ const UploadProfile = () => {
   if (infQuery.isLoading === "loading") console.log('loading')
   if (infQuery.status === "error") console.log('err')
   console.log(infQuery.data)
+
+  const infEditPrfQuery = useMutation({
+    mutationFn: () => infEditUserProfile(
+       uid,nickname,tags,sex,birthday,insta,mobile,avatar,location
+      ),
+    onError: console.log('err'),
+    onMutate: console.log('mutate'),
+    onSuccess: console.log('sucess')
+    })
+    if( infEditPrfQuery.isSuccess ) console.log('loadinf')
+    if( infEditPrfQuery.status === 'success') console.log('suc')
+
+
+
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -131,6 +145,7 @@ const UploadProfile = () => {
 
 
   const handlePost = async (e) => {
+    
     e.preventDefault();
     try {
       const res = await axios
@@ -148,36 +163,33 @@ const UploadProfile = () => {
         .then((res) => {
           console.log("success");
         });
-      console.log(uid, nickname, tags, sex, birthday, insta, mobile, avatar);
     } catch (err) {
       console.log("failed updateProfile");
-      console.log(uid, nickname, tags, sex, birthday, insta, mobile, avatar);
     }
-    const userinfo = {
-      uid,
-      nickname,
-      email,
-      tags,
-      about,
-      role,
-      avatar,
-      sex,
-      birthday,
-      location,
-      insta,
-      facebook,
-      tiktok,
-      twitter,
-      youtube,
-      mobile,
-      wait_prd,
-      denied_prd,
-      progress_prd,
-      history_prd,
-      joined_channel,
-      
-    };
-    infloginUser(userinfo);
+    // const userinfo = {
+    //   uid,
+    //   nickname,
+    //   email,
+    //   tags,
+    //   about,
+    //   role,
+    //   avatar,
+    //   sex,
+    //   birthday,
+    //   location,
+    //   insta,
+    //   facebook,
+    //   tiktok,
+    //   twitter,
+    //   youtube,
+    //   mobile,
+    //   wait_prd,
+    //   denied_prd,
+    //   progress_prd,
+    //   history_prd,
+    //   joined_channel,
+    // };
+    // infloginUser(userinfo);
     navigate("/Main");
   };
 
