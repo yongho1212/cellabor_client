@@ -81,10 +81,42 @@
     background-color: #fff;
     margin: 5px;
     width: 85%;
-    height: 7vh;
+    height: 9vh;
     border-radius: 17px;
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
     
 }
+.sns_textContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    background-color: khaki;
+    width: 60%;
+    align-items: center;
+}
+.sns_logo {
+    background-color: blueviolet;
+    width: 17%;
+    height: 75%;
+    justify-content: center;
+    align-items: center;
+}
+.sns_status {
+    margin-inline: 17px;
+}
+.sns_connect {
+    margin-inline: 17px;
+}
+.sns_connect {
+    margin-inline: 17px;
+}
+
+
+
+
 .information-container{
     width: 100%;
 }

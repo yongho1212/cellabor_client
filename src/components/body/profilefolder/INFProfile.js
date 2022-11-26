@@ -51,7 +51,7 @@ const INFProfile = () => {
   });
   if (infQuery.isLoading === "loading") console.log("loading");
   if (infQuery.status === "error") console.log("err");
-  console.log(infQuery.data);
+  // console.log(infQuery.data);
 
   const descriptionElementRef = React.useRef(null);
   useEffect(() => {
@@ -153,7 +153,7 @@ const INFProfile = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="information-container">
               <div className="info-row-cntainer">
                 <div className="line-items">
@@ -179,7 +179,7 @@ const INFProfile = () => {
                 <div className="line-items">
                   <div className="section-name">번호</div>
                   <div className="section-value">
-                  {infQuery?.data?.data?.mobile}
+                    {infQuery?.data?.data?.mobile}
                   </div>
                 </div>
                 <div className="line-items">
@@ -191,7 +191,7 @@ const INFProfile = () => {
                 <div className="line-items">
                   <div className="section-name">위치</div>
                   <div className="section-value">
-                  {infQuery?.data?.data?.location}
+                    {infQuery?.data?.data?.location}
                   </div>
                 </div>
               </div>
@@ -200,18 +200,65 @@ const INFProfile = () => {
         </grd.Main>
         <grd.ContentBox>
           <grd.Content1>
-            <div>Basic Information</div>
             <div className="sns_conatiner">
-              <div className="sns_box">유튜브</div>
-              <div className="sns_box">인스타그램</div>
-              <div className="sns_box">페이스북</div>
-              <div className="sns_box">틱톡</div>
-              <div className="sns_box">트위터</div>
+              {/* 유튜브 */}
+              <div className="sns_box">
+                <div className="sns_logo">Youtube</div>
+                <div className="sns_textContainer">
+                  <div className="sns_status">status</div>
+                  <div className="sns_connect">
+                    <Button variant="contained">connect</Button>
+                  </div>
+                  <div className="sns_disconnect">disconnect</div>
+                </div>
+              </div>
+              {/* 인스타 */}
+              <div className="sns_box">
+                <div className="sns_logo">인스타</div>
+                <div className="sns_textContainer">
+                  <div className="sns_status">status</div>
+                  <div className="sns_connect">
+                    <Button variant="contained">connect</Button>
+                  </div>
+                  <div className="sns_disconnect">disconnect</div>
+                </div>
+              </div>
+              {/* 블로그 */}
+              <div className="sns_box">
+                <div className="sns_logo">블로그</div>
+                <div className="sns_textContainer">
+                  <div className="sns_status">status</div>
+                  <div className="sns_connect">
+                    <Button variant="contained">connect</Button>
+                  </div>
+                  <div className="sns_disconnect">disconnect</div>
+                </div>
+              </div>
+              {/* 트위터 */}
+              <div className="sns_box">
+                <div className="sns_logo">트위터</div>
+                <div className="sns_textContainer">
+                  <div className="sns_status">status</div>
+                  <div className="sns_connect">
+                    <Button variant="contained">connect</Button>
+                  </div>
+                  <div className="sns_disconnect">disconnect</div>
+                </div>
+              </div>
+              {/* 페이스북 */}
+              <div className="sns_box">
+                <div className="sns_logo">페이스북</div>
+                <div className="sns_textContainer">
+                  <div className="sns_status">status</div>
+                  <div className="sns_connect">
+                    <Button variant="contained">connect</Button>
+                  </div>
+                  <div className="sns_disconnect">disconnect</div>
+                </div>
+              </div>
             </div>
           </grd.Content1>
-          <grd.Content2>
-            
-          </grd.Content2>
+          <grd.Content2></grd.Content2>
         </grd.ContentBox>
       </grd.Container>
     </>

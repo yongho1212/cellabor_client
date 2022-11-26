@@ -44,3 +44,7 @@ export const infEditUserProfile = async ({
 };
 
 // 서버에 올라와있는 상품들 불러오기
+export const importAllProducts = async () => {
+  const response = await authApi.post("/products/getlist")
+  return response.data;
+};

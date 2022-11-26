@@ -76,6 +76,8 @@ function App() {
   });
   console.log(auth?.currentUser?.email)
   
+  const emailVerified =  auth?.currentUser?.emailVerified
+
   return (
     <BrowserRouter>
     { loggedin ?
@@ -101,8 +103,10 @@ function App() {
           </>  
           :
           <>
+           {!emailVerified ? <Route path="/Emailverify/*" element={<Emailverify />} />
+          : console.log('verified') 
+          }
           
-          <Route path="/Emailverify/*" element={<Emailverify />} />
           <Route  element={<Layout />}>
             <Route path="/Main/*" element={<Main />} />
             <Route path="/SearchResult/:text" element={<SearchResult />} />

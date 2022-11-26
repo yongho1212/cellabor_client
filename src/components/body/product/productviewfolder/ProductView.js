@@ -3,6 +3,8 @@ import axios from 'axios'
 import { Link } from "react-router-dom";
 import ProductRecommendSlider from '../productrecommendsliderfolder/ProductRecommendSlider';
 import Pagination from './Pagnation';
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { importAllProducts } from '../../../../api';
 
 
 const ProdcutView = ({ useParams }) => {
@@ -10,6 +12,15 @@ const ProdcutView = ({ useParams }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const offset = ( page -1 ) * limit;
+
+  const importPrd = useQuery({
+    queryKey: ["prd"],
+    queryFn: () => importAllProducts(),
+  });
+  if (importPrd.isLoading === "loading") console.log("loading");
+  if (importPrd.status === "error") console.log("err");
+  if (importPrd.status === 'success') console.log("suc");
+  console.log(importPrd.data);
 
   const getPostList = async () => {
     try {

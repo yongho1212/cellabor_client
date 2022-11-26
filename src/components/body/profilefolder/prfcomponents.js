@@ -78,6 +78,8 @@ export const Content1 = styled.div`
   align-items: center;
   border-radius: 17px;
   margin: 11px;
+  align-items: center;
+  
   
 `;
 export const Content2 = styled.div`
