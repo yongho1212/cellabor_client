@@ -1,3 +1,18 @@
 .container {
     background-color:blueviolet
 }
+
+.main_prd {
+    display: 'flex';
+    flex-wrap: 'wrap';
+}
+
+.prd_item_container {
+    margin-inline: '40px';
+    margin-top: '40px';
+}
+
+.profile-img {
+    width:'200px';
+    height:'200px';
+}

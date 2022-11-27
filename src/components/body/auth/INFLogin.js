@@ -11,8 +11,10 @@ import {
   TwitterAuthProvider,
   signInWithPopup,
   getAuth,
-  updateProfile,
+  fetchSignInMethodsForEmail,
+  EmailAuthProvider,
   signOut,
+  deleteUser
 } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -56,15 +58,17 @@ const INFLogin = () => {
   const moveMain = () => {
     navigate("/Main");
   };
+  const moveSignup = () => {
+    navigate("/INFSignup");
+  };
 
-  
   const uid = testUid;
-  console.log(uid)
+  console.log(uid);
 
   const infQuery = useQuery({
     queryKey: ["inf"],
     queryFn: () => infUserInfo(uid),
-    staleTime: 1000 * 60
+    staleTime: 1000 * 60,
   });
   if (infQuery.isLoading === "loading") console.log("loading");
   if (infQuery.status === "error") console.log("err");
@@ -88,6 +92,22 @@ const INFLogin = () => {
     // .catch((error) => {
     //   console.log(error.response);
     // });
+  };
+
+  const dbChecker = async (email) => {
+    fetchSignInMethodsForEmail(email).then((signInMethods) => {
+      // This returns the same array as fetchProvidersForEmail but for email
+      // provider identified by 'password' string, signInMethods would contain 2
+      // different strings:
+      // 'emailLink' if the user previously signed in with an email/link
+      // 'password' if the user has a password.
+      // A user could have both.
+      if (
+        signInMethods.indexOf(GoogleAuthProvider.GOOGLE_SIGN_IN_METHOD) != -1
+      ) {
+        console.log("google");
+      }
+    });
   };
 
   const getListById = async () => {
@@ -122,9 +142,22 @@ const INFLogin = () => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         // The signed-in user info.
+        const uid = result.user.uid;
         const user = result.user;
-        getinfo();
-        moveMain();
+        console.log(result.user.uid);
+        const response = await axios
+          .get(`${process.env.REACT_APP_SERVER_URL}/inf/getInfInfo`, {
+            params: { uid: uid },
+          })
+          .then((res) => {
+            if (!res.data){
+              deleteUser(user);
+              moveSignup();
+              alert('회원 정보가 없습니다. 회원가입을 먼저 진행해주세요!')
+            }
+          });
+        // getinfo();
+        // moveMain();
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -134,7 +167,7 @@ const INFLogin = () => {
       });
   };
 
-  const handleFBSignIn = async() => {
+  const handleFBSignIn = async () => {
     await signInWithPopup(auth, fprovider)
       .then((result) => {
         // The signed-in user info.
@@ -158,7 +191,7 @@ const INFLogin = () => {
     //dispatch(fbSignInInitiate());
   };
 
-  const handleTWSignIn = async() => {
+  const handleTWSignIn = async () => {
     await signInWithPopup(auth, twprovider)
       .then((result) => {
         // The signed-in user info.
@@ -266,8 +299,6 @@ const INFLogin = () => {
               &nbsp;Login with Twitter
             </p>
           </div>
-
-          
         </div>
 
         {/* 중간 경계선  */}
