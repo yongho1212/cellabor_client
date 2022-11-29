@@ -7,6 +7,9 @@ import axios from "axios";
 import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
 import { MenuItem, Menu, Autocomplete, Chip, TextField, styled } from "@mui/material";
+import { Box, style } from "@mui/system";
+import Slider from '@mui/material/Slider';
+import MuiInput from '@mui/material/Input';
 
 const StyledTextField = styled(TextField)({
   '& label': {
@@ -35,19 +38,13 @@ const StyledTextField = styled(TextField)({
   },
 });
 
+const Input = styled(MuiInput)`
+width: 42px;
+`;
+
 
 const Search = (props) => {
-  const dispatch = useDispatch();
-  const state = useSelector((state) => state)
-  const {loginUser, logoutUser, fbuser, nofbuser} = bindActionCreators(actionCreators, dispatch);
-  // const channels = state.auth.state.loginData.joinedChannel
-
-  // const lists = channels.map((chat) => 
-  // <li>{chat}</li>
-  // )
-
   const sexList = ['All','female', 'male'];
-  const tagList = ['태그 전체', '패션', '여행', '외국', '섹스']
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -56,21 +53,32 @@ const Search = (props) => {
   const [sexOpen, setSexOpen] = React.useState(false);
   const [ageOpen, setAgeOpen] = React.useState(false);
   const [tagOpen, setTagOpen] = React.useState(false);
-  const [testOpen, setTestOpen] = React.useState(false);
+  const [platformOpen, setPlatformOpen] = React.useState(false);
+
+  const [tagText, setTagText] = React.useState('태그 입력');
+  const [platformText, setPlatformText] = React.useState('모두');
 
   const [sexText, setSexText] = React.useState('All');
-  const [ageText, setAgeText] = React.useState('나이');
-  const [tagText, setTagText] = React.useState('태그 전체');
-  const [testText, setTestText] = React.useState('태그');
+  const [ageText, setAgeText] = React.useState('나이'); // 적용 예정
 
-  const [value, setValue] = React.useState();
-  const [placeholder, setPlaceholder] = React.useState('');
+  const platformList = [
+    {title: '모두'},
+    {title: '인스타그램'},
+    {title: '유튜브'},
+    {title: '트위터'},
+    {title: '페이스북'},
+    {title: '틱톡'},
+  ];
+
+  const ageValueText = (value) => {
+    return `${value}살`;
+  }
+  // 개발 중
+  const [ageValue, setAgeValue] = React.useState([0,100]);
+
+  const [tagvalue, setTagValue] = React.useState([]);
+  const [platformValue, setPlatformValue] = React.useState([]);
   const [inputValue, setInputValue] = React.useState('');
-  const [options, setOptions] = React.useState();
-  const [openOptionsMenu, setOpenOptionMenu] = React.useState(false); //안쓸듯
-
-  console.log(inputValue);
-  console.log(value); // 이거로 필터 해야함
 
   const taglist = [
     {title: '축구'},
@@ -79,6 +87,38 @@ const Search = (props) => {
     {title: '음식'},
     {title: '일상'},
   ];
+
+  const changeTagText = () => {
+    console.log('tagList', tagvalue);
+    console.log('length', tagvalue.length);
+    if (tagvalue.length > 0) {
+      let temp = '';
+      for (let i = 0; i < tagvalue.length; i += 1) {
+        if (i !== tagvalue.length - 1) {
+          temp += tagvalue[i].title + ', ';
+        }
+        else temp += tagvalue[i].title;
+      }
+    console.log(temp);
+    setTagText(temp);
+    }
+  };
+
+  const changePlatformText = () => {
+    if (platformValue.title) setPlatformText(platformValue.title);
+    else setPlatformText('모두');
+    // console.log('tagList', platformValue);
+    // if (platformValue.length >0) {
+    //   let temp = '';
+    //   for (let i = 0; i < platformValue.length; i += 1) {
+    //     if (i !== platformValue.length - 1) {
+    //       temp += platformValue[i].title + ', ';
+    //     }
+    //     else temp += platformValue[i].title;
+    //   }
+    // setPlatformText(temp);
+    // }
+  };
 
   const sexFilterClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -95,31 +135,117 @@ const Search = (props) => {
     setTagOpen(true);
   };
 
-  const testFilterClick = (event) => {
+  const platformFilterClick = (event) => {
     setAnchorEl(event.currentTarget);
-    setTestOpen(true);
+    setPlatformOpen(true);
   };
-
-  const selectSexMenu = (item) => {
-    setSexText(item);
-    setSexOpen(false);
-  };
-
 
   const handleClose = () => {
     setSexOpen(false);
     setAgeOpen(false);
     setTagOpen(false);
-    setTestOpen(false);
+    setPlatformOpen(false);
     setAnchorEl(null);
+  };
+
+  const isAgeInclude = (value) => {
+    return value >= ageValue[0] && value <= ageValue[1];
+  };
+
+  const handleAgeChange = (event, newValue) => {
+    setAgeValue(newValue);
+    // setAgeText(`${ageValue[0]} ~ ${ageValue[1]}`)
+    console.log('age filter value', ageValue);
+  };
+
+  // 필터 로직 성별, 나이, 태그
+  const setList = async () => {
+    let temp = [];
+    let temptemp = [];
+    let temptempwithplatform = [];
+    if (platformText === '모두') {
+      if (sexText === 'All' && tagvalue.length === 0) temp = infList.filter(item => isAgeInclude(2022 - Number(item.birthday.slice(0,4)) + 1));
+      if (sexText !== 'All' && tagvalue.length === 0) temp = infList.filter(item => item.sex === sexText && isAgeInclude(2022 - Number(item.birthday.slice(0,4)) + 1));
+      if (sexText === 'All' && tagvalue.length !== 0) {
+        for (let i = 0; i < tagvalue.length; i += 1) {
+          temptemp.push(infList.filter(item => item.tags.includes(tagvalue[i].title)));
+        };
+          for (let j = 0; j < temptemp.length; j += 1) {
+            if (temptemp[j].length > 0) {
+              if (isAgeInclude(2022 - Number(temptemp[j][0].birthday.slice(0,4)) + 1)) {
+                temp.push(temptemp[j][0]);
+              }
+            }
+          }
+      }
+      if (sexText !== 'All' && tagvalue.length !== 0) {
+        for (let i = 0; i < tagvalue.length; i += 1) {
+          temptemp.push(infList.filter(item => item.tags.includes(tagvalue[i].title)));
+        };
+          for (let j = 0; j < temptemp.length; j += 1) {
+            if (temptemp[j].length > 0) {
+              if (isAgeInclude(2022 - Number(temptemp[j][0].birthday.slice(0,4)) + 1) && temptemp[j][0].sex === sexText) {
+                temp.push(temptemp[j][0]);
+              }
+            }
+          }
+      }
+    }
+    else if (platformText !== '모두') {
+      // 유저 플랫폼 비교 로직 필요
+      // if (플랫폼 검사)
+      if (platformText === '인스타그램') {
+        temptempwithplatform = infList.filter(item => item.insta !== '');
+      }
+      else if (platformText === '트위터') {
+        temptempwithplatform = infList.filter(item => item.twitter !== '');
+      }
+      else if (platformText === '틱톡') {
+        temptempwithplatform = infList.filter(item => item.tiktok !== '');
+      }
+      else if (platformText === '유튜브') {
+        temptempwithplatform = infList.filter(item => item.youtube !== '');
+      }
+      else if (platformText === '페이스북') {
+        temptempwithplatform = infList.filter(item => item.facebook !== '');
+      }
+      if (sexText === 'All' && tagvalue.length === 0) temp = temptempwithplatform.filter(item => isAgeInclude(2022 - Number(item.birthday.slice(0,4)) + 1));
+      if (sexText !== 'All' && tagvalue.length === 0) temp = temptempwithplatform.filter(item => item.sex === sexText && isAgeInclude(2022 - Number(item.birthday.slice(0,4)) + 1));
+      if (sexText === 'All' && tagvalue.length !== 0) {
+        for (let i = 0; i < tagvalue.length; i += 1) {
+          temptemp.push(temptempwithplatform.filter(item => item.tags.includes(tagvalue[i].title)));
+        };
+          for (let j = 0; j < temptemp.length; j += 1) {
+            if (temptemp[j].length > 0) {
+              if (isAgeInclude(2022 - Number(temptemp[j][0].birthday.slice(0,4)) + 1)) {
+                temp.push(temptemp[j][0]);
+              }
+            }
+          }
+      }
+      if (sexText !== 'All' && tagvalue.length !== 0) {
+        for (let i = 0; i < tagvalue.length; i += 1) {
+          temptemp.push(temptempwithplatform.filter(item => item.tags.includes(tagvalue[i].title)));
+        };
+          for (let j = 0; j < temptemp.length; j += 1) {
+            if (temptemp[j].length > 0) {
+              if (isAgeInclude(2022 - Number(temptemp[j][0].birthday.slice(0,4)) + 1) && temptemp[j][0].sex === sexText) {
+                temp.push(temptemp[j][0]);
+              }
+            }
+          }
+      }
+    }
+    setFilteredList(temp);
   };
 
   const getInfList = async () => {
     try {
-      const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/inf/getlist`)
+      const res = await axios.post(`http://localhost:1212/inf/getlist`)
         .then((res) => {
-          console.log(res);
+          console.log('유저 리스트 필수', res);
           setInfList(res.data);
+          setFilteredList(res.data);
           return 0;
         })
     }
@@ -128,33 +254,15 @@ const Search = (props) => {
     }
   }
 
-  const setList = () => {
-    let temp = []
-    // 1. 태그입력을 하면 태그 배열이 생긴다. 
-    // 2. 성별,나이 
-    if (sexText === 'All') temp = infList.filter(item => item.tags.includes(tagText));
-    if (sexText !== 'All' && tagText !== '태그 전체') temp = infList.filter(item => item.tags.includes(tagText) && item.sex === sexText);
-    if (tagText === '태그 전체') temp = infList.filter(item => item.sex === (sexText));
-    setFilteredList(temp);
-  };
-
-  const filterSelected = (a) => {
-    setSexText(a);
+  React.useEffect(() => {
     setList();
-    setAnchorEl(null);
-  }
+    changeTagText();
+    changePlatformText();
+  }, [sexText, tagvalue, platformValue]);
 
   React.useEffect(() => {
     getInfList();
   }, []);
-
-  React.useEffect(() => {
-    setList();
-  }, [sexText, tagText]);
-
-  console.log(sexText);
-  console.log(tagText);
-  console.log(filteredList);
   
   return (
     <div style={{display:'flex'}}>
@@ -167,51 +275,61 @@ const Search = (props) => {
           {ageText}
         </Button>
         <Button id="tag-filter" onClick={tagFilterClick}>
-          {tagText}
+          {tagvalue.length === 0 ? '태그 입력' : `${tagText}`}
         </Button>
-        <Button id="tag-filter" onClick={testFilterClick}>
-          텍스트 입력
+        <Button id="platform-filter" onClick={platformFilterClick}>
+          {`${platformText}`}
         </Button>
         <Menu open={sexOpen} anchorEl={anchorEl} onClose={handleClose}>
           {sexList.map(item => {
             return [
-            // <MenuItem onClick={()=>filterSelected(item)}>{item}</MenuItem>
             <MenuItem onClick={() => {setSexText(item); setSexOpen(false);}}>{item}</MenuItem>
             ]})}
         </Menu>
         <Menu open={ageOpen} anchorEl={anchorEl} onClose={handleClose}>
-          <MenuItem>20대</MenuItem>
-          <MenuItem>30대</MenuItem>
-          <MenuItem>30대</MenuItem>
+          <Box sx={{width: '500px', height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Slider
+              getAriaLabel={() => 'ageFilter'}
+              style={{ width: '200px', marignLeft: '20px' }}
+              value={ageValue}
+              onChange={handleAgeChange}
+              valueLabelDisplay="auto"
+              getAriaValueText={ageValueText} 
+              disableSwap
+            />
+            <div style={{ marginLeft: '30px' }}>start: {ageValue[0]} / end: {ageValue[1]}</div>
+            <Button 
+            onClick={() => {
+              setList();
+              setAgeOpen(false);
+            }}
+            style={{ marginLeft: '20px'}}
+            > 
+              적용
+            </Button>
+          </Box>
         </Menu>
         <Menu open={tagOpen} anchorEl={anchorEl} onClose={handleClose}>
-          {tagList.map(item => {
-            return [
-            <MenuItem onClick={() => {setTagText(item); setTagOpen(false); }}>{item}</MenuItem>
-            ]})}
-        </Menu>
-        <Menu open={testOpen} anchorEl={anchorEl} onClose={handleClose}>
           <div style={{ width: '400px', height: '200px' }}>
-            이찬휘의 입력칸
             <Autocomplete 
               multiple 
               options={taglist} 
               getOptionLabel={(option) => 
                 option.title
               }
-              value={value}
+              value={tagvalue}
               onChange={(event, selectedValue) => {
-                setValue(selectedValue);
+                setTagValue(selectedValue);
               }}
               onInputChange={(event, newInputValue) => {
                 setInputValue(newInputValue);
               }}
-              limitTags={3}
+              limitTags={2}
               renderInput={(params) => (
                 <TextField
                   {...params}
                   variant='standard'
-                  label='Multiple values'
+                  label='태그를 입력 또는 선택하세요'
                   placeholder="tags"
                 />
               )}
@@ -219,6 +337,38 @@ const Search = (props) => {
                 return selected.title === againstTo.title;
               }}
             />
+            <Button onClick={() => {setList(); setTagOpen(false);}}>적용</Button>
+          </div>
+        </Menu>
+        <Menu open={platformOpen} anchorEl={anchorEl} onClose={handleClose}>
+          <div style={{ width: '400px', height: '200px' }}>
+            <Autocomplete 
+              // multiple 
+              options={platformList} 
+              getOptionLabel={(option) => 
+                option.title
+              }
+              value={platformValue}
+              onChange={(event, selectedValue) => {
+                setPlatformValue(selectedValue);
+              }}
+              onInputChange={(event, newInputValue) => {
+                setInputValue(newInputValue);
+              }}
+              limitTags={1}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant='standard'
+                  label='플랫폼을 입력 또는 선택하세요'
+                  placeholder="platforms"
+                />
+              )}
+              isOptionEqualToValue={(againstTo, selected) => {
+                return selected.title === againstTo.title;
+              }}
+            />
+            <Button onClick={() => {setList(); setPlatformOpen(false);}}>적용</Button>
           </div>
         </Menu>
 

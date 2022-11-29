@@ -112,19 +112,19 @@ const INFLogin = () => {
     }
   };
 
-  const dbChecker = async (user) => {
-    await axios
-    .get(`${process.env.REACT_APP_SERVER_URL}/inf/getInfInfo`, {
-      params: { uid: uid },
-    })
-    .then((res) => {
-      if (!res.data){
-        deleteUser(user);
-        moveSignup();
-        alert('회원 정보가 없습니다. 회원가입을 먼저 진행해주세요!')
-      }
-    });
-  };
+  // const dbChecker = async (user) => {
+  //   await axios
+  //   .get(`${process.env.REACT_APP_SERVER_URL}/inf/getInfInfo`, {
+  //     params: { uid: uid },
+  //   })
+  //   .then((res) => {
+  //     if (!res.data){
+  //       deleteUser(user);
+  //       moveSignup();
+  //       alert('회원 정보가 없습니다. 회원가입을 먼저 진행해주세요!')
+  //     }
+  //   });
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
