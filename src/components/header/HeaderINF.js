@@ -15,6 +15,11 @@ import { getAuth, signOut } from "firebase/auth";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { IconContext } from "react-icons/lib";
 
+import {
+  QueryClient,
+  useQuery,
+} from "@tanstack/react-query";
+
 import "./HeaderINF.css";
 
 
@@ -39,6 +44,7 @@ const HeaderINF = () => {
   );
 
   const auth = getAuth();
+  const queryClient = new QueryClient();
 
   const showButton = () => {
     if (window.innerWidth <= 500) {
@@ -107,7 +113,7 @@ const HeaderINF = () => {
 
   async function handleLogout() {
     try {
-      logoutUser();
+      queryClient.removeQueries('inf')
       nofbuser(false);
       signOut(auth);
       navigate("/Home");

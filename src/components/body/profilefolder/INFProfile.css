@@ -1,5 +1,5 @@
 
-/* 
+
 .container {
     display: flex;
     justify-content: center;
@@ -30,18 +30,19 @@
 }
 
 .btm-box-info-container {
-    height: 25vh;
-    background-color:coral
+    
+    width: 100%;
 }
 
 .bottom-box-container {
-    background-color: crimson;
+    
+    
 }
 
 .bottom-box {
-    padding: 3px;
     justify-content: flex-end;
     display: flex;
+    margin-right: 15px;
 }
 
 .name-role-container {
@@ -60,9 +61,7 @@
     background-color: limegreen;
 }
 
-.info-text-container {
 
-}
 
 .info-text-me {
     background-color: lightpink;
@@ -70,19 +69,79 @@
 
 .info-text-category {
     background-color: lightskyblue;
-} */
+}
 .sns_conatiner{
     background-color: lightskyblue;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     align-items: center;
-    
 }
 .sns_box {
     background-color: #fff;
     margin: 5px;
-    width: 80%;
+    width: 85%;
     height: 9vh;
+    border-radius: 17px;
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
     
+}
+.sns_textContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    background-color: khaki;
+    width: 60%;
+    align-items: center;
+}
+.sns_logo {
+    background-color: blueviolet;
+    width: 17%;
+    height: 75%;
+    justify-content: center;
+    align-items: center;
+}
+.sns_status {
+    margin-inline: 17px;
+}
+.sns_connect {
+    margin-inline: 17px;
+}
+.sns_connect {
+    margin-inline: 17px;
+}
+
+
+
+
+.information-container{
+    width: 100%;
+}
+.info-row-cntainer{
+    flex-direction: row;
+    display: flex;
+    margin-block: 30px;
+    
+}
+.line-items{
+    margin-inline: 3vw;
+    background-color: aqua;
+    width: 17vw;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    padding: 3px;
+}
+.section-name{
+    font-size: 20px;
+    font-weight: bold;
+    
+}
+.section-value{
+    font-size: 17px;
 }
 
 

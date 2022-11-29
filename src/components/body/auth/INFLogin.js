@@ -8,10 +8,13 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   FacebookAuthProvider,
+  TwitterAuthProvider,
   signInWithPopup,
   getAuth,
-  updateProfile,
+  fetchSignInMethodsForEmail,
+  EmailAuthProvider,
   signOut,
+  deleteUser
 } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -21,58 +24,59 @@ import axios from "axios";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
-import { infUserInfo, infPrd} from '../../../api';
-
-const queryClient = new QueryClient()
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from "@tanstack/react-query";
+import { infUserInfo, infPrd } from "../../../api";
 
 const INFLogin = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { loginUser, logoutUser, fbuser, nofbuser, prependprd, infloginUser } =
+  const { loginUser, fbuser, nofbuser, prependprd, infloginUser } =
     bindActionCreators(actionCreators, dispatch);
   const [email, setEmail] = useState("");
   const [testUid, setTestUid] = useState("");
-  
+
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const auth = getAuth();
   const gprovider = new GoogleAuthProvider();
   const fprovider = new FacebookAuthProvider();
+  const twprovider = new TwitterAuthProvider();
   const [infor, setInfor] = useState("");
 
-  useEffect(() => {
-    if (state.loggedin) {
-      navigate("/Main");
-    }
-  }, [state.loggedin, navigate]);
+  const queryClient = new QueryClient();
 
-  useEffect(()=> {
-
-  })
+  // useEffect(() => {
+  //   if (state.loggedin) {
+  //     navigate("/Main");
+  //   }
+  // }, [state.loggedin, navigate]);
 
   const moveMain = () => {
     navigate("/Main");
   };
+  const moveSignup = () => {
+    navigate("/INFSignup");
+  };
 
-  // const uid = 'CzVwyQLh08YLFHFfixL2uuzmnOw1'
   const uid = testUid;
+  console.log(uid);
 
-  const Dd =() => {
-    const {data, status} = useQuery({queryKey:['inf'], queryFn: () => infUserInfo(uid)})
-
-    if (status === "loading") console.log('loading')
-    if (status === "error") console.log('err')
-    console.log(data)
-  }
-  
-  
+  const infQuery = useQuery({
+    queryKey: ["inf"],
+    queryFn: () => infUserInfo(uid),
+    staleTime: 1000 * 60,
+  });
+  if (infQuery.isLoading === "loading") console.log("loading");
+  if (infQuery.status === "error") console.log("err");
+  console.log(infQuery.data);
 
   const getinfo = async () => {
     setTestUid(auth.currentUser.uid);
-    const uid = auth.currentUser.uid;
-    Dd();
-
+    // const uid = auth.currentUser.uid;
     // const response = await axios
     //   .get(`${process.env.REACT_APP_SERVER_URL}/inf/getInfInfo`, {
     //     params: { uid: uid },
@@ -82,12 +86,28 @@ const INFLogin = () => {
     //     const infloginData = res.data;
     //     infloginUser(infloginData);
     //     loginUser(infloginData);
-    //     fbuser(true);
-    //     getListById();
-    //   })
-    //   .catch((error) => {
-    //     console.log(error.response);
-    //   });
+    // fbuser(true); ========================================================================
+    //  getListById();
+    // })
+    // .catch((error) => {
+    //   console.log(error.response);
+    // });
+  };
+
+  const dbChecker = async (email) => {
+    fetchSignInMethodsForEmail(email).then((signInMethods) => {
+      // This returns the same array as fetchProvidersForEmail but for email
+      // provider identified by 'password' string, signInMethods would contain 2
+      // different strings:
+      // 'emailLink' if the user previously signed in with an email/link
+      // 'password' if the user has a password.
+      // A user could have both.
+      if (
+        signInMethods.indexOf(GoogleAuthProvider.GOOGLE_SIGN_IN_METHOD) != -1
+      ) {
+        console.log("google");
+      }
+    });
   };
 
   const getListById = async () => {
@@ -109,65 +129,90 @@ const INFLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await signInWithEmailAndPassword(auth, email, password)
-      getinfo();
-      moveMain();
+      .then(() => getinfo())
+      .then(() => {
+        moveMain();
+      });
   };
 
   const handleGoogleSignIn = async (e) => {
-    
     await signInWithPopup(auth, gprovider)
-      .then(async(result) => {
+      .then(async (result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         // The signed-in user info.
+        const uid = result.user.uid;
         const user = result.user;
-        getinfo();
-        moveMain()
-
+        console.log(result.user.uid);
+        const response = await axios
+          .get(`${process.env.REACT_APP_SERVER_URL}/inf/getInfInfo`, {
+            params: { uid: uid },
+          })
+          .then((res) => {
+            if (!res.data){
+              deleteUser(user);
+              moveSignup();
+              alert('회원 정보가 없습니다. 회원가입을 먼저 진행해주세요!')
+            }
+          });
+        // getinfo();
+        // moveMain();
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         const email = error.customData.email;
         const credential = GoogleAuthProvider.credentialFromError(error);
-      })
-      .then(async() => {
-        console.log('check 1');
-        // getinfo();
-        // moveMain();
-      })
-      .then(() => {
-
-        console.log('check 2');
-        // moveMain();
       });
   };
 
-  const handleFBSignIn = () => {
-    signInWithPopup(auth, fprovider)
-  .then((result) => {
-    // The signed-in user info.
-    const user = result.user;
+  const handleFBSignIn = async () => {
+    await signInWithPopup(auth, fprovider)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user;
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        const credential = FacebookAuthProvider.credentialFromResult(result);
+        const accessToken = credential.accessToken;
+        getinfo();
+        moveMain();
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = FacebookAuthProvider.credentialFromError(error);
+        // ...
+      });
+    //dispatch(fbSignInInitiate());
+  };
 
-    // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-    const credential = FacebookAuthProvider.credentialFromResult(result);
-    const accessToken = credential.accessToken;
-
-    // ...
-  })
-  .catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = FacebookAuthProvider.credentialFromError(error);
-
-    // ...
-  });
-//dispatch(fbSignInInitiate());
+  const handleTWSignIn = async () => {
+    await signInWithPopup(auth, twprovider)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user;
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        const credential = TwitterAuthProvider.credentialFromResult(result);
+        const accessToken = credential.accessToken;
+        getinfo();
+        moveMain();
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = TwitterAuthProvider.credentialFromError(error);
+        // ...
+      });
+    //dispatch(fbSignInInitiate());
   };
 
   return (
@@ -231,16 +276,29 @@ const INFLogin = () => {
               &nbsp;Login with Facebook
             </p>
           </div>
-
-          {/*           
-          <GoogleButton
-            className="g-btn"
-            type="dark"
-            onClick={handleGoogleSignIn}
-          />
-          <Button variant="primary" onClick={handleFBSignIn}>
-            FACEBOOK
-          </Button> */}
+          <div
+            style={{
+              border: "1px solid ",
+              borderRadius: 5,
+              width: "79vw",
+              height: "11vw",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginBlock: "3vw",
+            }}
+            onClick={() => handleTWSignIn()}
+          >
+            <FaFacebook style={{ fontSize: 35 }} />
+            <p
+              style={{
+                fontSize: 19,
+                fontWeight: "bold",
+              }}
+            >
+              &nbsp;Login with Twitter
+            </p>
+          </div>
         </div>
 
         {/* 중간 경계선  */}
@@ -290,7 +348,7 @@ const INFLogin = () => {
                 label="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                style={{width:'80vw', marginBlock: "1vw"}}
+                style={{ width: "80vw", marginBlock: "1vw" }}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -307,14 +365,20 @@ const INFLogin = () => {
                 autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                style={{width:'80vw', marginBlock: "1vw",}}
+                style={{ width: "80vw", marginBlock: "1vw" }}
               />
             </Form.Group>
 
             <Button
               variant="primary"
               type="Submit"
-              style={{ width: "80vw", padding: 10, fontSize:19, fontWeight:'bold', marginBlock: "3vw", }}
+              style={{
+                width: "80vw",
+                padding: 10,
+                fontSize: 19,
+                fontWeight: "bold",
+                marginBlock: "3vw",
+              }}
             >
               Log In
             </Button>
@@ -329,4 +393,3 @@ const INFLogin = () => {
 };
 
 export default INFLogin;
-
