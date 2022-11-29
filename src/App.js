@@ -104,8 +104,8 @@ function App() {
           :
           <>
            {!emailVerified ? <Route path="/Emailverify/*" element={<Emailverify />} />
-          : console.log('verified') 
-          }
+          : 
+          
           
           <Route  element={<Layout />}>
             <Route path="/Main/*" element={<Main />} />
@@ -137,6 +137,7 @@ function App() {
             <Route path="/DashMain/" element={<DashMain />} />
             <Route path="/InfluencerProfile/:id" element={<InfluencerProfile />} />
           </Route>
+          }
           </>
           }
         </Routes>

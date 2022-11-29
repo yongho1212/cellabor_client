@@ -94,21 +94,7 @@ const INFLogin = () => {
     // });
   };
 
-  const dbChecker = async (email) => {
-    fetchSignInMethodsForEmail(email).then((signInMethods) => {
-      // This returns the same array as fetchProvidersForEmail but for email
-      // provider identified by 'password' string, signInMethods would contain 2
-      // different strings:
-      // 'emailLink' if the user previously signed in with an email/link
-      // 'password' if the user has a password.
-      // A user could have both.
-      if (
-        signInMethods.indexOf(GoogleAuthProvider.GOOGLE_SIGN_IN_METHOD) != -1
-      ) {
-        console.log("google");
-      }
-    });
-  };
+
 
   const getListById = async () => {
     const uid = auth.currentUser.uid;
@@ -124,6 +110,20 @@ const INFLogin = () => {
     } catch (err) {
       alert("비밀번호 혹은 이메일이 일치하지 않습니다. 다시 시도하세요");
     }
+  };
+
+  const dbChecker = async (user) => {
+    await axios
+    .get(`${process.env.REACT_APP_SERVER_URL}/inf/getInfInfo`, {
+      params: { uid: uid },
+    })
+    .then((res) => {
+      if (!res.data){
+        deleteUser(user);
+        moveSignup();
+        alert('회원 정보가 없습니다. 회원가입을 먼저 진행해주세요!')
+      }
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -144,7 +144,6 @@ const INFLogin = () => {
         // The signed-in user info.
         const uid = result.user.uid;
         const user = result.user;
-        console.log(result.user.uid);
         const response = await axios
           .get(`${process.env.REACT_APP_SERVER_URL}/inf/getInfInfo`, {
             params: { uid: uid },
@@ -154,10 +153,11 @@ const INFLogin = () => {
               deleteUser(user);
               moveSignup();
               alert('회원 정보가 없습니다. 회원가입을 먼저 진행해주세요!')
+            } else {
+              getinfo();
+              moveMain();
             }
           });
-        // getinfo();
-        // moveMain();
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -169,14 +169,27 @@ const INFLogin = () => {
 
   const handleFBSignIn = async () => {
     await signInWithPopup(auth, fprovider)
-      .then((result) => {
+      .then(async(result) => {
         // The signed-in user info.
         const user = result.user;
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
         const credential = FacebookAuthProvider.credentialFromResult(result);
         const accessToken = credential.accessToken;
-        getinfo();
-        moveMain();
+        const uid = result.user.uid;
+        const response = await axios
+          .get(`${process.env.REACT_APP_SERVER_URL}/inf/getInfInfo`, {
+            params: { uid: uid },
+          })
+          .then((res) => {
+            if (!res.data){
+              deleteUser(user);
+              moveSignup();
+              alert('회원 정보가 없습니다. 회원가입을 먼저 진행해주세요!')
+            } else {
+              getinfo();
+              moveMain();
+            }
+          });
       })
       .catch((error) => {
         // Handle Errors here.
@@ -193,14 +206,28 @@ const INFLogin = () => {
 
   const handleTWSignIn = async () => {
     await signInWithPopup(auth, twprovider)
-      .then((result) => {
+      .then(async(result) => {
         // The signed-in user info.
         const user = result.user;
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
         const credential = TwitterAuthProvider.credentialFromResult(result);
         const accessToken = credential.accessToken;
-        getinfo();
-        moveMain();
+        const uid = result.user.uid;
+        
+        const response = await axios
+          .get(`${process.env.REACT_APP_SERVER_URL}/inf/getInfInfo`, {
+            params: { uid: uid },
+          })
+          .then((res) => {
+            if (!res.data){
+              deleteUser(user);
+              moveSignup();
+              alert('회원 정보가 없습니다. 회원가입을 먼저 진행해주세요!')
+            } else {
+              getinfo();
+              moveMain();
+            }
+          });
       })
       .catch((error) => {
         // Handle Errors here.
