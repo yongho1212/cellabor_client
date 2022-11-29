@@ -1,37 +1,55 @@
 import React, { useState, useEffect, useId } from "react";
 import "./Register.css";
 import { Form, Alert } from "react-bootstrap";
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Typography } from "@mui/material";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Typography,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
+import SearchLocationInput from "../profilefolder/SearchLoaction";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios'
+import axios from "axios";
 import {
   createUserWithEmailAndPassword,
   getAuth,
   updateProfile,
-  sendEmailVerification
+  sendEmailVerification,
 } from "firebase/auth";
-import { useDispatch, useSelector } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import AWS from "aws-sdk";
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
 import { actionCreators } from "../../../state/index";
+import './INFSignup.css'
 
 const theme = createTheme();
 
 const INFSignup = () => {
-  const state = useSelector((state) => state)
+  const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const {loginUser, logoutUser, fbuser, nofbuser,infloginUser} = bindActionCreators(actionCreators, dispatch);
+  const { loginUser, logoutUser, fbuser, nofbuser, infloginUser } =
+    bindActionCreators(actionCreators, dispatch);
   let navigate = useNavigate();
   const auth = getAuth();
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [uid, setUid] = useState("");
+  const [tags, setTags] = useState("");
+  const [sex, setSex] = useState("");
+  const [birthday, setBirthday] = useState("");
+  const [avatar, setAvatar] = useState("");
+  const [location, setLocation] = useState("");
 
   useEffect(() => {
     if (state.loggedin) {
@@ -40,105 +58,189 @@ const INFSignup = () => {
   }, [state.loggedin, navigate]);
 
   function moveLogin() {
-    navigate("/Login")
-  };
+    navigate("/Login");
+  }
 
   function moveEmail() {
-    navigate("/Emailverify")
-  };
+    navigate("/Emailverify");
+  }
 
   async function upLoadProfile() {
-    try{
-      const uid = auth.currentUser.uid
-      const nickname = displayName
-      const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/inf/inf_register`, 
-      {nickname, email, uid, password})
-      .then(function(res){        
-        console.log("해당 상풍 아이디" + res)
-        console.log(res.data)
-      })
-      const role = "influencer"
-      const infloginData = {nickname, email, uid, password, role}
-      const loginData = {role, uid}
-      infloginUser(infloginData)
-      loginUser(loginData)
-      fbuser(true)
-    // console.log(state.auth.state.loginData.role)
+    try {
+      const uid = auth.currentUser.uid;
+      const nickname = displayName;
+      // 서버로 프로필 업로드
+      const res = await axios
+        .post(`${process.env.REACT_APP_SERVER_URL}/inf/inf_register`, {
+          nickname,
+          email,
+          uid,
+          password,
+        })
+        .then(function (res) {
+          console.log(res.data);
+        });
+      // 서버로 추가정보 업로드
+      const rese = await axios
+        .post(`${process.env.REACT_APP_SERVER_URL}/inf/inf_update_profile`, {
+          uid,
+          tags,
+          sex,
+          birthday,
+          avatar,
+          location,
+        })
+        .then((rese) => {
+          console.log("success");
+          console.log(rese);
+        });
+
+      const role = "influencer";
+      const infloginData = { nickname, email, uid, password, role };
+      const loginData = { role, uid };
+      infloginUser(infloginData);
+      loginUser(loginData);
+      fbuser(true);
+      // console.log(state.auth.state.loginData.role)
     } catch (err) {
-      console.log('failed')
+      console.log(err);
     }
   }
 
-  const handleSubmit = async (e) => { 
+  const handleSubmit = async (e) => {
     e.preventDefault();
     await createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
         updateProfile(auth.currentUser, {
           displayName,
-        })
-        console.log(auth.currentUser.uid, displayName, email)
+        });
+        console.log(auth.currentUser.uid, displayName, email);
       })
       .then(() => {
-        upLoadProfile()
+        upLoadProfile();
       })
       .then(() => {
-        sendEmailVerification(auth.currentUser)
-      })
+        sendEmailVerification(auth.currentUser);
+      });
     moveEmail();
-  }  
-        
+  };
+
+  const handleFileInput = (e) => {
+    const file = e.target.files[0];
+    const upload = new AWS.S3.ManagedUpload({
+      params: {
+        Bucket: "swaybucket",
+        Key: "INFPROFILE" + auth.currentUser.uid + ".jpg",
+        Body: file,
+      },
+    });
+
+    const promise = upload.promise();
+
+    promise.then(
+      function (data) {
+        setAvatar(data.Location.toString());
+        console.log("checkthephoto: ", data.Location);
+        alert("이미지 업로드에 성공했습니다.");
+        console.log("data: ", avatar, "data type: ", typeof avatar);
+      },
+      function (err) {
+        return alert("오류가 발생했습니다.", err.message);
+      }
+    );
+  };
+
   return (
     <ThemeProvider theme={theme}>
-    <Container>
-      <Typography>
-        인플루언서 회원가입 페이지입니다.
-      </Typography>
-      <CssBaseline />
-      <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-        <Form onSubmit={handleSubmit}>
-        <Box className="mb-3" controlId="formBasicName">
-            <TextField
-              type="name"
-              placeholder="nickname"
-              onChange={(e) => setDisplayName(e.target.value)}
-            />
-          </Box>
-          <Box className="mb-3" controlId="formBasicEmail">
-            <TextField
-              type="email"
-              placeholder="Email address"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Box>
-          <Box className="mb-3" controlId="formBasicPassword">
-            <TextField
-              type="password"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Box>
-            <Button
-            type="Submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            >
-              Sign up
-            </Button>
-        </Form>
-        <Button onClick={moveLogin}>
-        Already have an account? Log In
-        </Button>
-      </Box>
-      </Container>
-      </ThemeProvider>
+      <div className="signup-container">
+        
+        {/* <CssBaseline /> */}
+        <div className='form-container'>
+          <Form onSubmit={handleSubmit}>
+            <div className='input-container'>
+              <div className='basic-input-container'>
+                <Box className="mb-3" controlId="formBasicName">
+                  <TextField
+                    type="name"
+                    placeholder="nickname"
+                    onChange={(e) => setDisplayName(e.target.value)}
+                  />
+                </Box>
+                <Box className="mb-3" controlId="formBasicEmail">
+                  <TextField
+                    type="email"
+                    placeholder="Email address"
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </Box>
+                <Box className="mb-3" controlId="formBasicPassword">
+                  <TextField
+                    type="password"
+                    placeholder="Password"
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </Box>
+              </div>
+              <div className='additional-input-container'>
+                {/* additional information */}
+                <Form.Group className="mb-3" controlId="formBasicName">
+                  <TextField
+                    type="Date"
+                    placeholder="how old?"
+                    onChange={(e) => setBirthday(e.target.value)}
+                    defaultValue="생일"
+                  />
+                </Form.Group>
+
+                <FormControl sx={{ m: 1, width: 300 }}>
+                  <InputLabel id="demo-simple-select-label">Sex</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={sex}
+                    label="sex"
+                    onChange={(e) => setSex(e.target.value)}
+                    defaultValue={"select sex"}
+                  >
+                    <MenuItem value={"male"}>male</MenuItem>
+                    <MenuItem value={"female"}>female</MenuItem>
+                  </Select>
+                </FormControl>
+
+                {/* additional information */}
+                <Form.Group className="mb-3" controlId="formBasicName">
+                  <TextField
+                    type="Date"
+                    placeholder="how old?"
+                    onChange={(e) => setBirthday(e.target.value)}
+                    defaultValue="생일"
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formBasicName">
+                  <TextField type="photo" placeholder={"www"} value={avatar} />
+                </Form.Group>
+
+                <div style={{ height: "100px", zIndex: 100 }}>
+                  <SearchLocationInput setLocation={setLocation} />
+                </div>
+              </div>
+            </div>
+            <div>
+              <Button
+                type="Submit" 
+                variant="contained"
+                
+              >
+                Sign up
+              </Button>
+            </div>
+            
+          </Form>
+          <Button onClick={moveLogin}>Already have an account? Log In</Button>
+        </div>
+      </div>
+    </ThemeProvider>
   );
 };
 
