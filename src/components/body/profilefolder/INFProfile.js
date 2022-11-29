@@ -21,6 +21,7 @@ import * as grd from "./prfcomponents";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { infUserInfo } from "../../../api";
 import UploadProfile from "./UploadProfile";
+import axios from "axios";
 
 const INFProfile = () => {
   const [open, setOpen] = React.useState(false);
@@ -42,6 +43,12 @@ const INFProfile = () => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleClick = async () => {
+    console.log('클릭 실행');
+    const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/inf/test`)
+    console.log('완료', res);
   };
 
   const uid = auth?.currentUser?.uid || "undefined";
@@ -207,7 +214,7 @@ const INFProfile = () => {
                 <div className="sns_textContainer">
                   <div className="sns_status">status</div>
                   <div className="sns_connect">
-                    <Button variant="contained">connect</Button>
+                    <Button variant="contained" onClick={handleClick}>connect</Button>
                   </div>
                   <div className="sns_disconnect">disconnect</div>
                 </div>
