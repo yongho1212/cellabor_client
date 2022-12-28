@@ -1,6 +1,3 @@
-.container {
-    background-color:blueviolet
-}
 
 .main_prd {
     display: 'flex';
@@ -15,4 +12,17 @@
 .profile-img {
     width:'200px';
     height:'200px';
+}
+.pgntContainer {
+    
+    width: 100vw;
+    position: relative;
+    bottom: 10;
+}
+.pgnt {
+    
+    height: 40px;
+    
+    
+    
 }
