@@ -130,6 +130,7 @@ const INFProfile = () => {
     setOpen(false);
   };
 
+
   // const handleClick = async () => {
   //   console.log('클릭 실행');
   //   const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/inf/youtubeapicall`,{
@@ -137,6 +138,7 @@ const INFProfile = () => {
   //   })
   //   console.log('완료', res);
   // };
+
 
   const uid = auth?.currentUser?.uid || "undefined";
   const infQuery = useQuery({
@@ -301,7 +303,9 @@ const INFProfile = () => {
                 <div className="sns_textContainer">
                   <div className="sns_status">status</div>
                   <div className="sns_connect">
+
                     <Button variant="contained" onClick={() => apicall()}>connect</Button>
+
                   </div>
                   <div className="sns_disconnect">disconnect</div>
                 </div>
