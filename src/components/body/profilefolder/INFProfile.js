@@ -27,6 +27,7 @@ const INFProfile = () => {
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState("paper");
   const [password, setPassword] = useState("");
+  const [youtbeVerified, setYoutubeVerified] = React.useState(false);
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -130,15 +131,23 @@ const INFProfile = () => {
     setOpen(false);
   };
 
+  const handleClick = async () => {
+    console.log('클릭 실행');
+    console.log(uid);
+    const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/inf/verifyUserWithYoutube`,
+    {uid})
+    .then(function(res){
+      console.log(res.data)
+    })
+    console.log('완료', res);
+  };
 
-  // const handleClick = async () => {
-  //   console.log('클릭 실행');
-  //   const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/inf/youtubeapicall`,{
-  //     token
-  //   })
-  //   console.log('완료', res);
-  // };
 
+  const handleDisconnetClick = async () => {
+    console.log('disconnet 실행');
+    // const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/inf/test`)
+    // console.log('완료', res);
+  };
 
   const uid = auth?.currentUser?.uid || "undefined";
   const infQuery = useQuery({
@@ -302,12 +311,26 @@ const INFProfile = () => {
                 <div className="sns_logo">Youtube</div>
                 <div className="sns_textContainer">
                   <div className="sns_status">status</div>
-                  <div className="sns_connect">
-
-                    <Button variant="contained" onClick={() => apicall()}>connect</Button>
+                  
+                    {infQuery?.data?.data?.youtube?.verify ? (
+                      <>
+                        <div className="sns_disconnect">connect</div>
+                        <div className="sns_connect">
+                        <Button variant="contained" onClick={handleDisconnetClick}>disconnect</Button>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                      <div className="sns_connect">
+                        <Button variant="contained" onClick={handleClick}>connect</Button>
+                      </div>
+                      <div className="sns_disconnect">disconnect</div>
+                    </>
+                    )}
+                    {/* <Button variant="contained" onClick={handleClick}>connect</Button>
 
                   </div>
-                  <div className="sns_disconnect">disconnect</div>
+                  <div className="sns_disconnect">disconnect</div> */}
                 </div>
               </div>
               {/* 인스타 */}
