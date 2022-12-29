@@ -31,6 +31,10 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../../state/index";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { adUserInfo } from "../../../api";
+
+
 
 const ADProfile = () => {
   const [open, setOpen] = React.useState(false);
@@ -43,8 +47,16 @@ const ADProfile = () => {
   const navigate = useNavigate();
   const auth = getAuth();
   const user = auth.currentUser;
-  const uid = "m8mU6Gzf74Vl55CmwDZYNFfIHbt1"
-  
+  const uid = auth?.currentUser?.uid || "undefined";
+
+  const adQuery = useQuery({
+    queryKey: ["ad"],
+    queryFn: () => adUserInfo(uid),
+  });
+  if (adQuery.isLoading === "loading") console.log("loading");
+  if (adQuery.status === "error") console.log("err");
+  console.log(adQuery.data); 
+  console.log(adQuery?.data?.data?.insta); 
 
   const handleClickOpen = (scrollType) => () => {
     setOpen(true);
