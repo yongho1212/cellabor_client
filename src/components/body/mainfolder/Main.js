@@ -8,16 +8,39 @@ import Dashmain from '../workspacefolder/Dashmain';
 import Search from '../searchfolder/Search'
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../state/index';
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { infUserInfo, adUserInfo } from "../../../api";
+import { getAuth, updateProfile, signOut } from "firebase/auth";
+
 
 const Main = () => {
   const state = useSelector((state) => state)
   const dispatch = useDispatch();
   const { loginUser, logoutUser, fbuser, nofbuser } = bindActionCreators(actionCreators, dispatch);
   const navigate = useNavigate();
+  const auth = getAuth();
 
 
-// const userRole = state.auth.state.loginData.role  
-const userRole = 'influencer'
+  const uid = auth?.currentUser?.uid || "undefined";
+  const infQuery = useQuery({
+    queryKey: ["inf"],
+    queryFn: () => infUserInfo(uid),
+  });
+  if (infQuery.isLoading === "loading") console.log("loading");
+  if (infQuery.status === "error") console.log("err");
+  console.log(infQuery?.data?.data?.role);
+
+
+  const adQuery = useQuery({
+    queryKey: ["ad"],
+    queryFn: () => adUserInfo(uid),
+  });
+  if (adQuery.isLoading === "loading") console.log("loading");
+  if (adQuery.status === "error") console.log("err");
+  console.log(adQuery?.data?.data?.role);
+  const adr = adQuery?.data?.data?.role
+  
+ const userRole = adQuery?.data?.data?.role || infQuery?.data?.data?.role
 
   console.log(userRole);
 

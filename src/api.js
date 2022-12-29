@@ -17,6 +17,14 @@ export const infUserInfo = async (uid) => {
   return response;
 };
 
+// 광고주 로그인데이터 불러오기
+export const adUserInfo = async (uid) => {
+  const response = await authApi.get("/ad/getAdInfo", {
+    params: { uid: uid },
+  });
+  return response;
+};
+
 // 해당 인플루언서 진행중인 상품 불러오기
 export const infPrd = async (uid) => {
   const response = await authApi.get("/products/getlistbyid", {
@@ -24,6 +32,13 @@ export const infPrd = async (uid) => {
   });
   return response;
 };
+
+export const adPrd = async (uid) => {
+  const response = await authApi.get("/ad/getAdInfo", {
+    params: { uid },
+  });
+  return response
+}
 
 // 인플루언서 회원데이터 수정
 export const infEditUserProfile = async ({

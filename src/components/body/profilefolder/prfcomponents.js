@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: grid;
   height: 100vh;
-  width: 100vw;
+  width: 70vw;
   margin: auto;
   grid-template-areas:
     "nav nav nav"

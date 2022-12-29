@@ -127,9 +127,9 @@
     
 }
 .line-items{
-    margin-inline: 3vw;
+    margin-inline: 7px;
     background-color: aqua;
-    width: 17vw;
+    width: 13vw;
     align-items: flex-start;
     display: flex;
     flex-direction: column;

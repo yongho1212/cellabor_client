@@ -14,7 +14,7 @@ import {
   fetchSignInMethodsForEmail,
   EmailAuthProvider,
   signOut,
-  deleteUser
+  deleteUser,
 } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -22,7 +22,7 @@ import { actionCreators } from "../../../state/index";
 import "./Login.css";
 import axios from "axios";
 import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
+import { FaFacebook, FaTwitter } from "react-icons/fa";
 
 import {
   QueryClient,
@@ -94,8 +94,6 @@ const INFLogin = () => {
     // });
   };
 
-
-
   const getListById = async () => {
     const uid = auth.currentUser.uid;
     try {
@@ -149,10 +147,10 @@ const INFLogin = () => {
             params: { uid: uid },
           })
           .then((res) => {
-            if (!res.data){
+            if (!res.data) {
               deleteUser(user);
               moveSignup();
-              alert('회원 정보가 없습니다. 회원가입을 먼저 진행해주세요!')
+              alert("회원 정보가 없습니다. 회원가입을 먼저 진행해주세요!");
             } else {
               getinfo();
               moveMain();
@@ -169,7 +167,7 @@ const INFLogin = () => {
 
   const handleFBSignIn = async () => {
     await signInWithPopup(auth, fprovider)
-      .then(async(result) => {
+      .then(async (result) => {
         // The signed-in user info.
         const user = result.user;
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
@@ -181,10 +179,10 @@ const INFLogin = () => {
             params: { uid: uid },
           })
           .then((res) => {
-            if (!res.data){
+            if (!res.data) {
               deleteUser(user);
               moveSignup();
-              alert('회원 정보가 없습니다. 회원가입을 먼저 진행해주세요!')
+              alert("회원 정보가 없습니다. 회원가입을 먼저 진행해주세요!");
             } else {
               getinfo();
               moveMain();
@@ -206,23 +204,23 @@ const INFLogin = () => {
 
   const handleTWSignIn = async () => {
     await signInWithPopup(auth, twprovider)
-      .then(async(result) => {
+      .then(async (result) => {
         // The signed-in user info.
         const user = result.user;
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
         const credential = TwitterAuthProvider.credentialFromResult(result);
         const accessToken = credential.accessToken;
         const uid = result.user.uid;
-        
+
         const response = await axios
           .get(`${process.env.REACT_APP_SERVER_URL}/inf/getInfInfo`, {
             params: { uid: uid },
           })
           .then((res) => {
-            if (!res.data){
+            if (!res.data) {
               deleteUser(user);
               moveSignup();
-              alert('회원 정보가 없습니다. 회원가입을 먼저 진행해주세요!')
+              alert("회원 정보가 없습니다. 회원가입을 먼저 진행해주세요!");
             } else {
               getinfo();
               moveMain();
@@ -249,7 +247,8 @@ const INFLogin = () => {
           alignItems: "center",
           display: "flex",
           flexDirection: "column",
-          height: "100vh",
+          height: "100%",
+          marginBottom: "30px",
         }}
       >
         <div>
@@ -316,7 +315,7 @@ const INFLogin = () => {
             }}
             onClick={() => handleTWSignIn()}
           >
-            <FaFacebook style={{ fontSize: 35 }} />
+            <FaTwitter style={{ fontSize: 35 }} />
             <p
               style={{
                 fontSize: 19,
@@ -395,20 +394,21 @@ const INFLogin = () => {
                 style={{ width: "80vw", marginBlock: "1vw" }}
               />
             </Form.Group>
-
-            <Button
-              variant="primary"
-              type="Submit"
-              style={{
-                width: "80vw",
-                padding: 10,
-                fontSize: 19,
-                fontWeight: "bold",
-                marginBlock: "3vw",
-              }}
-            >
-              Log In
-            </Button>
+            <div style={{display:'flex', justifyContent:'center'}}>
+              <Button
+                variant="primary"
+                type="Submit"
+                style={{
+                  width: "80vw",
+                  padding: 10,
+                  fontSize: 19,
+                  fontWeight: "bold",
+                  marginBlock: "3vw",
+                }}
+              >
+                Log In
+              </Button>
+            </div>
           </Form>
         </div>
         <div className="p-4 box mt-3 text-center">
