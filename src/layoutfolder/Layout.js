@@ -16,10 +16,12 @@ import {
 } from "firebase/auth";
 
 import handleLogout from '../components/body/auth/Logout'
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { infUserInfo, adUserInfo } from '../api'
 
 const Layout = () => {
 
-  const [userRole, setUserRole] = useState('')
+  // const [userRole, setUserRole] = useState('')
   const auth = getAuth();
 
   const state = useSelector((state) => state)
@@ -41,19 +43,38 @@ const Layout = () => {
   //     }
   //   }
   // }
-  const myrole =  'influencer'
+  const uid = auth?.currentUser?.uid || "undefined";
+  const infQuery = useQuery({
+    queryKey: ["inf"],
+    queryFn: () => infUserInfo(uid),
+  });
+  if (infQuery.isLoading === "loading") console.log("loading");
+  if (infQuery.status === "error") console.log("err");
+  console.log(infQuery?.data?.data?.role);
+
+
+  const adQuery = useQuery({
+    queryKey: ["ad"],
+    queryFn: () => adUserInfo(uid),
+  });
+  if (adQuery.isLoading === "loading") console.log("loading");
+  if (adQuery.status === "error") console.log("err");
+  console.log(adQuery?.data?.data?.role);
+  const adr = adQuery?.data?.data?.role
+  
+ const userRole = adQuery?.data?.data?.role || infQuery?.data?.data?.role
   
 
 
 
 
-  const sidebarRender = () => {
-    if (myrole === "influencer"){
-      return(<InfNavBar />)
-    } else {
-      return(<AdNavBar />)
-    }
-  }
+  // const sidebarRender = () => {
+  //   if (myrole === "influencer"){
+  //     return(<InfNavBar />)
+  //   } else {
+  //     return(<AdNavBar />)
+  //   }
+  // }
 
 
   return (
@@ -61,7 +82,7 @@ const Layout = () => {
 
       <header className="header">
       {
-          myrole === "influencer"
+          userRole === "influencer"
           ? <HeaderINF />
           : <HeaderAD />
         }
@@ -76,9 +97,9 @@ const Layout = () => {
     <main className="main">
       <Outlet />
     </main>
-    <footer className="footer">
+    {/* <footer className="footer">
         Footer
-    </footer>
+    </footer> */}
   </div>
   )
 }

@@ -34,7 +34,92 @@ const INFProfile = () => {
     bindActionCreators(actionCreators, dispatch);
   const navigate = useNavigate();
   const auth = getAuth();
-  //const uid = infQuery?.data?.data?.uid;
+
+  const apicall = async() => {
+    const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/inf/test`)
+    .then((res) => console.log(res.data))
+  }
+
+
+  // // ABOUT YOUTUBE API
+  // const YOUR_CLIENT_ID = process.env.REACT_APP_YOUTUBE_CLIENT_ID
+  // const YOUR_REDIRECT_URI = 'http://localhost:3000/INFProfile'
+  // const fragmentString = window.location.hash.substring(1);
+  
+  // const params = {};
+  // var regex = /([^&=]+)=([^&]*)/g, m;
+
+
+  // while (m = regex.exec(fragmentString)) {
+  //   params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+  // }
+  // if (Object.keys(params).length > 0) {
+  //   localStorage.setItem('oauth2-test-params',JSON.stringify(params));
+  //   console.log(JSON.stringify(params['access_token']))
+  //   if (params['state'] && params['state'] == 'try_sample_request') {
+  //     trySampleRequest();
+  //   }
+  // }
+  //   // If there's an access token, try an API request.
+  // // Otherwise, start OAuth 2.0 flow.
+  // async function trySampleRequest () {
+  //   var params = JSON.parse(localStorage.getItem('oauth2-test-params'));
+  //   let utoken = params.access_token
+  //   if (params && params['access_token']) {
+  //     const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/inf/youtubeapicall`,{
+  //       utoken
+  //         })
+  //     var xhr = new XMLHttpRequest();
+  //     xhr.open('GET',
+  //         'https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=true&' +
+  //         'access_token=' + params['access_token']);
+  //     xhr.onreadystatechange = function (e) {
+  //       if (xhr.readyState === 4 && xhr.status === 200) {
+  //         console.log('api res', xhr.response);
+          
+  //       } else if (xhr.readyState === 4 && xhr.status === 401) {
+  //         // Token invalid, so prompt for user permission.
+  //         oauth2SignIn();
+  //       }
+  //     };
+  //     xhr.send(null);
+  //   } else {
+  //     oauth2SignIn();
+  //   }
+  // }
+  // /*
+  //  * Create form to request access token from Google's OAuth 2.0 server.
+  //  */
+  // function oauth2SignIn() {
+  //   // Google's OAuth 2.0 endpoint for requesting an access token
+  //   var oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
+
+  //   // Create element to open OAuth 2.0 endpoint in new window.
+  //   var form = document.createElement('form');
+  //   form.setAttribute('method', 'GET'); // Send as a GET request.
+  //   form.setAttribute('action', oauth2Endpoint);
+
+  //   // Parameters to pass to OAuth 2.0 endpoint.
+  //   var params = {'client_id': YOUR_CLIENT_ID,
+  //                 'redirect_uri': YOUR_REDIRECT_URI,
+  //                 'scope': "https://www.googleapis.com/auth/youtube",
+  //                 'state': 'try_sample_request',
+  //                 'include_granted_scopes': 'true',
+  //                 'response_type': 'token'};
+
+  //   // Add form parameters as hidden input values.
+  //   for (var p in params) {
+  //     var input = document.createElement('input');
+  //     input.setAttribute('type', 'hidden');
+  //     input.setAttribute('name', p);
+  //     input.setAttribute('value', params[p]);
+  //     form.appendChild(input);
+  //   }
+  //   // Add form to page and submit it to open the OAuth 2.0 endpoint.
+  //   document.body.appendChild(form);
+  //   form.submit();
+  // }
+
 
   const handleClickOpen = (scrollType) => () => {
     setOpen(true);
@@ -45,11 +130,15 @@ const INFProfile = () => {
     setOpen(false);
   };
 
-  const handleClick = async () => {
-    console.log('클릭 실행');
-    const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/inf/test`)
-    console.log('완료', res);
-  };
+
+  // const handleClick = async () => {
+  //   console.log('클릭 실행');
+  //   const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/inf/youtubeapicall`,{
+  //     token
+  //   })
+  //   console.log('완료', res);
+  // };
+
 
   const uid = auth?.currentUser?.uid || "undefined";
   const infQuery = useQuery({
@@ -214,7 +303,9 @@ const INFProfile = () => {
                 <div className="sns_textContainer">
                   <div className="sns_status">status</div>
                   <div className="sns_connect">
-                    <Button variant="contained" onClick={handleClick}>connect</Button>
+
+                    <Button variant="contained" onClick={() => apicall()}>connect</Button>
+
                   </div>
                   <div className="sns_disconnect">disconnect</div>
                 </div>

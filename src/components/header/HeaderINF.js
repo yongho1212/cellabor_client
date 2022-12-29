@@ -15,13 +15,9 @@ import { getAuth, signOut } from "firebase/auth";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { IconContext } from "react-icons/lib";
 
-import {
-  QueryClient,
-  useQuery,
-} from "@tanstack/react-query";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 
 import "./HeaderINF.css";
-
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -29,7 +25,7 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const HeaderINF = () => {
   const [userRole, setUserRole] = useState("");
   const [text, setText] = React.useState("");
-  
+
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
 
@@ -49,7 +45,6 @@ const HeaderINF = () => {
   const showButton = () => {
     if (window.innerWidth <= 500) {
       setButton(false);
-      
     } else {
       setButton(true);
     }
@@ -83,7 +78,6 @@ const HeaderINF = () => {
   };
 */
 
-
   let navigate = useNavigate();
 
   function handleSearch() {
@@ -113,7 +107,7 @@ const HeaderINF = () => {
 
   async function handleLogout() {
     try {
-      queryClient.removeQueries('inf')
+      queryClient.removeQueries("inf");
       nofbuser(false);
       signOut(auth);
       navigate("/Home");
@@ -135,28 +129,32 @@ const HeaderINF = () => {
     <>
       <IconContext.Provider value={{ color: "#fff" }}>
         <nav className="navbar">
-          <div className="navbar-container container">
-            <Link
-              to="Main"
-              className='navbar-logo' 
-              onClick={closeMobileMenu}
-              style={{
-                textDecoration: "none",
-                color: "#000",
-                fontSize: 31,
-                fontWeight: "bold",
-                marginInline: 10,
-              }}
-            >
-              Cellabor
-            </Link>
-          
+          <div className="navbar-container">
+            <div >
+              <Link
+                to="Main"
+                className="navbar-logo"
+                onClick={closeMobileMenu}
+                style={{
+                  textDecoration: "none",
+                  color: "#000",
+                  fontSize: 31,
+                  fontWeight: "bold",
+                  marginInline: 10,
+                  
+                }}
+              >
+                Cellabor
+              </Link>
+            </div>
+            
 
-          <div className="menu-icon" onClick={handleClick}>
-            {click ? <FaTimes /> : <FaBars />}
-          </div>
-          <ul className={click ? "nav-menu active" : "nav-menu"}>
-            {/* <li className="nav-item">
+            <div className="menu-icon" onClick={handleClick}>
+              {click ? <FaTimes /> : <FaBars />}
+            </div>
+            <div className='nav-btn-container'>
+            <ul className={click ? "nav-menu active" : "nav-menu"}>
+              {/* <li className="nav-item">
               <Input
                 variant="contained"
                 placeholder="검색어"
@@ -191,49 +189,48 @@ const HeaderINF = () => {
                 검색
               </Link>
             </li> */}
-            <li className="nav-item">
-              <Button
-                variant="contained"
-                style={{
-                  color: "#03ff95",
-                  backgroundColor: "#03ff95",
-                  color: "#000",
-                  marginInline: 10,
-                }}
-                onClick={handleClickChat}
-              >
-                채팅
-              </Button>
-            </li>
-            <li className="nav-item">
-              <Button
-                variant="contained"
-                style={{
-                  color: "#03ff95",
-                  backgroundColor: "#03ff95",
-                  color: "#000",
-                  marginInline: 10,
-                }}
-                onClick={handleClickProfile}
-              >
-                프로필
-              </Button>
-            </li>
-            <li className="nav-item">
-              <Button
-                variant="contained"
-                style={{
-                  color: "#03ff95",
-                  backgroundColor: "#03ff95",
-                  color: "#000",
-                  marginInline: 10,
-                }}
-                onClick={handleLogout}
-              >
-                로그아웃
-              </Button>
-            </li>
-          </ul>
+              <li className="nav-item">
+                <Button
+                  variant="contained"
+                  style={{
+                    backgroundColor: "#03ff95",
+                    color: "#000",
+                    marginInline:'10px'
+                  }}
+                  onClick={handleClickChat}
+                >
+                  채팅
+                </Button>
+              </li>
+              <li className="nav-item">
+                <Button
+                  variant="contained"
+                  style={{
+                    backgroundColor: "#03ff95",
+                    color: "#000",
+                    marginInline:'10px'
+                  }}
+                  onClick={handleClickProfile}
+                >
+                  프로필
+                </Button>
+              </li>
+              <li className="nav-item">
+                <Button
+                  variant="contained"
+                  style={{
+                    backgroundColor: "#03ff95",
+                    color: "#000",
+                    marginInline:'10px'
+                  }}
+                  onClick={handleLogout}
+                >
+                  로그아웃
+                </Button>
+              </li>
+            </ul>
+            </div>
+            
           </div>
         </nav>
       </IconContext.Provider>

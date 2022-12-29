@@ -45,9 +45,11 @@ const ProdcutView = ({ useParams }) => {
   // }, []);
 
   return (
-    <div style={{ justifyContent: "center", alignItems: "center" }}>
+    <div style={{ justifyContent: "center", alignItems: "center", display:"flex", flexDirection:'column', width:'100vw' }}>
       {/* 내가 진행하고 있는 켐페인에 대한 리스트 */}
-      <div>
+
+      {/* 한페이지 당 표시할 게시물 수  설정 */}
+      {/* <div>
         <label>
           페이지 당 표시할 게시물 수:&nbsp;
           <select
@@ -62,7 +64,7 @@ const ProdcutView = ({ useParams }) => {
             <option value="100">100</option>
           </select>
         </label>
-      </div>
+      </div> */}
 
       {/* 상품 추천 슬라이더  */}
       {/* <ProductRecommendSlider /> */}
@@ -109,15 +111,17 @@ const ProdcutView = ({ useParams }) => {
             })
           : ""}
       </div>
-
-      <div>
-        <Pagination
-          total={prdlength || 0}
-          limit={limit}
-          page={page}
-          setPage={setPage}
-        />
+      <div className="pgntContainer">
+        <div className="pgnt">
+          <Pagination
+            total={prdlength || 0}
+            limit={limit}
+            page={page}
+            setPage={setPage}
+          />
+        </div>
       </div>
+      
     </div>
   );
 };
