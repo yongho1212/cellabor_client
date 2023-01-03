@@ -7,12 +7,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../state/index';
 
-
-
 import {
   getAuth,
   signOut,
 } from "firebase/auth";
+
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from "@tanstack/react-query";
+import { adUserInfo, infPrd } from "../../../api";
+
 
 const Myprd = () => {
 
@@ -27,10 +33,18 @@ const Myprd = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state)
   const {loginUser, logoutUser, fbuser, nofbuser} = bindActionCreators(actionCreators, dispatch);
+  const queryClient = new QueryClient();
 
-  const uid = state.advertiser.state.adloginData.uid;
-// const uid = "m8mU6Gzf74Vl55CmwDZYNFfIHbt1"
+  const uid = auth?.currentUser?.uid || "undefined";
   
+  const adQuery = useQuery({
+    queryKey: ["ad"],
+    queryFn: () => adUserInfo(uid),
+    staleTime: 1000 * 60,
+  }); 
+  if (adQuery.isLoading === "loading") console.log("loading");
+  if (adQuery.status === "error") console.log("err");
+  console.log(adQuery.data);
 
   const handleLogout = async () => {
     try {

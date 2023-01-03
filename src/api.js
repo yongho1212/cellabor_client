@@ -58,6 +58,27 @@ export const infEditUserProfile = async ({
   return response;
 };
 
+// 광고주 회원데이터 수정
+export const adEditUserProfile = async ({
+  uid,brand_name,tags,insta,mobile,logo,website,facebook,twitter,youtube,location,about
+}) => {
+  const response = await authApi.get("/ad/ad_update_profile", {
+    uid,
+    brand_name,
+    insta,
+    mobile,
+    logo,
+    tags,
+    website,
+    facebook,
+    twitter,
+    youtube,
+    location,
+    about,
+  });
+  return response;
+};
+
 // 서버에 올라와있는 상품들 불러오기
 export const importAllProducts = async () => {
   const response = await authApi.post("/products/getlist")
