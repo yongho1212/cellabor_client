@@ -1,0 +1,35 @@
+.homeContentsContainer{
+    height:90vh;
+    width:50vw;
+    background-color:#F22613;
+    margin:30px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+  
+  img {
+    border: 0;
+    max-width: 100%;
+    vertical-align: middle;
+    display: inline-block;
+  }
+  
+  @media screen and (max-width: 991px) {
+    .container {
+      padding-right: 30px;
+      padding-left: 30px;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .home__hero-text-wrapper {
+      padding-bottom: 65px;
+    }
+  
+    .col {
+      max-width: 100%;
+      flex-basis: 100%;
+    }
+  }
+  
