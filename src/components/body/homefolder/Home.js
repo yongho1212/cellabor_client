@@ -25,9 +25,10 @@ const Home = () => {
         {/* <Section {...homeObjOne} />
         <Section {...homeObjThree} />
         <Section {...homeObjTwo} /> */}
-        <Box num={1} />
-        <Box num={2} />
-        <Box num={3} />
+        
+        <Box {...homeObjOne} />
+        <Box {...homeObjTwo} />
+        <Box {...homeObjTwo} />
       </div>
     </>
   );
