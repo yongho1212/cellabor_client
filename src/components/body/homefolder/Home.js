@@ -28,7 +28,7 @@ const Home = () => {
         
         <Box {...homeObjOne} />
         <Box {...homeObjTwo} />
-        <Box {...homeObjTwo} />
+        <Box {...homeObjThree} />
       </div>
     </>
   );

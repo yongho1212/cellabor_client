@@ -6,11 +6,11 @@ export const homeObjOne = {
     lightBg: false,
     lightText: true,
     lightTextDesc: true,
-    topLine: '서비스 준비중입니다.',
-    headline: '서비스 준비중입니다.',
+    topLine: '100% SECURE',
+    headline: 'Stay protected 24/7 anywhere anytime',
     description:
-      '서비스 준비중입니다.',
-    buttonLabel: 'Get Started',
+      'We have you covered no matter where you are located. Over 140 locations worldwide to ensure you have access anytime',
+    buttonLabel: 'Learn More',
     imgStart: '',
     img: homeimg1
     // alt: 'Credit Card'
@@ -43,16 +43,3 @@ export const homeObjOne = {
     img: homeimg3,
     alt: 'Vault'
   };
-  
-  export const img1 = {
-    img: 'images/1.png'
-  };
-
-  export const img2 = {
-    img: 'images/2.png'
-  };
-
-  export const img3 = {
-    img: 'images/3.png'
-  };
-  

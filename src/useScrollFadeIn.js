@@ -92,7 +92,7 @@ const Box = ({
         initial="hiddenRight"
         animate={control}
       >
-        <div style={{ backgroundColor: "green" }}> 
+        <div className="rightsideContainer"> 
         <img src={img} alt={alt} style={{width:'300px'}} />
         </div>
       </motion.div>

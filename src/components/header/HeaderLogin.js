@@ -77,18 +77,23 @@ const HeaderLogin = () => {
   
 
   return (
-    <AppBar position="static" style={{backgroundColor:'#fff', zIndex:100}}>
-      <Container maxWidth="xl" >
+    <div position="static" style={{backgroundColor:'#fff', zIndex:100, justifyContent:'center', alignItems:'center', display:'flex', }}>
+      <Container style={{width:"87vw"}} >
         <div style={{justifyContent:'space-between', 
         display:'flex', 
-        height:'7vh',
+        height:'11vh',
+        alignItems:'center',
+        paddingInline:'15px',
+        marginTop:'-15px',
+        border: '3px solid #193c46',
+        borderRadius:'21px',
         
-        alignItems:'center'}}>
+        }}>
         
         <Box>
             <div 
                 variant="contained"
-                style={{ color:"#3E588C", marginInline:10, fontSize:25, fontWeight:'bold'}}
+                style={{ color:"#193c46", marginInline:10, fontSize:29, fontWeight:'bold'}}
                 onClick={handleClickHome}
             >
                Cellabor
@@ -105,12 +110,13 @@ const HeaderLogin = () => {
             <Button 
                 variant="contained"
                 style={{
-                backgroundColor:"#77A1D9",
-                color:"#0D378C",
-                marginInline:3,
+                backgroundColor:"#fff",
+                color:"#193c46",
+                marginInline:'9px',
                 height:'31px',
                 width:'71px',
-                fontWeight:'bold'
+                fontWeight:'bold',
+                
               }}
                 onClick={handleClickSignUp}
             >
@@ -118,10 +124,13 @@ const HeaderLogin = () => {
             </Button>
             <Button 
                 variant="outlined"
-                style={{color:"#0D378C", borderColor:"#77A1D9" , marginInline:3,
+                style={{color:"#193c46", borderColor:"grey" , marginInline:3,
                 height:'31px',
                 width:'71px',
-                fontWeight:'bold'}}
+                fontWeight:'bold',
+                marginInline:'9px',
+                
+              }}
                 onClick={handleClickSignIn}
             >
                 Login
@@ -135,7 +144,7 @@ const HeaderLogin = () => {
          
         </div>
       </Container>
-    </AppBar>
+    </div>
   );
 };
 export default HeaderLogin;
