@@ -122,9 +122,16 @@ const HeaderProfile = () => {
   
 
   return (
-    <AppBar position="static" style={{backgroundColor:'#fff', zIndex:100}}>
-      <Container maxWidth="xl" >
-        <Toolbar disableGutters style={{justifyContent:'space-between'}}>
+    <div position="static" style={{backgroundColor:'#fff', zIndex:100}}>
+      <Container style={{width:"87vw"}} >
+        <div style={{justifyContent:'space-between', 
+        display:'flex', 
+        height:'11vh',
+        alignItems:'center',
+        paddingInline:'15px',
+        marginTop:'-15px',
+        border: '3px solid #193c46',
+        borderRadius:'21px',}}>
         
         <Box>
           <Link to="Main" style={{ backgroundColor:'#fff', color:'#000', fontSize:31, fontWeight:'bold', marginInline:10}}>Sway</Link>
@@ -208,9 +215,9 @@ const HeaderProfile = () => {
 
 
          
-        </Toolbar>
+        </div>
       </Container>
-    </AppBar>
+    </div>
   );
 };
 export default HeaderProfile;

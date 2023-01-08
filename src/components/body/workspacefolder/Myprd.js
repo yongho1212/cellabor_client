@@ -85,7 +85,7 @@ const Myprd = () => {
 
   
   return (
-    <div className="main_Right_chan" style={{display: 'flex', flexWrap: 'wrap'}}>
+    <div className="main_Right_chan" style={{display: 'flex', flexWrap: 'wrap', justifyContent:'center'}}>
       <div style={{width:'100%'}}>
       나의 상품리스트
       </div>
@@ -97,7 +97,11 @@ const Myprd = () => {
               {/* <Link to={`/Detail/${item.name}`} /> */}
               <div style={{ width: '200px', height: '200px', backgroundColor: 'red' }}>
                 
-                <img className='profile-img' src={item.photo} />
+                <img 
+                  className='profile-img' 
+                  src={item.photo} 
+                  style={{objectFit:'fill', width: '200px', height: '200px',}}
+                  />
               </div>
               
               <div style={{ display: 'flex', flexDirection: 'column',  backgroundColor:'#fff' }}>

@@ -13,9 +13,13 @@ a:hover{ color:#49ffbd; }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: red;
   width: 95vw;
   margin-inline: 10px;
+  border: 3px solid #193c46;
+  border-radius:21px;
+  padding-inline:15px;
+  margin-top:-15px;
+  width:87vw;
 }
 
 .nav-btn-container {

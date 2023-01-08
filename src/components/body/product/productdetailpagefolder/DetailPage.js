@@ -3,12 +3,14 @@ import axios from 'axios'
 import { useParams } from "react-router-dom";
 import { Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
+import {getAuth} from 'firebase/auth'
 
 const DetailPage = () => {
     const [product, setProduct] = useState([]); // 제품 정보
     const { id } = useParams();
     const state = useSelector((state) => state);
-    const uid = state.auth.state.loginData.uid;
+    const auth = getAuth();
+    const uid = auth?.currentUser?.uid;
 
     const [already, setAlready] = useState(false)
 

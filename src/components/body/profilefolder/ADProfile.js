@@ -24,6 +24,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 import ADEditProfile from "./ADEditprofile";
+import Myprd from "../workspacefolder/Myprd";
 
 import { async } from "@firebase/util";
 import axios from "axios";
@@ -136,29 +137,38 @@ const ADProfile = () => {
               alt="Remy Sharp"
               src={adQuery?.data?.data?.logo}
               sx={{ width: 179, height: 179 }}
-              style={{ marginTop: "10vh", marginLeft: "1vh" }}
+              style={{
+                marginTop: "30px",
+                marginLeft: "1vh",
+              }}
             />
-            <div>{adQuery?.data?.data?.brand_name}</div>
-            <div>{adQuery?.data?.data?.facebook}</div>
-            <div>{adQuery?.data?.data?.aboutme}</div>
-            <br />
-            인스타
-            {adQuery?.data?.data?.insta}
-            <br />
-            이메일
-            {adQuery?.data?.data?.email}
-            <br />
-            번호
-            {adQuery?.data?.data?.mobile}
-            <br />
-            태그
-            {adQuery?.data?.data?.tags}
-            <br />
+            <div style={{justifyContent:'flex-start'}}> 
+
+            <div className="sidebarInfoContainer">
+              <div className="sidebarInfoName">브랜드 이름</div>
+              <div className="sidebarInfoInfo">{adQuery?.data?.data?.brand_name}</div>
+            </div>
+
+            <div className="sidebarInfoContainer">
+              <div className="sidebarInfoName">카테고리</div>
+              <div className="sidebarInfoInfo">카테고리 업종</div>
+            </div>
+
+            <div className="sidebarInfoContainer">
+              <div className="sidebarInfoName">위치</div>
+              <div className="sidebarInfoInfo">{adQuery?.data?.data?.location}</div>
+            </div>
+              
+              
+            </div>
           </div>
         </grd.SideBar>
 
         <grd.Main>
-          <div>MY PRD LIST</div>
+          
+          <div style={{justifyContent:'center', display:'flex', alignItems:'center'}}>
+            <Myprd />
+          </div>
         </grd.Main>
         <grd.ContentBox>
           <grd.Content1>
@@ -167,7 +177,6 @@ const ADProfile = () => {
                 display: "flex",
                 justifyContent: "center",
                 backgroundColor: "#667",
-                height: "90vh",
               }}
             >
               <div style={{ width: "50vw" }}>

@@ -14,6 +14,10 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { db, auth } from "../../../../firebase";
+import {
+  getAuth,
+} from "firebase/auth";
+
 import { useNavigate } from "react-router-dom";
 import { reload } from "@firebase/auth";
 import { async } from "@firebase/util";
@@ -32,8 +36,9 @@ const EditDetailpage = () => {
   const { loginUser, logoutUser, fbuser, nofbuser, adaddchannel } =
     bindActionCreators(actionCreators, dispatch);
   const navigate = useNavigate();
+  const auth = getAuth();
 
-  const uid = state.auth.state.loginData.uid;
+  const uid = auth?.currentUser?.uid;
 
   console.log(applicant);
   console.log(id);
