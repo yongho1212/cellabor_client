@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-  
+import TextField from "@mui/material/TextField";
 
 let autoComplete;
 
@@ -37,9 +37,9 @@ async function handlePlaceSelect(updateQuery) {
   const addressObject = autoComplete.getPlace();
   const query = addressObject.formatted_address;
   updateQuery(query);
-  console.log(query);
-  console.log(addressObject);
-  console.log(addressObject.formatted_address)
+  // console.log(query);
+  // console.log(addressObject);
+  // console.log(addressObject.formatted_address)
 }
 
 const SearchLocationInput = (props) => {
@@ -48,7 +48,7 @@ const SearchLocationInput = (props) => {
   const [address, setAddress] = useState("")
   
   props.setLocation(query);
-  console.log(query);
+  
 
   useEffect(() => {
     loadScript(
@@ -57,8 +57,9 @@ const SearchLocationInput = (props) => {
     );
   }, []);
 
+  
+
 const handleChange = (event, query) => {
-    console.log(query);
     setQuery(event.target.value);
   }
 

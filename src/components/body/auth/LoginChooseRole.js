@@ -15,7 +15,7 @@ const LoginChooseRole = () => {
   }
 
   return (
-    <div style={{ justifyContent: "center", alignItems: "center", height:'90vh' }}>
+    <div style={{ justifyContent: "center", alignItems: "center", height:'90vh', display:'flex', flexDirection:'column' }}>
       <div >
         It's login page!
       </div>

@@ -258,6 +258,7 @@ const UploadProfile = () => {
             >
               <MenuItem value={'male'}>male</MenuItem>
               <MenuItem value={'female'}>female</MenuItem>
+              <MenuItem value={'none'}>none</MenuItem>
               
             </Select>
           </FormControl>

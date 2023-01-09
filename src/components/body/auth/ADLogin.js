@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import GoogleButton from "react-google-button";
+import { TextField } from "@mui/material";
 
 import {
   signInWithEmailAndPassword,
@@ -170,35 +171,59 @@ console.log(adQuery.data);
 
   return (
     <>
-      <div className="p-4 box">
-        <h2 className="mb-3">Firebase Auth Login</h2>
+      <div style={{
+          alignItems: "center",
+          display: "flex",
+          flexDirection: "column",
+          height: "100%",
+          marginBottom: "30px",
+          marginBlock:'40px'
+        }}>
+        
 
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Control
-              type="email"
-              placeholder="Email address"
-              onChange={(e) => setEmail(e.target.value)}
-            />
+          <TextField
+                id="outlined-basic"
+                label="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                style={{ width: "80vw", marginBlock: "1vw" }}
+              />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
+          <TextField
+                id="outlined-password-input"
+                label="Password"
+                type="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                style={{ width: "80vw", marginBlock: "1vw" }}
+              />
           </Form.Group>
 
-          <div className="d-grid gap-2">
-            <Button variant="primary" type="Submit">
-              Log In
-            </Button>
-            <div> 준비중입니다.</div>
-          </div>
+          <div style={{display:'flex', justifyContent:'center'}}>
+              <Button
+                variant="primary"
+                type="Submit"
+                style={{
+                  width: "80vw",
+                  padding: 10,
+                  fontSize: 19,
+                  fontWeight: "bold",
+                  marginBlock: "3vw",
+                }}
+              >
+                Log In
+              </Button>
+            </div>
         </Form>
-        <hr />
-        <div>
+        <div className="p-4 box mt-3 text-center">
+        Don't have an account? <Link to="/signup">Sign up</Link>
+      </div>
+        {/* <div>
           <GoogleButton
             className="g-btn"
             type="dark"
@@ -207,11 +232,9 @@ console.log(adQuery.data);
           <Button variant="primary" onClick={handleFBSignIn}>
             FACEBOOK
           </Button>
-        </div>
+        </div> */}
       </div>
-      <div className="p-4 box mt-3 text-center">
-        Don't have an account? <Link to="/signup">Sign up</Link>
-      </div>
+      
     </>
   );
 };
