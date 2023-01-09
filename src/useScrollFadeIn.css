@@ -1,11 +1,19 @@
 .homeContentsContainer{
     height:90vh;
     width:50vw;
-    background-color:#F22613;
+    
     margin:30px;
     display:flex;
     justify-content:center;
     align-items:center;
+}
+
+.rightsideContainer{
+  
+  height:90vh;
+  justify-content:center;
+  align-items:center;
+  display:flex;
 }
   
   img {

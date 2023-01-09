@@ -89,7 +89,7 @@ const AdSignup = () => {
 
   return (
     <ThemeProvider theme={theme}>
-    <Container style={{height:'90vh'}}>
+    <Container style={{height:'85vh'}}>
       <CssBaseline />
       <Typography>
           광고주 회원가입 페이지 입니다.
@@ -104,23 +104,35 @@ const AdSignup = () => {
         >
         <Form onSubmit={handleSubmit}>
         <Box className="mb-3" controlId="formBasicName">
+          <div style={{fontWeight:'bold'}}>
+            BrandName
+          </div>
             <TextField
               type="name"
               placeholder="brand name"
+              style={{width:'200px', marginBottom:'10px'}}
               onChange={(e) => setDisplayName(e.target.value)}
             />
           </Box>
           <Box className="mb-3" controlId="formBasicEmail">
+          <div style={{fontWeight:'bold'}}>
+            Email
+          </div>
             <TextField
               type="email"
               placeholder="Email address"
+              style={{width:'200px', marginBottom:'10px'}}
               onChange={(e) => setEmail(e.target.value)}
             />
           </Box>
           <Box className="mb-3" controlId="formBasicPassword">
+          <div style={{fontWeight:'bold'}}>
+            Password
+          </div>
             <TextField
               type="password"
               placeholder="Password"
+              style={{width:'200px', marginBottom:'10px'}}
               onChange={(e) => setPassword(e.target.value)}
             />
           </Box>
@@ -129,6 +141,7 @@ const AdSignup = () => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            style={{backgroundColor:'#193c46', fontWeight:'bold'}}
             >
               Sign up
             </Button>

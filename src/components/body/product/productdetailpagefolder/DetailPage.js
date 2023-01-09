@@ -3,12 +3,17 @@ import axios from 'axios'
 import { useParams } from "react-router-dom";
 import { Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
+import {getAuth} from 'firebase/auth'
+import './detailPage.css'
+
+import * as grd from "../detailComponents";
 
 const DetailPage = () => {
     const [product, setProduct] = useState([]); // 제품 정보
     const { id } = useParams();
     const state = useSelector((state) => state);
-    const uid = state.auth.state.loginData.uid;
+    const auth = getAuth();
+    const uid = auth?.currentUser?.uid;
 
     const [already, setAlready] = useState(false)
 
@@ -73,48 +78,62 @@ const applyChecker = async() => {
     }, []);
 
     return (
-        <div>
-            <div>{uid}</div>
-            {item ? 
-            <div>
-                <div>{item._id}</div>
-                <h1>상품 상세 페이지</h1>
-                <div>
-                    상품명 {item.name}    
+        <>
+        <grd.Container>
+            <grd.SideBar>
+                <div className="detailpageContainer">
+                 {/* 디테일 페이지 상단 정보 요약  */}
+                <div className="headerContainer">
+                    <div className="headerTitle">
+                    {item.name}
+                    </div>
+                    <div className="headerBrand">
+                    {item.brand}    
+                    </div>
+                    <div className="headerDescription">
+                    This is description
+                    </div>
+                    <div className="headerCategory">
+                    {item.targetPlatform}    
+                    </div>
                 </div>
-                <div>
-                    브랜드 {item.brand}    
-                </div>
-                <div>
-                    카테고리 {item.category}    
-                </div>
-                <div>
-                    전화번호 {item.mobile}    
-                </div>
-                <div>
-                    확인 여부 {item.isCheck}    
-                </div>
-                <div>
-                    상품 사진 {item.photo}
+
+                {/** 상세정보 컨테이너 */}
+                <div className="infoContainer">
+                    <div className="picContainer">
                     <img
                         src={item.photo}
                         width='100'
                         height='100'
                         alt='testA' 
                     />
-                </div>
-                <div>
-                    타겟 플랫폼 {item.targetPlatform}    
-                </div> 
-                {/* {item ? item.applicant.map(e => {
-                    return (
-                        <div key={e}>
-                            {e}
+                    </div>
+                    <div className="infoReward">
+                        <div className="textTitle">
+        제공내역
                         </div>
-                    )
-                }) : <></>} */}
-            </div> : <div>업로드 실패</div>}
-            <div>
+                        <div className="textDescription">
+                            1.ㅇㅁㄴㅇㅁㄴㅇㅁㄴ<br/>
+                            2..ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ<br/>
+                            2...ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ<br/>
+                        </div>
+                    </div>
+                    <div className="infoDescription">
+                        <div className="textTitle">
+
+                        </div>
+                        <div className="textDescription">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            </grd.SideBar>
+            <grd.ContentBox>
+                <grd.Content1>
+                <div>
                 { already === false ?
                     <Button onClick={appliyCampaign}>
                     신청하기
@@ -123,7 +142,11 @@ const applyChecker = async() => {
                     <p>이미 신청하셨습니다.</p>
                 }
             </div>
-        </div>
+                </grd.Content1>
+            </grd.ContentBox>
+        </grd.Container>
+        </>
+        
     );
 };
 

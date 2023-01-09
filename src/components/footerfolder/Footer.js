@@ -51,12 +51,12 @@ function Footer() {
       <section className='social-media'>
         <div className='social-media-wrap'>
           <div className='footer-logo'>
-            <Link to='/' className='social-logo'>
+            <Link to='/' className='social-logo' style={{fontWeight:'bold'}}>
               {/*<MdFingerprint className='navbar-icon' />*/}
-            Collaber
+            Cellabor
             </Link>
           </div>
-          <small className='website-rights'>Collaber © 2022</small>
+          <small className='website-rights'>Cellabor © 2023</small>
           <div className='social-icons'>
             <Link
               className='social-icon-link'

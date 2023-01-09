@@ -16,10 +16,10 @@ const boxVariant = {
 
 const boxVariantRight = {
   visibleRight: {
-    x: 300,
+    x: 170,
     opacity: 1,
     scale: 1,
-    transition: { duration: 1, delay: 0.6, ease: [0, 0.71, 0.2, 1.01] },
+    transition: { duration: 1, delay: 0.4, ease: [0, 0.71, 0.2, 1.01] },
   },
   hiddenRight: {
     opacity: 0,
@@ -80,9 +80,7 @@ const Box = ({
                 </div>
               </div>
 
-              <div>
-                <img src={img} alt={alt} />
-              </div>
+             
             </div>
           </div>
         </div>
@@ -94,7 +92,9 @@ const Box = ({
         initial="hiddenRight"
         animate={control}
       >
-        <div style={{ backgroundColor: "green" }}>{topLine}</div>
+        <div className="rightsideContainer"> 
+        <img src={img} alt={alt} style={{width:'300px'}} />
+        </div>
       </motion.div>
     </div>
   );

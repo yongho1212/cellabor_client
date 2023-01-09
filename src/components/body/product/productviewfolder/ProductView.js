@@ -68,7 +68,7 @@ const ProdcutView = ({ useParams }) => {
 
       {/* 상품 추천 슬라이더  */}
       {/* <ProductRecommendSlider /> */}
-      <div className="main_prd" style={{ display: "flex", flexWrap: "wrap" }}>
+      <div className="main_prd" style={{ display: "flex", flexWrap: "wrap", justifyContent:'center' }}>
         {product? product.slice(offset, offset + limit).map((item) => {
               return (
                 <div
@@ -95,7 +95,11 @@ const ProdcutView = ({ useParams }) => {
                         backgroundColor: "red",
                       }}
                     >
-                      <img className="profile-img" src={item.photo} />
+                      <img 
+                        className="profile-img" 
+                        src={item.photo} 
+                        style={{objectFit:'fill', width: '200px', height: '200px',}}
+                        />
                     </div>
                     {/* 상품 정보 */}
                     <div style={{ display: "flex", flexDirection: "column" }}>

@@ -3,13 +3,13 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: grid;
   height: 200vh;
-  width: 70vw;
+  width: 90vw;
   margin: auto;
   grid-template-areas:
-    "nav nav nav"
-    "sidebar content content"
-    "sidebar content content"
-    "main main main"
+    
+    "sidebar sidebar content"
+    "sidebar sidebar content"
+    
     "footer footer footer";
   grid-template-rows: 0.2fr 2fr 1.25fr 1.25fr 0.2fr;
   grid-template-columns: 0.8fr 1.2fr 0.8fr;
@@ -52,7 +52,7 @@ export const SideBar = styled.div`
   padding: 0.25rem;
   display: flex;
   justify-content: center;
-  
+  height: 100%;
   margin: 13px;
   border-radius: 17px;
 `;
@@ -74,7 +74,7 @@ export const Content1 = styled.div`
   
   background-color: #D9D9D9;
   width: 95%;
-  height: 100%;
+  height: 90%;
   justify-content: center;
   align-items: center;
   border-radius: 17px;
