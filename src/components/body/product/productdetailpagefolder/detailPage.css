@@ -1,0 +1,79 @@
+
+.detailpageContainer{
+    display: flex;
+    background-color: hotpink;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+    
+}
+
+.headerContainer{
+    background-color: green;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 5px;
+}
+
+.headerTitle{
+    font-weight: bold;
+    font-size: 27px;
+    margin-block: 2px;
+}
+
+.headerBrand{
+    margin-block: 2px;
+}
+
+.headerDescription{
+    font-size: 17px;
+    color: grey;
+    margin-block: 2px;
+}
+
+.headerCategory{
+    margin-block: 2px;
+}
+
+.infoContainer{
+    display: flex;
+    background-color: blue;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.picContainer{
+    background-color: red;
+    width: 100%;
+    height: 40vh;
+
+}
+
+.infoReward{
+    height: 20vh;
+    background-color: #fff;
+    width: 100%;
+    display: flex;
+}
+
+.infoDescription{
+    height: 20vh;
+    background-color: #000;
+    width: 100%;
+}
+
+.textTitle{
+
+flex: 1;
+}
+
+.textDescription{
+flex: 3;
+align-items: flex-start;
+display: flex;
+}

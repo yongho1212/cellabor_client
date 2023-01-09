@@ -16,7 +16,7 @@ const boxVariant = {
 
 const boxVariantRight = {
   visibleRight: {
-    x: 200,
+    x: 170,
     opacity: 1,
     scale: 1,
     transition: { duration: 1, delay: 0.6, ease: [0, 0.71, 0.2, 1.01] },
