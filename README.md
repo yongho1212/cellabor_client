@@ -1,10 +1,19 @@
-# Getting Started with Create React App
+# 인플루언서 마케팅 플랫폼 "cellabor"입니다.
+인플루언서는 진행중인 캠페인/광고/협찬 등을 확인하고 신청할 수 있습니다.</br>
+광고주는 캠페인/광고/협찬 등을 등록하고 자신이 찾고자 하는 인플루언서를 쉽게 찾을 수 있습니다.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 사용 기술
 
-## Available Scripts
+- ReactJs
+- NodeJs
+- MongoDB
 
-In the project directory, you can run:
+- Redux
+- ReactQuery
+
+- Firebase
+- AWS Amplify
+- Heroku
 
 ### `npm start`
 
