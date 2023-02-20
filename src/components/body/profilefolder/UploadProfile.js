@@ -20,8 +20,8 @@ import {
 } from "@mui/material";
 import { TagsInput } from "react-tag-input-component";
 
-import SearchLocationInput from "./SearchLoaction";
-
+// import SearchLocationInput from "./SearchLoaction";
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../../state/index";
@@ -111,7 +111,7 @@ const UploadProfile = () => {
   AWS.config.update({
     region: "ap-northeast-2",
     credentials: new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: "ap-northeast-2:118bc61e-49a2-424d-a6d7-a98a1f6d4605",
+      IdentityPoolId: "ap-northeast-2:f1312c6d-5d6d-49bd-9b44-7a3504d36aef",
     }),
   });
 
@@ -120,8 +120,8 @@ const UploadProfile = () => {
     const file = e.target.files[0];
     const upload = new AWS.S3.ManagedUpload({
       params: {
-        Bucket: "swaybucket",
-        Key: "INFPROFILE" + uid + ".jpg",
+        Bucket: "cellabor",
+        Key: "prfs/" + "INFPROFILE" + uid + ".jpg",
         Body: file,
       },
     });
@@ -315,9 +315,25 @@ const UploadProfile = () => {
             <em>press enter to add new tag</em>
           </div>
           <div style={{height:'100px', zIndex:100}}>
-            <SearchLocationInput 
-              setLocation={setLocation}
-            /> 
+          <GooglePlacesAutocomplete
+                    apiKey= {process.env.REACT_APP_GOOGLEPLACES_API}
+                    apiOptions={{ language: 'kor', region: 'kor' }}
+                    selectProps={{
+                      location,
+                      onChange: setLocation
+                    }}
+                    styles={{
+                      textInputContainer: {
+                        backgroundColor: 'grey',
+                      },
+                      textInput: {
+                        height: 38,
+                        width:50,
+                        color: '#5d5d5d',
+                        fontSize: 16,
+                      }
+                    }}
+                  />
             
           </div>
           

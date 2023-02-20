@@ -19,6 +19,7 @@ import { bindActionCreators } from "redux";
 import { actionCreators } from "../../state/index";
 import { getAuth, signOut } from "firebase/auth";
 
+
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -225,6 +226,14 @@ const HeaderAD = () => {
                 검색
             </Button> */}
             <Button
+                          //onClick={handleClickOpen("paper")}
+                          onClick={handleClickUpload}
+                          variant="contained"
+                          style={{ fontWeight: "bold" }}
+                        >
+                          Upload Product
+                        </Button>
+            {/* <Button
               variant="contained"
               style={{
                 backgroundColor: "#03ff95",
@@ -235,7 +244,7 @@ const HeaderAD = () => {
               onClick={handleClickChat}
             >
               채팅
-            </Button>
+            </Button> */}
             <Button
               variant="contained"
               style={{

@@ -1,17 +1,34 @@
 
 .main_prd {
-    display: 'flex';
-    flex-wrap: 'wrap';
+     /* display: flex; */
+    /* flex-wrap: wrap; */
+    /* flex-direction: row; */
+    
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, max-content));
+    grid-gap: 41px;
+    justify-content: center;
+    padding: initial;
+    width: 100vw;
+    
 }
 
 .prd_item_container {
-    margin-inline: '40px';
-    margin-top: '40px';
+    list-style-type: none;
+    border: 1px solid gray;
+    padding: 5px;
+    width: 210px;
+    display: flex;
+    justify-content: center;
+    
+    
 }
 
 .profile-img {
-    width:'200px';
-    height:'200px';
+    width:200px;
+    height:200px;
+    object-fit:fill;
+    
 }
 .pgntContainer {
     
@@ -22,7 +39,10 @@
 .pgnt {
     
     height: 40px;
-    
+    margin-top: 40px;
+    flex-direction: row;
+    display: flex;
+    justify-content: center;
     
     
 }

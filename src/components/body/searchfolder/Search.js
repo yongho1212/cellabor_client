@@ -265,9 +265,9 @@ const Search = (props) => {
   }, []);
   
   return (
-    <div style={{display:'flex'}}>
+    <div style={{}}>
       {/* <h1>Filtered Search Area</h1> */}
-      <div style={{ width: '80vw', backgroundColor:'red', alignItems:'center'}}>
+      <div style={{ width: '100vw', backgroundColor:'red', alignItems:'center', height:'50px'}}>
         <Button id="sex-filter" onClick={sexFilterClick}>
           {sexText}
         </Button>
@@ -377,11 +377,12 @@ const Search = (props) => {
               
         </div>
       </div>
-      {filteredList ? filteredList.map(item => {
+      {filteredList ? 
+        filteredList.map(item => {
         return (
-          <div key={item._id} style={{ marginInline: '40px', marginTop: '40px' }}>
-            <Link to={`/Detail/${item._id}`} style={{ color: 'black', display: 'flex', flexDirection: 'column', width: '200px', height: '280px', alignItems: 'flex-start' }}>
-              <div style={{ width: '200px', height: '200px', backgroundColor: 'red' }}>
+          <div key={item._id} style={{  justifyContent: "center", display: "flex", flexDirection:'row',  }}>
+            <Link to={`/Detail/${item._id}`} style={{ color: 'black', display: 'flex', flexDirection: 'column', width: '200px', height: '280px', alignItems: 'flex-start', backgroundColor:'green' }}>
+              <div style={{ width: '200px', height: '200px', backgroundColor: 'red', }}>
                 <img className='profile-img' src={item.avatar} width='200px' height='200px' />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column' }}>

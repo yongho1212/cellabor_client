@@ -45,75 +45,60 @@ const ProdcutView = ({ useParams }) => {
   // }, []);
 
   return (
-    <div style={{ justifyContent: "center", alignItems: "center", display:"flex", flexDirection:'column', width:'100vw' }}>
+    <div
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "column",
+        width: "100vw",
+      }}
+    >
       {/* 내가 진행하고 있는 켐페인에 대한 리스트 */}
 
       {/* 한페이지 당 표시할 게시물 수  설정 */}
-      {/* <div>
-        <label>
-          페이지 당 표시할 게시물 수:&nbsp;
-          <select
-            type="number"
-            value={limit}
-            onChange={({ target: { value } }) => setLimit(Number(value))}
-          >
-            <option value="10">10</option>
-            <option value="12">12</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-          </select>
-        </label>
-      </div> */}
 
       {/* 상품 추천 슬라이더  */}
       {/* <ProductRecommendSlider /> */}
-      <div className="main_prd" style={{ display: "flex", flexWrap: "wrap", justifyContent:'center' }}>
-        {product? product.slice(offset, offset + limit).map((item) => {
-              return (
-                <div
-                  className="prd_item_container"
-                  key={item._id}
-                  style={{ marginInline: "40px", marginTop: "40px" }}
-                >
-                  <Link
-                    to={`/Detail/${item._id}`}
-                    style={{
-                      color: "black",
-                      display: "flex",
-                      flexDirection: "column",
-                      width: "200px",
-                      height: "280px",
-                      alignItems: "flex-start",
-                    }}
-                  >
-                    {/* 사진 */}
-                    <div
+      <div style={{ justifyContent: "center", display: "flex" }}>
+        <div className="main_prd">
+          {product
+            ? product.slice(offset, offset + limit).map((item) => {
+                return (
+                  <div className="prd_item_container" key={item._id}>
+                    <Link
+                      to={`/Detail/${item._id}`}
                       style={{
+                        color: "black",
                         width: "200px",
-                        height: "200px",
-                        backgroundColor: "red",
+                        height: "280px",
                       }}
                     >
-                      <img 
-                        className="profile-img" 
-                        src={item.photo} 
-                        style={{objectFit:'fill', width: '200px', height: '200px',}}
-                        />
-                    </div>
-                    {/* 상품 정보 */}
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      <div style={{ fontSize: "20px" }}>
-                        <div>{item.brand}</div>
+                      {/* 사진 */}
+                      <div
+                        style={{
+                          width: "200px",
+                          height: "200px",
+
+                          marginBottom: "7px",
+                        }}
+                      >
+                        <img className="profile-img" src={item.photo} />
                       </div>
-                      <div style={{ fontSize: "20px" }}>{item.name}</div>
-                      <div style={{ fontSize: "14px" }}>{item.point}</div>
-                    </div>
-                  </Link>
-                </div>
-              );
-            })
-          : ""}
+                      {/* 상품 정보 */}
+                      <div style={{ display: "flex", flexDirection: "column" }}>
+                        <div style={{ fontSize: "20px" }}>
+                          <div>{item.brand}</div>
+                        </div>
+                        <div style={{ fontSize: "20px" }}>{item.name}</div>
+                        <div style={{ fontSize: "14px" }}>{item.point}</div>
+                      </div>
+                    </Link>
+                  </div>
+                );
+              })
+            : ""}
+        </div>
       </div>
       <div className="pgntContainer">
         <div className="pgnt">
@@ -123,9 +108,26 @@ const ProdcutView = ({ useParams }) => {
             page={page}
             setPage={setPage}
           />
+          
+          
         </div>
+        <div>
+            <label>
+              페이지 당 표시할 게시물 수:&nbsp;
+              <select
+                type="number"
+                value={limit}
+                onChange={({ target: { value } }) => setLimit(Number(value))}
+              >
+                <option value="10">10</option>
+                <option value="12">12</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </label>
+          </div>
       </div>
-      
     </div>
   );
 };

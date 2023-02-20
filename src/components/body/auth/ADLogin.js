@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Form, Alert } from "react-bootstrap";
-import { Button } from "react-bootstrap";
-import GoogleButton from "react-google-button";
-import { TextField } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../../state/index";
+
+import axios from "axios";
+
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from "@tanstack/react-query";
 
 import {
   signInWithEmailAndPassword,
@@ -13,19 +20,15 @@ import {
   deleteUser
 } from "firebase/auth";
 
-import { useDispatch, useSelector } from "react-redux";
-import { bindActionCreators } from "redux";
-import { actionCreators } from "../../../state/index";
+import { TextField } from "@mui/material";
+import { Form, Alert } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+
+import { adUserInfo, infPrd } from "../../../api";
 
 import "./Login.css";
-import axios from "axios";
 
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from "@tanstack/react-query";
-import { adUserInfo, infPrd } from "../../../api";
+
 
 const ADLogin = () => {
   const state = useSelector((state) => state);
@@ -54,7 +57,7 @@ const ADLogin = () => {
 
 
 function moveMain() {
-  navigate("/DashMain")
+  navigate("/Main")
 };
 
 const moveSignup = () => {

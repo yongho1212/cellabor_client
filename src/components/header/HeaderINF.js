@@ -53,7 +53,7 @@ const HeaderINF = () => {
   useEffect(() => {
     showButton();
     window.addEventListener("resize", showButton);
-    return {};
+    // return {};
   }, []);
 
   /*  useEffect(() => {
