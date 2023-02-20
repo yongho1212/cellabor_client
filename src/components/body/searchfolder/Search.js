@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../state/index';
 import axios from "axios";
-import Link from "@mui/material/Link";
+import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { MenuItem, Menu, Autocomplete, Chip, TextField, styled } from "@mui/material";
 import { Box, style } from "@mui/system";
@@ -49,7 +49,7 @@ const Search = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const [infList, setInfList] = React.useState([]);
-  const [filteredList, setFilteredList] = React.useState();
+  const [filteredList, setFilteredList] = React.useState([]);
   const [sexOpen, setSexOpen] = React.useState(false);
   const [ageOpen, setAgeOpen] = React.useState(false);
   const [tagOpen, setTagOpen] = React.useState(false);
@@ -263,11 +263,13 @@ const Search = (props) => {
   React.useEffect(() => {
     getInfList();
   }, []);
+
+  console.log(filteredList)
   
   return (
     <div style={{}}>
       {/* <h1>Filtered Search Area</h1> */}
-      <div style={{ width: '100vw', backgroundColor:'red', alignItems:'center', height:'50px'}}>
+      <div style={{ width: '100vw',  alignItems:'center', height:'50px'}}>
         <Button id="sex-filter" onClick={sexFilterClick}>
           {sexText}
         </Button>
@@ -377,12 +379,14 @@ const Search = (props) => {
               
         </div>
       </div>
-      {filteredList ? 
-        filteredList.map(item => {
+      <div>
+      { filteredList ?
+        filteredList.map((item) => {
         return (
-          <div key={item._id} style={{  justifyContent: "center", display: "flex", flexDirection:'row',  }}>
-            <Link to={`/Detail/${item._id}`} style={{ color: 'black', display: 'flex', flexDirection: 'column', width: '200px', height: '280px', alignItems: 'flex-start', backgroundColor:'green' }}>
-              <div style={{ width: '200px', height: '200px', backgroundColor: 'red', }}>
+          <div key={item._id} style={{display:'flex', zIndex:'100'}}>
+            <Link to={`/ProfileDetailpage/${item._id}`} style={{ color: 'black', display: 'flex', flexDirection: 'column', width: '200px', height: '280px', alignItems: 'flex-start', backgroundColor:'green' }}
+            >
+              <div style={{ width: '200px', height: '200px', backgroundColor: 'red' }}>
                 <img className='profile-img' src={item.avatar} width='200px' height='200px' />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -402,6 +406,7 @@ const Search = (props) => {
           </div>
         )
       }) : <div>검색결과 없음</div>}
+      </div>
     </div> 
   );
 } 

@@ -73,6 +73,7 @@ const ProdcutView = ({ useParams }) => {
                         width: "200px",
                         height: "280px",
                       }}
+                      
                     >
                       {/* 사진 */}
                       <div

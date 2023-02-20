@@ -23,7 +23,7 @@ import Profile from './components/body/profilefolder/Profile';
 import ADProfile from './components/body/profilefolder/ADProfile';
 import INFProfile from './components/body/profilefolder/INFProfile';
 
-
+import ProfileDetailpage from './components/body/profilefolder/ProfileDetailpage';
 import DetailPage from './components/body/product/productdetailpagefolder/DetailPage';
 import Main from './components/body/mainfolder/Main';
 import Footer from './components/footerfolder/Footer';
@@ -112,6 +112,8 @@ function App() {
             <Route path="/SearchResult/:text" element={<SearchResult />} />
             <Route path="/UploadProfile" element={<UploadProfile/>} />
             <Route path="/Detail/:id" element={<DetailPage />} />
+            <Route path="/ProfileDetailpage/:id" element={<ProfileDetailpage />} />
+            
             <Route path="/EditDetailPage/:id" element={<EditDetailpage />} />
             <Route path="/Profile/*" element={<Profile />} />
             <Route path="/ADProfile/*" element={<ADProfile />} />
