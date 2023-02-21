@@ -174,7 +174,7 @@ const HeaderAD = () => {
                   setText(e.target.value);
                 }}
               /> */}
-              <Button
+              {/* <Button
               variant="contained"
               style={{
                 backgroundColor: "#03ff95",
@@ -185,7 +185,7 @@ const HeaderAD = () => {
               onClick={handleClickSearch}
             >
               검색
-            </Button>
+            </Button> */}
               {/* <Link
                 to={`/SearchResult/${text}`}
                 style={{

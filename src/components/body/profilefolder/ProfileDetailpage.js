@@ -5,8 +5,9 @@ import { Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import {getAuth} from 'firebase/auth'
 
+import "./ProfileDetailPage.css"
 
-import * as grd from "../product/detailComponents";
+
 
 const DetailPage = () => {
     const [inf, setInf] = useState([]); // inf 정보
@@ -21,7 +22,6 @@ const DetailPage = () => {
 
     const getPostList = async () => {
         try {
-            console.log(id,'inside')
            const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/inf/getInfInfoByid`,
            { id }).then((res) => {
             console.log(res.data)
@@ -47,11 +47,23 @@ const DetailPage = () => {
 
     return (
         <>
-        <grd.Container>
-            <grd.SideBar>
-                <div className="detailpageContainer">
-                 {/* 디테일 페이지 상단 정보 요약  */}
-                <div className="headerContainer">
+            <div style={{display:'flex',justifyContent:'center'}}>
+
+                <div className="infDetailpageContainer">
+                
+
+                {/** 상세정보 컨테이너 */}
+                <div className="infInfoContainer">
+                    <div className="infPicContainer">
+                    <img
+                        src={item.avatar}
+                        width="100%"
+                        alt='testA' 
+                        style={{borderRadius:'30px',border: '1px solid #000' }}
+                    />
+                    </div>
+                     {/* 디테일 페이지 상단 정보 요약  */}
+                <div className="infHeaderContainer">
                     <div className="headerTitle">
                     {item.role}
                     </div>
@@ -65,46 +77,29 @@ const DetailPage = () => {
                     {item.targetPlatform}    
                     </div>
                 </div>
-
-                {/** 상세정보 컨테이너 */}
-                <div className="infoContainer">
-                    <div className="picContainer">
-                    <img
-                        src={item.avatar}
-                        width='100'
-                        height='100'
-                        alt='testA' 
-                    />
-                    </div>
-                    <div className="infoReward">
+                    {/* <div className="infoReward">
                         <div className="textTitle">
-        제공내역
+                        제공내역
                         </div>
                         <div className="textDescription">
                             1.ㅇㅁㄴㅇㅁㄴㅇㅁㄴ<br/>
                             2..ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ<br/>
                             2...ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ<br/>
                         </div>
-                    </div>
-                    <div className="infoDescription">
+                    </div> */}
+                    {/* <div className="infoDescription">
                         <div className="textTitle">
 
                         </div>
                         <div className="textDescription">
                             
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 
+            </div>
             
-            </grd.SideBar>
-            <grd.ContentBox>
-                <grd.Content1>
-                
-                </grd.Content1>
-            </grd.ContentBox>
-        </grd.Container>
         </>
         
     );

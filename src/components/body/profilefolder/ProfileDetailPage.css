@@ -1,20 +1,31 @@
 
-.detailpageContainer{
+.infDetailpageContainer{
     display: flex;
-    background-color: hotpink;
     flex-direction: column;
-    width: 100%;
     align-items: flex-start;
-    
+    margin-top: 50px;
+    padding: 20px;
+    border: 2px solid #000;
+    border-radius: 20px;
+    animation: fadein 2s;
+}
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
-.headerContainer{
-    background-color: green;
+.infHeaderContainer{
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 5px;
+    margin-block: 10px;
+    border: 1px solid #000;
+    border-radius: 20px;
 }
 
 .headerTitle{
@@ -37,20 +48,21 @@
     margin-block: 2px;
 }
 
-.infoContainer{
+.infInfoContainer{
     display: flex;
-    background-color: blue;
-    width: 100%;
+    background-color:#fff;
+    border-radius:'30px';
     height: 100%;
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
+    
 }
 
-.picContainer{
+.infPicContainer{
     
-    width: 100%;
-    height: 40vh;
+    width: 300px;
+    
 
 }
 
