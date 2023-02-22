@@ -1,4 +1,4 @@
-a:hover{ color:#49ffbd; }
+
 
 .navbar {
   position: sticky;
@@ -6,7 +6,7 @@ a:hover{ color:#49ffbd; }
   display: flex;
   width: 100vw;
   justify-content: center;
-  
+  text-decoration: none;
 }
 
 .navbar-container {

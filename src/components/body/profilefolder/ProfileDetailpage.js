@@ -53,12 +53,12 @@ const DetailPage = () => {
         
         const birth = datas?.birthday
         const bday = new Date(birth)
-        console.log(birth)
-        console.log(bday)
-        console.log(today)
+        // console.log(birth)
+        // console.log(bday)
+        // console.log(today)
         let age = today.getFullYear() - bday.getFullYear();
         let mon = (today.getMonth()+1) - bday.getMonth();
-        console.log(age,mon)
+
         if ( mon < 0 || (mon === 0 && today.getDate() < bday.getDate())){
             // return age = age - 1 
             setMyage(age -1  )
@@ -94,7 +94,7 @@ const DetailPage = () => {
                 <div className="infHeaderContainer">
                     <div className="infInfo1">
                         <div className="infNickname">
-                        {item.role}
+                        {item.nickname}
                         </div>
                         <div className="infAge">
                         {myage}
@@ -104,7 +104,7 @@ const DetailPage = () => {
                     </div>
                     <div className="headerBrand">
                     {item.email}    
-                    {item.nickname}
+                    
                     {item.tags}
                     {item.about}
                     

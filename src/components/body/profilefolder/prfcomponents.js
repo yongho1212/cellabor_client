@@ -11,7 +11,7 @@ export const Container = styled.div`
     "sidebar content content"
     "main main main"
     "footer footer footer";
-  grid-template-rows: 0.2fr 2fr 1.25fr 1.25fr 0.2fr;
+  // grid-template-rows: 0.2fr 2fr 1.25fr 1.25fr 0.2fr;
   grid-template-columns: 0.8fr 1.2fr 0.8fr;
   
 
@@ -40,7 +40,7 @@ export const Main = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  
+  overflow: auto;
   background-color: #D9D9D9;
   margin: 13px;
   border-radius: 17px;

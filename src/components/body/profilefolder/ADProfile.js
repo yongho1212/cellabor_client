@@ -166,7 +166,7 @@ const ADProfile = () => {
 
         <grd.Main>
           
-          <div style={{justifyContent:'center', display:'flex', alignItems:'center'}}>
+          <div style={{justifyContent:'center', display:'flex', alignItems:'center', height:'100%'}}>
             <Myprd />
           </div>
         </grd.Main>

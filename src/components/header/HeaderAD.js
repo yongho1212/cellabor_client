@@ -120,46 +120,21 @@ const HeaderAD = () => {
   }
 
   return (
-    <AppBar
-      style={{
-        backgroundColor: "#fff",
-        zIndex: 100,
-        height: "70px",
-        justifyContent: "center",
-        width: "100vw",
-        
-      }}
-    >
-      <Container maxWidth="xl">
-        <Toolbar disableGutters style={{ justifyContent: "space-between" }}>
-          {/* <Typography style={{color:'#000'}}>
-            ad
-        </Typography> */}
-          <Box>
-            {/* <Button 
-                variant="text"
-                style={{ backgroundColor:"#fff", color:"#000",fontSize:31,fontWeight:'bold', marginInline:10}}
-                onClick={handleClickMain}
-                >
-                  Sway
-                </Button> */}
+    <div position="static" className="headerSet">
+      <Container style={{ width: "87vw" }}>
+      <div className="headerContainerSet">
+          
             <Link
               to="Main"
-              style={{
-                color: "#000",
-                fontSize: 31,
-                fontWeight: "bold",
-                marginInline: 10,
-                textDecoration: "none",
-              }}
+              id="logoStyle"
             >
               Cellabor
             </Link>
-          </Box>
+          
 
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <div style={{ display: "flex" }}>
-              {/* <Input
+          <div style={{ display:'flex', alignItems:'center',width:'50%' }}>
+            {/* <div style={{ display: "flex" }}>
+              <Input
                 variant="contained"
                 placeholder="검색어"
                 style={{
@@ -173,20 +148,15 @@ const HeaderAD = () => {
                 onChange={(e) => {
                   setText(e.target.value);
                 }}
-              /> */}
-              <Button
-              variant="contained"
-              style={{
-                backgroundColor: "#03ff95",
-                color: "#000",
-                marginInline: 10,
-                height: "45px",
-              }}
+              />
+              <button
+              id="eachBtnStyleContained"
+              
               onClick={handleClickSearch}
             >
               검색
-            </Button>
-              {/* <Link
+            </button>
+              <Link
                 to={`/SearchResult/${text}`}
                 style={{
                   display: "flex",
@@ -201,8 +171,8 @@ const HeaderAD = () => {
                 onClick={handleSearch}  
               >
                 검색
-              </Link> */}
-            </div>
+              </Link>
+            </div> */}
             {/* <Button 
               variant="contained"
               style={{backgroundColor:"#03ff95", color:"#000", marginInline:10, height:'70px'}}
@@ -225,14 +195,14 @@ const HeaderAD = () => {
             >
                 검색
             </Button> */}
-            <Button
+            <button
                           //onClick={handleClickOpen("paper")}
                           onClick={handleClickUpload}
-                          variant="contained"
-                          style={{ fontWeight: "bold" }}
+                          style={{ fontSize:'17px'}}
+                          id="eachBtnStyleOutlined"
                         >
                           Upload Product
-                        </Button>
+                        </button>
             {/* <Button
               variant="contained"
               style={{
@@ -245,18 +215,12 @@ const HeaderAD = () => {
             >
               채팅
             </Button> */}
-            <Button
-              variant="contained"
-              style={{
-                backgroundColor: "#03ff95",
-                color: "#000",
-                marginInline: 10,
-                height: "45px",
-              }}
+            <button
+              id="eachBtnStyleOutlined"
               onClick={handleClickProfile}
             >
               프로필
-            </Button>
+            </button>
             
             {/* <Button 
                 variant="contained"
@@ -265,22 +229,16 @@ const HeaderAD = () => {
             >
                 WORK SPACE
             </Button> */}
-            <Button
-              variant="contained"
-              style={{
-                backgroundColor: "#03ff95",
-                color: "#000",
-                marginInline: 10,
-                height: "45px",
-              }}
+            <button
+              id="eachBtnStyleOutlined"
               onClick={handleLogout}
             >
               로그아웃
-            </Button>
-          </Box>
-        </Toolbar>
+            </button>
+          </div>
+        </div>
       </Container>
-    </AppBar>
+    </div>
   );
 };
 export default HeaderAD;
