@@ -15,23 +15,26 @@ const DetailPage = () => {
     const state = useSelector((state) => state);
     const auth = getAuth();
     const uid = auth?.currentUser?.uid;
+    const [myage, setMyage] = useState(0);
 
     const [already, setAlready] = useState(false)
 
-    console.log(id)
+    
 
     const getPostList = async () => {
-        try {
+       
            const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/inf/getInfInfoByid`,
            { id }).then((res) => {
             console.log(res.data)
-            setInf(res.data); 
+            const datas = res.data
+            setInf(datas); 
+            getage(datas);
             
           })
-        } 
-        catch (err) {
-          console.log(err)
-        }
+        
+        
+       
+        
       }
 
     
@@ -42,8 +45,33 @@ const DetailPage = () => {
 
     useEffect(() => {
         getPostList();
-        //applyChecker();
+        
     }, []);
+
+    const getage = (datas ) => {
+        const today = new Date();
+        
+        const birth = datas?.birthday
+        const bday = new Date(birth)
+        console.log(birth)
+        console.log(bday)
+        console.log(today)
+        let age = today.getFullYear() - bday.getFullYear();
+        let mon = (today.getMonth()+1) - bday.getMonth();
+        console.log(age,mon)
+        if ( mon < 0 || (mon === 0 && today.getDate() < bday.getDate())){
+            // return age = age - 1 
+            setMyage(age -1  )
+        } else {
+            
+            setMyage(age)
+        }
+        
+
+    }
+    
+    console.log(myage)
+
 
     return (
         <>
@@ -64,11 +92,23 @@ const DetailPage = () => {
                     </div>
                      {/* 디테일 페이지 상단 정보 요약  */}
                 <div className="infHeaderContainer">
-                    <div className="headerTitle">
-                    {item.role}
+                    <div className="infInfo1">
+                        <div className="infNickname">
+                        {item.role}
+                        </div>
+                        <div className="infAge">
+                        {myage}
+                        </div>
+                    
+                    
                     </div>
                     <div className="headerBrand">
                     {item.email}    
+                    {item.nickname}
+                    {item.tags}
+                    {item.about}
+                    
+                    
                     </div>
                     <div className="headerDescription">
                     This is description

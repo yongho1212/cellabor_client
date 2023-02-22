@@ -21,17 +21,33 @@
 .infHeaderContainer{
     width: 100%;
     display: flex;
+    justify-content: center;
+    
     flex-direction: column;
     align-items: flex-start;
     margin-block: 10px;
     border: 1px solid #000;
     border-radius: 20px;
+    
 }
 
-.headerTitle{
+
+.infInfo1{
+    justify-content: space-between;
+    flex-direction: row;
+    display: flex;
+    width: 100%;
+    margin-block: 2px;
+}
+.infNickname{
     font-weight: bold;
     font-size: 27px;
-    margin-block: 2px;
+    margin-left: 11px;
+}
+.infAge{
+    font-weight: bold;
+    font-size: 27px;
+    margin-right: 11px;
 }
 
 .headerBrand{
@@ -53,8 +69,8 @@
     background-color:#fff;
     border-radius:'30px';
     height: 100%;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: center;
+    
     flex-direction: column;
     
 }
