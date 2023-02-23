@@ -317,8 +317,12 @@ const Search = (props) => {
   return (
     <div style={{}}>
       {/* <h1>Filtered Search Area</h1> */}
-      <div style={{ width: "100vw", alignItems: "center", height: "50px" }}>
-        <Button id="sex-filter" onClick={sexFilterClick}>
+      <div style={{ width: "87vw", alignItems: "center", height: "50px", backgroundColor:'green'}}>
+        <Button 
+          id="sex-filter" 
+          onClick={sexFilterClick}
+          style={{}}
+          >
           {sexText}
         </Button>
         <Button id="age-filter" onClick={ageFilterClick}>
@@ -493,7 +497,7 @@ const Search = (props) => {
                       <div style={{ fontSize: "20px" }}>
                         <div>{item.nickname}</div>
                       </div>
-                      <div style={{ fontSize: "20px" }}>{item.youtube}</div>
+                      {/* <div style={{ fontSize: "20px" }}>{item.youtube.id}</div> */}
                     </div>
                     <div style={{ fontSize: "14px" }}>{item.mobile}</div>
                   </Link>

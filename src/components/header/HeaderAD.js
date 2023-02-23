@@ -132,7 +132,7 @@ const HeaderAD = () => {
             </Link>
           
 
-          <div style={{ display:'flex', alignItems:'center',width:'50%' }}>
+          <div style={{ display:'flex', alignItems:'center', }}>
             {/* <div style={{ display: "flex" }}>
               <Input
                 variant="contained"
@@ -199,7 +199,7 @@ const HeaderAD = () => {
                           //onClick={handleClickOpen("paper")}
                           onClick={handleClickUpload}
                           style={{ fontSize:'17px'}}
-                          id="eachBtnStyleOutlined"
+                          id="eachBtnStyleContained"
                         >
                           Upload Product
                         </button>

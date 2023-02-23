@@ -5,6 +5,8 @@ import { Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import {getAuth} from 'firebase/auth'
 
+import { BsYoutube } from "react-icons/bs";
+
 import "./ProfileDetailPage.css"
 
 
@@ -17,7 +19,7 @@ const DetailPage = () => {
     const uid = auth?.currentUser?.uid;
     const [myage, setMyage] = useState(0);
 
-    const [already, setAlready] = useState(false)
+    const [already, setAlready] = useState(false);
 
     
 
@@ -29,13 +31,13 @@ const DetailPage = () => {
             const datas = res.data
             setInf(datas); 
             getage(datas);
-            
           })
-        
-        
-       
-        
-      }
+      };
+
+      const youtubeData = {
+        title: "youtube",
+        url: `https://www.youtube.com/channel/${inf?.youtube?.channelId}`,
+      };
 
     
 
@@ -112,6 +114,14 @@ const DetailPage = () => {
                     </div>
                     <div className="headerDescription">
                     This is description
+                    </div>
+                    <div className="sns_logo">
+                        <a 
+                            href={youtubeData.url}
+                            target="_blank"
+                        >
+                            <BsYoutube style={{ fontSize: "40px", color: "red" }} />
+                        </a>
                     </div>
                     <div className="headerCategory">
                     {item.targetPlatform}    

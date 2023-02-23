@@ -9,7 +9,7 @@
 .headerContainerSet{
     justify-content:space-between;
     display:flex;
-    height:11vh;
+    height:8vh;
     align-items:center;
     
     padding-inline:15px;
@@ -32,14 +32,14 @@
 }
 
 #eachBtnStyleContained{
-    background-color: #fff;
-    color: #193c46;
+    background-color: #193c46;
+    color: #fff;
     margin-inline: 9px;
     height: 100%;
-    width: 100%;
+    padding-inline: 10px;
     font-weight: bold;
     font-size: 21px;
-    border-color: grey;
+    
     border-radius: 10px;
     transition: all 0.5s;
 }
@@ -54,10 +54,10 @@
     color: #193c46;
     margin-inline: 9px;
     height: 100%;
-    width: 100%;
+    
     font-weight: bold;
-    font-size: 21px;
-    padding-inline: 1px;
+    font-size: 19px;
+    padding-inline: 10px;
     border-color: grey;
     border-radius: 10px;
     transition: all 0.5s;
