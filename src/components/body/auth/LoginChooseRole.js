@@ -16,9 +16,9 @@ const LoginChooseRole = () => {
 
   return (
     <div style={{ justifyContent: "center", alignItems: "center", height:'90vh', display:'flex', flexDirection:'column' }}>
-      <div >
+      {/* <div >
         It's login page!
-      </div>
+      </div> */}
       <div className='pricing__container'>
       <Link to="/InfLogin" className="pricing__container-card">
         <div className="pricing__container-cardInfo">

@@ -199,14 +199,15 @@ const INFSignup = () => {
               <div className='additional-input-container'>
                 {/* additional information */}
                 <Form.Group className="mb-3" controlId="formBasicName">
-                <div className="inputName">
+                  <div className="inputName">
                     Birthday
                   </div>
                   <TextField
-                    type="Date"
+                    type="date"
                     placeholder="how old?"
                     onChange={(e) => setBirthday(e.target.value)}
                     defaultValue="생일"
+                    
                   />
                 </Form.Group>
 

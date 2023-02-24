@@ -6,6 +6,7 @@ import axios from "axios";
 
 import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
+
 import FormControl from "@mui/material/FormControl";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
@@ -24,6 +25,10 @@ import {
   collection,
 } from "firebase/firestore";
 
+import { getAuth } from "firebase/auth";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { adUserInfo } from "../../../../api";
+
 import { db, auth } from "../../../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -32,14 +37,25 @@ import { appendprd } from "../../../../state/actioncreators";
 import { async } from "@firebase/util";
 
 const UploadProduct = () => {
+  const auth = getAuth();
+  const uid = auth?.currentUser?.uid || "undefined";
+
+  const adQuery = useQuery({
+    queryKey: ["ad"],
+    queryFn: () => adUserInfo(uid),
+  });
+  if (adQuery.isLoading === "loading") console.log("loading");
+  if (adQuery.status === "error") console.log("err");
+
+  const authorUid = auth?.currentUser?.uid || "undefined";
+  const authorEmail = adQuery?.data?.data?.email;
+
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const { loginUser, logoutUser, fbuser, nofbuser, appendprd } =
     bindActionCreators(actionCreators, dispatch);
   const [name, setName] = useState("");
-  const [brand, setBrand] = useState(
-    state.advertiser.state.adloginData.brand_name
-  );
+  const [brand, setBrand] = useState(adQuery?.data?.data?.brand_name);
   const [targetPlatform, setTargetPlatform] = useState("");
   const [category, setCategory] = useState("");
   const [period, setPeriod] = useState("");
@@ -55,8 +71,8 @@ const UploadProduct = () => {
   const [mobile, setMobile] = useState("");
 
   const navigate = useNavigate();
-  const authorUid = state.advertiser.state.adloginData.uid;
-  const authorEmail = state.advertiser.state.adloginData.email;
+
+  const user = auth.currentUser;
 
   const addNewPrdChannel = async () => {
     const prdfsid = await addDoc(collection(db, "prdRoom"), {
@@ -64,6 +80,7 @@ const UploadProduct = () => {
       writer: { authorUid },
       createdAt: serverTimestamp(),
     });
+    console.log(prdfsid.id)
     const fff = prdfsid.id;
     return fff;
   };
@@ -71,7 +88,7 @@ const UploadProduct = () => {
   AWS.config.update({
     region: "ap-northeast-2",
     credentials: new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: "ap-northeast-2:118bc61e-49a2-424d-a6d7-a98a1f6d4605",
+      IdentityPoolId: "ap-northeast-2:f1312c6d-5d6d-49bd-9b44-7a3504d36aef",
     }),
   });
 
@@ -80,8 +97,8 @@ const UploadProduct = () => {
     const file = e.target.files[0];
     const upload = new AWS.S3.ManagedUpload({
       params: {
-        Bucket: "swaybucket",
-        Key: authorUid + today + ".jpg",
+        Bucket: "cellabor",
+        Key: "prds/" + authorUid + today + ".jpg",
         Body: file,
       },
     });
@@ -112,8 +129,8 @@ const UploadProduct = () => {
 
       const upload = new AWS.S3.ManagedUpload({
         params: {
-          Bucket: "swaybucket",
-          Key: fileName + today + ".jpg",
+          Bucket: "cellabor",
+          Key: "prds/" + fileName + today + ".jpg",
           Body: selected[i],
         },
       });
@@ -122,24 +139,8 @@ const UploadProduct = () => {
 
       urlList.push(data.Location);
       console.log(urlList);
-
-      //   promise.then(
-      //     function (data) {
-      //       console.log(data.Location);
-      //       urlList.push(data.Location);
-      //       console.log(urlList);
-      //       console.log("checkthephoto: ", data.Location);
-      //       // uploaded.push(data.Location)
-      //       alert("이미지 업로드에 성공했습니다.");
-      //       console.log("data: ", urlList[i], "data type: ", typeof urlList[i]);
-      //     },
-      //     function (err) {
-      //       return alert("오류가 발생했습니다.", err.message);
-      //     }
-      //   );
     }
 
-    //이게 무조건 루프문 끝나고 돌아야하는데 왜 쳐 먼저 도
     setSubimage(urlList);
     console.log(subimage);
     console.log(subimage[0]);
@@ -151,7 +152,9 @@ const UploadProduct = () => {
 
   const handlePost = async (e) => {
     e.preventDefault();
+    console.log('submit')
     const qqq = await addNewPrdChannel();
+    
     const prdfsidDb = qqq;
     const uid = authorUid;
     const progress_prd = qqq;
@@ -183,7 +186,10 @@ const UploadProduct = () => {
           console.log("success");
         });
       const resprdad = await axios
-        .post(`${process.env.REACT_APP_SERVER_URL}/ad/ad_add_prd`, { uid, progress_prd })
+        .post(`${process.env.REACT_APP_SERVER_URL}/ad/ad_add_prd`, {
+          uid,
+          progress_prd,
+        })
         .then((resprdad) => {
           console.log("success");
           console.log(resprdad.data);
@@ -254,42 +260,30 @@ const UploadProduct = () => {
       prdfsidDb,
     };
     appendprd(data);
-    console.log(state.myprd);
-    navigate("/Dashmain");
-    console.log(state.myprd);
+    
+    navigate("/Main");
+    
     alert("상품 업로드 완료");
   };
 
   return (
-    <div
-      className="prdUPloadContainer"
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        marginInline: "10vw",
-        height: "100%",
-        width: "80vw",
-        marginInline: "10vw",
-        marginTop: "39px",
-      }}
-    >
-      <div
-        className="imageContainer"
-        style={{
-          backgroundColor: "skyblue",
-          width: "50%",
-        }}
-      >
+    <div className="prdUploadContainer">
+      <div className="imageContainer">
+        <div className="imgAnnounce" >
+          <div>콜라보 커버 이미지를 등록해주세요.</div>
+        </div>
+
         <div
           className="mainImageContainer"
-          style={{ display: "flex", justifyContent: "center" }}
+          style={{ display: "flex", justifyContent: "center", }}
         >
           <div
             className="mainInamge"
             style={{
               width: "25vw",
               height: "25vw",
-              border: "3px solid rgba(0, 0, 0)",
+              // border: "3px solid rgba(0, 0, 0)",
+              backgroundColor: "#E6E6E6",
             }}
           >
             <label
@@ -302,11 +296,11 @@ const UploadProduct = () => {
                 src={photo}
                 style={{ width: "25vw", height: "25vw" }}
               />
+
               <input
                 type="file"
                 id="upload"
                 className="image-upload"
-                // onChange={handleFileInput}
                 style={{
                   opacity: 0,
                 }}
@@ -319,103 +313,102 @@ const UploadProduct = () => {
           className="subImageContainer"
           style={{
             display: "flex",
-            justifyContent: "center",
+
             alignItems: "center",
             width: "100%",
-            border: "3px solid rgba(0, 0, 0)",
-            height: "15vw",
-            marginTop: "3vw",
+            // border: "3px solid rgba(0, 0, 0)",
+            height: "80vh",
+            marginTop: "40px",
+            flexDirection: "column",
           }}
         >
-          <div style={{}}>
-            <div style={{ display: "flex" }}>
-              {subimage.map((image, id) => (
-                <div key={id} style={{ marginInline: "3px" }}>
-                  <img
-                    src={image}
-                    alt={`${image}-${id}`}
-                    style={{ width: "10vw" }}
-                  />
-                  <Button
-                    onClick={() => {
-                      handleDeleteImage(id);
-                      console.log("", id);
-                    }}
-                    style={{}}
-                  >
-                    ✕
-                  </Button>
-                </div>
-              ))}
-              <div
-                style={{
-                  width: "100px",
-                  height: "100px",
-                  backgroundColor: "blue",
-                }}
-              >
-                s
-              </div>
-              <div
-                style={{
-                  width: "100px",
-                  height: "100px",
-                  backgroundColor: "blue",
-                }}
-              >
-                s
-              </div>
-              <div
-                style={{
-                  width: "100px",
-                  height: "100px",
-                  backgroundColor: "blue",
-                }}
-              >
-                s
-              </div>
-              <div
-                style={{
-                  width: "100px",
-                  height: "100px",
-                  backgroundColor: "blue",
-                }}
-              >
-                s
-              </div>
-            </div>
-            <div style={{ display: "flex" }}></div>
-            <div
+          <div
+            style={{
+              // justifyContent: "center",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <label
+              htmlFor="input-file"
+              onChange={handleSubFileInput}
               style={{
-                justifyContent: "center",
+                width: "360px",
+                height: "30px",
                 display: "flex",
+                justifyContent: "flex-end",
                 alignItems: "center",
+                marginBottom: "15px",
               }}
             >
-              <label
-                htmlFor="input-file"
-                onChange={handleSubFileInput}
+              <input
+                type="file"
+                id="input-file"
+                multiple
                 style={{
-                  backgroundColor: "red",
+                  opacity: 0,
+                }}
+              />
+
+              <span>내용 이미지 추가</span>
+            </label>
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            {subimage.map((image, id) => (
+              <div key={id} style={{}}>
+                <img
+                  src={image}
+                  alt={`${image}-${id}`}
+                  style={{ width: "25vw", marginBlock: "7px" }}
+                />
+                <Button
+                  onClick={() => {
+                    handleDeleteImage(id);
+                    console.log("", id);
+                  }}
+                  style={{}}
+                >
+                  ✕
+                </Button>
+              </div>
+            ))}
+            {/* <div
+                style={{
                   width: "100%",
                   height: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
+                  border: "3px solid rgba(0, 0, 0)",
                 }}
               >
-                <input
-                  type="file"
-                  id="input-file"
-                  multiple
-                  style={{
-                    opacity: 0,
-                  }}
-                />
-
-                <span>사진추가</span>
-              </label>
-            </div>
+                s
+              </div>
+              <div
+                style={{
+                  width: "100px",
+                  height: "100px",
+                  backgroundColor: "blue",
+                }}
+              >
+                s
+              </div>
+              <div
+                style={{
+                  width: "100px",
+                  height: "100px",
+                  backgroundColor: "blue",
+                }}
+              >
+                s
+              </div>
+              <div
+                style={{
+                  width: "100px",
+                  height: "100px",
+                  backgroundColor: "blue",
+                }}
+              >
+                s
+              </div> */}
           </div>
         </div>
       </div>
@@ -429,12 +422,7 @@ const UploadProduct = () => {
       >
         <Form onSubmit={handlePost} id="prdform">
           <div className="formCell">
-            <FormControl
-              className="mb-3"
-              controlId="formBasicName"
-              fullWidth
-              variant="filled"
-            >
+            
               {/* <Form.Control
               type="name"
               placeholder="ItemName"
@@ -446,17 +434,12 @@ const UploadProduct = () => {
                 id="component-simple"
                 onChange={(e) => setName(e.target.value)}
               />
-            </FormControl>
+            
           </div>
 
           <div style={{ display: "flex" }}>
             <div className="formCell">
-              <FormControl className="mb-3" controlId="formBasicName">
-                {/* <Form.Control
-              type="brand"
-              placeholder={brand}
-              onChange={(e) => setBrand(e.target.value)}
-            /> */}
+              
                 <InputLabel htmlFor="component-simple">브랜드명</InputLabel>
                 <Input
                   type="brand"
@@ -464,11 +447,11 @@ const UploadProduct = () => {
                   defaultValue={brand}
                   onChange={(e) => setBrand(e.target.value)}
                 />
-              </FormControl>
+              
             </div>
 
             <div className="formCell">
-              <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+             
                 <InputLabel id="demo-simple-select-label">Platform</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
@@ -481,13 +464,14 @@ const UploadProduct = () => {
                   <MenuItem value={"instagram"}>Instagram</MenuItem>
                   <MenuItem value={"facebook"}>Facebook</MenuItem>
                   <MenuItem value={"blog"}>Blog</MenuItem>
+                  <MenuItem value={"youtube"}>Youtube</MenuItem>
                 </Select>
-              </FormControl>
+              
             </div>
           </div>
 
           <div className="formCell">
-            <FormControl className="mb-3" controlId="formBasicName">
+            
               {/* <Form.Control
                 type="category"
                 placeholder="Category"
@@ -499,22 +483,11 @@ const UploadProduct = () => {
                 id="component-simple"
                 onChange={(e) => setCategory(e.target.value)}
               />
-            </FormControl>
+            
           </div>
 
           <div className="formCell">
-            <FormControl className="mb-3" controlId="formBasicName">
-              {/* <Form.Control
-                type="period"
-                placeholder="Period"
-                onChange={(e) => setPeriod(e.target.value)}
-              /> */}
-              {/* <InputLabel htmlFor="component-simple">마감기한</InputLabel> */}
-              {/* <TextField
-                type="Date"
-                placeholder="date today"
-                onChange={(e) => setPeriod(e.target.value)}
-              /> */}
+           
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DateTimePicker
                   renderInput={(props) => <TextField {...props} />}
@@ -526,16 +499,12 @@ const UploadProduct = () => {
                   }}
                 />
               </LocalizationProvider>
-            </FormControl>
+          
           </div>
 
           <div className="formCell">
-            <FormControl className="mb-3" controlId="formBasicName">
-              {/* <Form.Control
-                type="postType"
-                placeholder="PostType"
-                onChange={(e) => setPostType(e.target.value)}
-              /> */}
+           
+          
               <InputLabel htmlFor="component-simple">postType</InputLabel>
               <Input
                 style={{ width: "300px" }}
@@ -543,32 +512,22 @@ const UploadProduct = () => {
                 id="component-simple"
                 onChange={(e) => setPostType(e.target.value)}
               />
-            </FormControl>
+           
           </div>
 
           <div className="formCell">
-            <FormControl className="mb-3" controlId="formBasicName">
-              {/* <Form.Control
-                type="point"
-                placeholder="Point"
-                onChange={(e) => setPoint(e.target.value)}
-              /> */}
+           
               <InputLabel htmlFor="component-simple">포인트</InputLabel>
               <Input
                 type="point"
                 id="component-simple"
                 onChange={(e) => setPoint(e.target.value)}
               />
-            </FormControl>
+          
           </div>
 
           <div className="formCell">
-            <FormControl className="mb-3" controlId="formBasicName">
-              {/* <Form.Control
-                type="applicationConditions"
-                placeholder="ApplicationConditions"
-                onChange={(e) => setApplicationConditions(e.target.value)}
-              /> */}
+            
               <InputLabel htmlFor="component-simple">
                 applicationConditions
               </InputLabel>
@@ -577,44 +536,33 @@ const UploadProduct = () => {
                 id="component-simple"
                 onChange={(e) => setApplicationConditions(e.target.value)}
               />
-            </FormControl>
+            
           </div>
 
           <div className="formCell">
-            <FormControl className="mb-3" controlId="formBasicName">
-              {/* <Form.Control
-                type="qulification"
-                placeholder="Qualification"
-                onChange={(e) => setQualification(e.target.value)}
-              /> */}
+           
               <InputLabel htmlFor="component-simple">신청 조건</InputLabel>
               <Input
                 type="qulification"
                 id="component-simple"
                 onChange={(e) => setQualification(e.target.value)}
               />
-            </FormControl>
+          
           </div>
 
           <div className="formCell">
-            <FormControl className="mb-3" controlId="formBasicName">
+           
               <InputLabel htmlFor="component-simple">isCheck</InputLabel>
               <Input
                 type="isCheck"
                 id="component-simple"
                 onChange={(e) => setIsCheck(e.target.value)}
               />
-            </FormControl>
+           
           </div>
 
           <div className="formCell">
-            <FormControl fullWidth className="mb-3" controlId="formBasicName">
-              {/* <Form.Control
-                type="detailPage"
-                placeholder="DetailPage"
-                onChange={(e) => setDetailPage(e.target.value)}
-              /> */}
-              {/* <InputLabel htmlFor="component-simple">상세 설명</InputLabel> */}
+           
               <TextField
                 multiline
                 rows={8}
@@ -623,59 +571,41 @@ const UploadProduct = () => {
                 onChange={(e) => setDetailPage(e.target.value)}
                 style={{}}
               />
-            </FormControl>
+          
           </div>
 
           <div className="formCell">
-            <FormControl className="mb-3" controlId="formBasicName">
-              {/* <Form.Control
-                type="offersAndMissions"
-                placeholder="OffersAndMissions"
-                onChange={(e) => setOffersAndMissions(e.target.value)}
-              /> */}
+         
               <InputLabel htmlFor="component-simple">미션</InputLabel>
               <Input
                 type="offersAndMissions"
                 id="component-simple"
                 onChange={(e) => setOffersAndMissions(e.target.value)}
               />
-            </FormControl>
+          
           </div>
 
           <div className="formCell">
-            <FormControl className="mb-3" controlId="formBasicName">
-              {/* <Form.Control
-                type="mobile"
-                placeholder="Mobile"
-                onChange={(e) => setMobile(e.target.value)}
-              /> */}
+          
               <InputLabel htmlFor="component-simple">담장자 연락처</InputLabel>
               <Input
                 type="mobile"
                 id="component-simple"
                 onChange={(e) => setMobile(e.target.value)}
               />
-            </FormControl>
+         
           </div>
-          {/* <FormControl className="mb-3" controlId="formBasicName">
-            <Form.Control
-              type="photo"
-              placeholder="photo"
-              value={photo}
-              defaultValue="사진을 선택하세요"
-            />
-          </FormControl> */}
-          <div className="formCell">
-            <Button
+          <div>
+            <button
               variant="contained"
-              type="Submit"
+              type="submit"
+              value="Submit"
               style={{ backgroundColor: "pink" }}
+              
             >
-              Upload Please!
-            </Button>
+              Product Upload
+            </button>
           </div>
-
-          <div></div>
         </Form>
       </div>
     </div>

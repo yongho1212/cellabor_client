@@ -1,0 +1,107 @@
+
+.infDetailpageContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 50px;
+    padding: 20px;
+    border: 2px solid #000;
+    border-radius: 20px;
+    animation: fadein 2s;
+}
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.infHeaderContainer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
+    flex-direction: column;
+    align-items: flex-start;
+    margin-block: 10px;
+    border: 1px solid #000;
+    border-radius: 20px;
+    
+}
+
+
+.infInfo1{
+    justify-content: space-between;
+    flex-direction: row;
+    display: flex;
+    width: 100%;
+    margin-block: 2px;
+}
+.infNickname{
+    font-weight: bold;
+    font-size: 27px;
+    margin-left: 11px;
+}
+.infAge{
+    font-weight: bold;
+    font-size: 27px;
+    margin-right: 11px;
+}
+
+.headerBrand{
+    margin-block: 2px;
+}
+
+.headerDescription{
+    font-size: 17px;
+    color: grey;
+    margin-block: 2px;
+}
+
+.headerCategory{
+    margin-block: 2px;
+}
+
+.infInfoContainer{
+    display: flex;
+    background-color:#fff;
+    border-radius:'30px';
+    height: 100%;
+    justify-content: center;
+    
+    flex-direction: column;
+    
+}
+
+.infPicContainer{
+    
+    width: 300px;
+    
+
+}
+
+.infoReward{
+    height: 20vh;
+    background-color: #fff;
+    width: 100%;
+    display: flex;
+}
+
+.infoDescription{
+    height: 20vh;
+    background-color: #000;
+    width: 100%;
+}
+
+.textTitle{
+
+flex: 1;
+}
+
+.textDescription{
+flex: 3;
+align-items: flex-start;
+display: flex;
+}

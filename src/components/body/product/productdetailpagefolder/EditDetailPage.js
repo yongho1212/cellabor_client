@@ -40,9 +40,7 @@ const EditDetailpage = () => {
 
   const uid = auth?.currentUser?.uid;
 
-  console.log(applicant);
-  console.log(id);
-  console.log(id);
+
 
 
   const onAcceptHandle = async (applicant_id) => {

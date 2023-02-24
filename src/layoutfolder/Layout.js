@@ -50,7 +50,7 @@ const Layout = () => {
   });
   if (infQuery.isLoading === "loading") console.log("loading");
   if (infQuery.status === "error") console.log("err");
-  console.log(infQuery?.data?.data?.role);
+  
 
 
   const adQuery = useQuery({
@@ -59,7 +59,7 @@ const Layout = () => {
   });
   if (adQuery.isLoading === "loading") console.log("loading");
   if (adQuery.status === "error") console.log("err");
-  console.log(adQuery?.data?.data?.role);
+  
   const adr = adQuery?.data?.data?.role
   
  const userRole = adQuery?.data?.data?.role || infQuery?.data?.data?.role

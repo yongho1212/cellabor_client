@@ -9,6 +9,8 @@ import {
   DialogActions,
 } from "@mui/material";
 
+import { BsYoutube } from "react-icons/bs";
+
 import { getAuth, updateProfile, signOut } from "firebase/auth";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -36,11 +38,11 @@ const INFProfile = () => {
   const navigate = useNavigate();
   const auth = getAuth();
 
-  const apicall = async() => {
-    const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/inf/test`)
-    .then((res) => console.log(res.data))
-  }
-
+  const apicall = async () => {
+    const res = await axios
+      .post(`${process.env.REACT_APP_SERVER_URL}/inf/test`)
+      .then((res) => console.log(res.data));
+  };
 
   const handleClickOpen = (scrollType) => () => {
     setOpen(true);
@@ -52,19 +54,20 @@ const INFProfile = () => {
   };
 
   const handleClick = async () => {
-    console.log('클릭 실행');
+    console.log("클릭 실행");
     console.log(uid);
-    const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/inf/verifyUserWithYoutube`,
-    {uid})
-    .then(function(res){
-      console.log(res.data)
-    })
-    console.log('완료', res);
+    const res = await axios
+      .post(`${process.env.REACT_APP_SERVER_URL}/inf/verifyUserWithYoutube`, {
+        uid,
+      })
+      .then(function (res) {
+        console.log(res.data);
+      });
+    console.log("완료", res);
   };
 
-
   const handleDisconnetClick = async () => {
-    console.log('disconnet 실행');
+    console.log("disconnet 실행");
     // const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/inf/test`)
     // console.log('완료', res);
   };
@@ -77,6 +80,12 @@ const INFProfile = () => {
   if (infQuery.isLoading === "loading") console.log("loading");
   if (infQuery.status === "error") console.log("err");
   // console.log(infQuery.data);
+
+  const youtubeData = {
+    
+    title: "youtube",
+    url: `https://www.youtube.com/channel/${infQuery?.data?.data?.youtube?.channelId}`,
+  };
 
   const descriptionElementRef = React.useRef(null);
   useEffect(() => {
@@ -228,26 +237,38 @@ const INFProfile = () => {
             <div className="sns_conatiner">
               {/* 유튜브 */}
               <div className="sns_box">
-                <div className="sns_logo">Youtube</div>
+                <div className="sns_logo">
+                  <a href={youtubeData.url}>
+                    <BsYoutube style={{ fontSize: "40px", color: "red" }} />
+                  </a>
+                </div>
+
                 <div className="sns_textContainer">
                   <div className="sns_status">status</div>
-                  
-                    {infQuery?.data?.data?.youtube?.verify ? (
-                      <>
-                        <div className="sns_disconnect">connect</div>
-                        <div className="sns_connect">
-                        <Button variant="contained" onClick={handleDisconnetClick}>disconnect</Button>
-                        </div>
-                      </>
-                    ) : (
-                      <>
+
+                  {infQuery?.data?.data?.youtube?.verify ? (
+                    <>
+                      <div className="sns_disconnect">connect</div>
                       <div className="sns_connect">
-                        <Button variant="contained" onClick={handleClick}>connect</Button>
+                        <Button
+                          variant="contained"
+                          onClick={handleDisconnetClick}
+                        >
+                          disconnect
+                        </Button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="sns_connect">
+                        <Button variant="contained" onClick={handleClick}>
+                          connect
+                        </Button>
                       </div>
                       <div className="sns_disconnect">disconnect</div>
                     </>
-                    )}
-                    {/* <Button variant="contained" onClick={handleClick}>connect</Button>
+                  )}
+                  {/* <Button variant="contained" onClick={handleClick}>connect</Button>
 
                   </div>
                   <div className="sns_disconnect">disconnect</div> */}

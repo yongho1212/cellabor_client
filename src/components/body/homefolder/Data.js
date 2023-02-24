@@ -6,11 +6,11 @@ export const homeObjOne = {
     lightBg: false,
     lightText: true,
     lightTextDesc: true,
-    topLine: '100% SECURE',
-    headline: 'Stay protected 24/7 anywhere anytime',
+    topLine: '원하는 인플루언서를 찾으세요',
+    headline: '팔로워, 지역에 따라 최적의 인플루언서를 찾으세요',
     description:
-      'We have you covered no matter where you are located. Over 140 locations worldwide to ensure you have access anytime',
-    buttonLabel: 'Learn More',
+      '팔로워, 성별, 지역 등 원하는 조건에 맞는 인플루언서를 찾아 최적의 마케팅을 진행해보세요',
+    buttonLabel: '',
     imgStart: '',
     img: homeimg1
     // alt: 'Credit Card'
