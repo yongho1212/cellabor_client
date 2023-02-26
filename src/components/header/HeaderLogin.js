@@ -79,7 +79,7 @@ const HeaderLogin = () => {
             Cellabor
           </Link>
 
-          <div style={{width:'100%', display:'flex',width:'30%'}}>
+          <div style={{width:'100%', display:'flex',width:'30%', justifyContent:'flex-end'}}>
             <button
               
               id="eachBtnStyleContained"

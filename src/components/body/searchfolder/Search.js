@@ -18,7 +18,7 @@ import { Box, style } from "@mui/system";
 import Slider from "@mui/material/Slider";
 import MuiInput from "@mui/material/Input";
 
-import "./Search.css"
+import "./Search.css";
 
 const StyledTextField = styled(TextField)({
   "& label": {
@@ -312,17 +312,21 @@ const Search = (props) => {
     getInfList();
   }, []);
 
-  console.log(filteredList);
+  // console.log(filteredList);
 
   return (
     <div style={{}}>
       {/* <h1>Filtered Search Area</h1> */}
-      <div style={{ width: "87vw", alignItems: "center", height: "50px", backgroundColor:'green'}}>
-        <Button 
-          id="sex-filter" 
-          onClick={sexFilterClick}
-          style={{}}
-          >
+      <div
+        style={{
+          
+          alignItems: "center",
+          height: "50px",
+          backgroundColor: "green",
+        }}
+      >
+        <div style={{marginLeft:"5vw", backgroundColor:"#fff", }}>
+        <Button id="sex-filter" onClick={sexFilterClick} style={{}}>
           {sexText}
         </Button>
         <Button id="age-filter" onClick={ageFilterClick}>
@@ -453,6 +457,8 @@ const Search = (props) => {
             </Button>
           </div>
         </Menu>
+        </div>
+        
 
         {/* 플랫폼 구분 버튼 */}
         <div></div>
@@ -461,11 +467,7 @@ const Search = (props) => {
         {filteredList ? (
           filteredList.map((item) => {
             return (
-              <div
-                style={{
-                
-                }}
-              >
+              <div style={{}}>
                 <div key={item._id} style={{}}>
                   <Link
                     to={`/ProfileDetailpage/${item._id}`}
@@ -474,23 +476,24 @@ const Search = (props) => {
                       display: "flex",
                       flexDirection: "column",
                       width: "200px",
-                      height: "280px",
+                      // height: "280px",
                       alignItems: "flex-start",
                       backgroundColor: "green",
                     }}
                   >
                     <div
-                      style={{
-                        width: "200px",
-                        height: "200px",
-                        backgroundColor: "red",
-                      }}
+                      style={
+                        {
+                          // width: "200px",
+                          // height: "200px",
+                        }
+                      }
                     >
                       <img
                         className="profile-img"
                         src={item.avatar}
-                        width="200px"
-                        height="200px"
+                        width="100%"
+                        // height="200px"
                       />
                     </div>
                     <div style={{ display: "flex", flexDirection: "column" }}>
