@@ -467,7 +467,7 @@ const Search = (props) => {
         {filteredList ? (
           filteredList.map((item) => {
             return (
-              <div style={{}}>
+              <div className="searchResultCard" >
                 <div key={item._id} style={{}}>
                   <Link
                     to={`/ProfileDetailpage/${item._id}`}
@@ -478,7 +478,7 @@ const Search = (props) => {
                       width: "200px",
                       // height: "280px",
                       alignItems: "flex-start",
-                      backgroundColor: "green",
+                      
                     }}
                   >
                     <div
@@ -492,17 +492,17 @@ const Search = (props) => {
                       <img
                         className="profile-img"
                         src={item.avatar}
-                        width="100%"
+                        width="300px"
                         // height="200px"
                       />
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      <div style={{ fontSize: "20px" }}>
+                    <div style={{ display: "flex", flexDirection: "column", marginTop:'5px'}}>
+                      <div className="searchResultCardNickname" >
                         <div>{item.nickname}</div>
                       </div>
                       {/* <div style={{ fontSize: "20px" }}>{item.youtube.id}</div> */}
                     </div>
-                    <div style={{ fontSize: "14px" }}>{item.mobile}</div>
+                    {/* <div style={{ fontSize: "14px" }}>{item.mobile}</div> */}
                   </Link>
                 </div>
               </div>

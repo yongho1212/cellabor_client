@@ -9,7 +9,7 @@ import {
   DialogActions,
 } from "@mui/material";
 
-import { BsYoutube } from "react-icons/bs";
+import { BsYoutube, BsInstagram } from "react-icons/bs";
 
 import { getAuth, updateProfile, signOut } from "firebase/auth";
 

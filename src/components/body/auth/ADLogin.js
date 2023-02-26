@@ -55,7 +55,6 @@ const ADLogin = () => {
   }, [state.loggedin, navigate]);
 
 
-
 function moveMain() {
   navigate("/Main")
 };
