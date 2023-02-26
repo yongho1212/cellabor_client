@@ -4,7 +4,7 @@
    /* flex-direction: row; */
    
    display: grid;
-   grid-template-columns: repeat(auto-fit, minmax(210px, max-content));
+   grid-template-columns: repeat(auto-fit, minmax(250px, max-content));
    grid-gap: 41px;
    justify-content: center;
    padding: initial;
