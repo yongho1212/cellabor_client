@@ -26,13 +26,7 @@
   width:87vw;
 }
 
-.nav-btn-container {
-  height: 100%;
-  
-  display: flex;
-  align-items: center;
-  
-}
+
 
 .container {
   z-index: 1;
@@ -64,15 +58,8 @@
   margin-right: 0.5rem;
 }
 
-.nav-menu {
-  display: flex;
-  margin-top: 15px;
-  
-  list-style: none;
-  
-  
-  
-}
+
+
 .logo-img {
   width: 90px;
   margin-right: 20px;
@@ -126,8 +113,6 @@
     left: -100%;
     opacity: 1;
     transition: all 0.5s ease;
-    
-    
   }
 
   .nav-menu.active {
@@ -203,9 +188,7 @@
     
   }
 
-  .nav-item-each {
-    
-  }
+
 
   .navbar-logo {
     /*position: absolute;

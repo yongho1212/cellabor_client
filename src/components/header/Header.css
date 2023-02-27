@@ -38,7 +38,6 @@
     padding-inline: 10px;
     font-weight: bold;
     font-size: 21px;
-    
     border-radius: 10px;
     transition: all 0.5s;
 }
@@ -48,12 +47,10 @@
 }
 
 #eachBtnStyleOutlined{
-
     background-color: #fff;
     color: #193c46;
     margin-inline: 9px;
     height: 100%;
-    
     font-weight: bold;
     font-size: 19px;
     padding-inline: 10px;
@@ -66,3 +63,35 @@
     border-color: #000;
     background-color: red;
 }
+
+.nav-btn-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+.nav-menu {
+    display: flex;
+    margin-top: 15px;
+    list-style: none;
+  }
+
+.nav-item {
+    border-bottom: 2px solid transparent;
+    font-size: 16pt;
+    font-weight: bold;
+  }
+
+.nav-item-each {
+    
+    display: flex;
+    align-items: center;
+    
+}
+
+@media screen and (max-width: 500px) {
+    .NavbarItems {
+      position: relative;
+      
+    }
+}  

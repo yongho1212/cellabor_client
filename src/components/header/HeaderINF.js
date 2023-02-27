@@ -144,8 +144,8 @@ const HeaderINF = () => {
           <div className={click? "mobile-drawer-container active" : "mobile-drawer-container"}>
             <div className="mobile-drawer-style">
               <div 
-              className="mobile-drawer-style-each"
-              onClick={handleClickProfile}
+                className="mobile-drawer-style-each"
+                onClick={handleClickProfile}
               >
                 프로필 
               </div>
