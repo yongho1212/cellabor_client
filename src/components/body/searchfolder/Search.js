@@ -319,23 +319,23 @@ const Search = (props) => {
       {/* <h1>Filtered Search Area</h1> */}
       <div
         style={{
-          
           alignItems: "center",
           height: "50px",
-          backgroundColor: "green",
+          display:'flex',
+          justifyContent:'center'
         }}
       >
-        <div style={{marginLeft:"5vw", backgroundColor:"#fff", }}>
+        <div style={{width:'85vw', border:'1px solid #000', padding:'3px', borderRadius:'10px'}}>
         <Button id="sex-filter" onClick={sexFilterClick} style={{}}>
           {sexText}
         </Button>
-        <Button id="age-filter" onClick={ageFilterClick}>
+        <Button id="age-filter" onClick={ageFilterClick} style={{}}>
           {ageText}
         </Button>
-        <Button id="tag-filter" onClick={tagFilterClick}>
+        <Button id="tag-filter" onClick={tagFilterClick} style={{}}>
           {tagvalue.length === 0 ? "태그 입력" : `${tagText}`}
         </Button>
-        <Button id="platform-filter" onClick={platformFilterClick}>
+        <Button id="platform-filter" onClick={platformFilterClick} style={{}}>
           {`${platformText}`}
         </Button>
         <Menu open={sexOpen} anchorEl={anchorEl} onClose={handleClose}>
