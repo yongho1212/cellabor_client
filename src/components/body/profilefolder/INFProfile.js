@@ -9,7 +9,8 @@ import {
   DialogActions,
 } from "@mui/material";
 
-import { BsYoutube, BsInstagram } from "react-icons/bs";
+import { BsYoutube, BsInstagram, BsFacebook, BsTwitter } from "react-icons/bs";
+import {FaBlog} from 'react-icons/fa'
 
 import { getAuth, updateProfile, signOut } from "firebase/auth";
 
@@ -81,11 +82,37 @@ const INFProfile = () => {
   if (infQuery.status === "error") console.log("err");
   // console.log(infQuery.data);
 
-  const youtubeData = {
-    
-    title: "youtube",
-    url: `https://www.youtube.com/channel/${infQuery?.data?.data?.youtube?.channelId}`,
-  };
+
+
+  const snsUrlData = {
+    facebookdata:{
+      title : 'facebook',
+      url: `https://www.facebook.com`
+    },
+    youtubedata:{
+      title: "youtube",
+      url: `https://www.youtube.com/channel/${infQuery?.data?.data?.youtube?.channelId}`,
+    },
+    blogdata:{
+      title: "blog",
+      url: `https://www.tistory.com`,
+    },
+    twitterdata:{
+      title: "twitter",
+      url: `https://www.twitter.com`,
+    },
+    instadata:{
+      title: "insta",
+      url: `https://www.instagram.com`,
+    },
+
+
+
+  }
+
+  
+
+
 
   const descriptionElementRef = React.useRef(null);
   useEffect(() => {
@@ -126,17 +153,50 @@ const INFProfile = () => {
   // const dd = useQuery({ queryKey: ['inf'], ... })
   // console.log(inf)
 
+  const StatusBtn = (sns) => {
+    return(
+      <>
+      <div className="sns_textContainer">
+                  {/* <div className="sns_status">status</div> */}
+
+                  {infQuery?.data?.data?.sns?.verify ? (
+                    <>
+                      <div className="sns_disconnect">connected</div>
+                      <div className="sns_connect">
+                        <button
+                          variant="contained"
+                          onClick={handleDisconnetClick}
+                        >
+                          disconnect
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="sns_connect">
+                        <button variant="contained" onClick={() => console.log(sns)}>
+                          connect
+                        </button>
+                      </div>
+                      <div className="sns_disconnect">disconnected</div>
+                    </>
+                  )}
+                </div>
+      </>
+    )
+  }
+
   return (
     // <div className="container">
     <>
       <grd.Container>
         <grd.SideBar>
-          <div style={{ flexDirection: "column" }}>
+          <div style={{ display:'flex', flexDirection:'column', }}>
             <Avatar
               alt="Remy Sharp"
               src={infQuery?.data?.data?.avatar}
               sx={{ width: 179, height: 179 }}
-              style={{ marginTop: "10vh",  }}
+              style={{ marginTop: "15px",  }}
             />
             <div>{infQuery?.data?.data?.nickname}</div>
             <div>{infQuery?.data?.data?.sex}</div>
@@ -237,24 +297,27 @@ const INFProfile = () => {
               {/* 유튜브 */}
               <div className="sns_box">
                 <div className="sns_logo">
-                  <a href={youtubeData.url}>
+                  <a 
+                  href={snsUrlData.youtubedata.url}
+                  style={{display:'flex'}}
+                  >
                     <BsYoutube style={{ fontSize: "40px", color: "red" }} />
                   </a>
                 </div>
 
                 <div className="sns_textContainer">
-                  <div className="sns_status">status</div>
+                  {/* <div className="sns_status">status</div> */}
 
                   {infQuery?.data?.data?.youtube?.verify ? (
                     <>
-                      <div className="sns_disconnect">connect</div>
+                      <div className="sns_disconnect">connected</div>
                       <div className="sns_connect">
-                        <Button
+                        <button
                           variant="contained"
                           onClick={handleDisconnetClick}
                         >
                           disconnect
-                        </Button>
+                        </button>
                       </div>
                     </>
                   ) : (
@@ -264,7 +327,7 @@ const INFProfile = () => {
                           connect
                         </Button>
                       </div>
-                      <div className="sns_disconnect">disconnect</div>
+                      <div className="sns_disconnect">disconnected</div>
                     </>
                   )}
                   {/* <Button variant="contained" onClick={handleClick}>connect</Button>
@@ -275,47 +338,59 @@ const INFProfile = () => {
               </div>
               {/* 인스타 */}
               <div className="sns_box">
-                <div className="sns_logo">인스타</div>
-                <div className="sns_textContainer">
-                  <div className="sns_status">status</div>
-                  <div className="sns_connect">
-                    <Button variant="contained">connect</Button>
-                  </div>
-                  <div className="sns_disconnect">disconnect</div>
+              <div className="sns_logo">
+                  <a 
+                  href={snsUrlData.instadata.url}
+                  style={{display:'flex'}}
+                  >
+                    <BsInstagram style={{ fontSize: "40px", color: "#8c3ac3",  }} />
+                  </a>
                 </div>
+                <StatusBtn 
+                sns='insta'
+                />
               </div>
               {/* 블로그 */}
               <div className="sns_box">
-                <div className="sns_logo">블로그</div>
-                <div className="sns_textContainer">
-                  <div className="sns_status">status</div>
-                  <div className="sns_connect">
-                    <Button variant="contained">connect</Button>
-                  </div>
-                  <div className="sns_disconnect">disconnect</div>
+              <div className="sns_logo">
+                  <a 
+                  href={snsUrlData.blogdata.url}
+                  style={{display:'flex'}}
+                  >
+                    <FaBlog style={{ fontSize: "40px", color: "#2db400" }} />
+                  </a>
                 </div>
+                <StatusBtn 
+                sns='blog'
+                />
               </div>
               {/* 트위터 */}
               <div className="sns_box">
-                <div className="sns_logo">트위터</div>
-                <div className="sns_textContainer">
-                  <div className="sns_status">status</div>
-                  <div className="sns_connect">
-                    <Button variant="contained">connect</Button>
-                  </div>
-                  <div className="sns_disconnect">disconnect</div>
+              <div className="sns_logo">
+                  <a 
+                  href={snsUrlData.twitterdata.url}
+                  style={{display:'flex'}}
+                  >
+                    <BsTwitter style={{ fontSize: "40px", color: "#00acee" }} />
+                  </a>
                 </div>
+                <StatusBtn 
+                sns='twitter'
+                />
               </div>
               {/* 페이스북 */}
               <div className="sns_box">
-                <div className="sns_logo">페이스북</div>
-                <div className="sns_textContainer">
-                  <div className="sns_status">status</div>
-                  <div className="sns_connect">
-                    <Button variant="contained">connect</Button>
-                  </div>
-                  <div className="sns_disconnect">disconnect</div>
+              <div className="sns_logo">
+                  <a 
+                  href={snsUrlData.facebookdata.url}
+                  style={{display:'flex'}}
+                  >
+                    <BsFacebook style={{ fontSize: "40px", color: "#3b5998" }} />
+                  </a>
                 </div>
+                <StatusBtn 
+                sns='facebook'
+                />
               </div>
             </div>
           {/* <grd.Content1>
