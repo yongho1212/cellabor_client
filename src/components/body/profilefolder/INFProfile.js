@@ -136,7 +136,7 @@ const INFProfile = () => {
               alt="Remy Sharp"
               src={infQuery?.data?.data?.avatar}
               sx={{ width: 179, height: 179 }}
-              style={{ marginTop: "10vh", marginLeft: "1vh" }}
+              style={{ marginTop: "10vh",  }}
             />
             <div>{infQuery?.data?.data?.nickname}</div>
             <div>{infQuery?.data?.data?.sex}</div>
@@ -233,8 +233,7 @@ const INFProfile = () => {
           </div>
         </grd.Main>
         <grd.ContentBox>
-          <grd.Content1>
-            <div className="sns_conatiner">
+        <div className="sns_conatiner">
               {/* 유튜브 */}
               <div className="sns_box">
                 <div className="sns_logo">
@@ -319,8 +318,10 @@ const INFProfile = () => {
                 </div>
               </div>
             </div>
-          </grd.Content1>
-          <grd.Content2></grd.Content2>
+          {/* <grd.Content1>
+            
+          </grd.Content1> */}
+          
         </grd.ContentBox>
       </grd.Container>
     </>

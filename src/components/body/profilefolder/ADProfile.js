@@ -164,22 +164,16 @@ const ADProfile = () => {
           </div>
         </grd.SideBar>
 
-        <grd.Main>
-          
-          <div style={{justifyContent:'center', display:'flex', alignItems:'center', height:'100%'}}>
-            <Myprd />
-          </div>
-        </grd.Main>
+       
         <grd.ContentBox>
-          <grd.Content1>
-            <div
+        <div
               style={{
                 display: "flex",
                 justifyContent: "center",
                 backgroundColor: "#667",
               }}
             >
-              <div style={{ width: "50vw" }}>
+              <div style={{ width: "100%" }}>
                 <Box
                   style={{
                     backgroundColor: "#fff",
@@ -187,7 +181,8 @@ const ADProfile = () => {
                   sx={{ flexGrow: 1 }}
                 >
                   <Grid style={{}}>
-                    <div style={{ backgroundColor: "red", margin: "15px" }}>
+                    <div style={{ backgroundColor:'grey', width:'100%',height:'100%' }}>
+                      {/* 프로필 수정 다이얼로그 */}
                       <div
                         style={{
                           display: "flex",
@@ -198,7 +193,7 @@ const ADProfile = () => {
                       >
                         <div
                           style={{
-                            marginLeft: "15px",
+                            
                             width: "100%",
                             height: "170",
                             backgroundColor: "#fff",
@@ -282,16 +277,24 @@ const ADProfile = () => {
                 </Box>
                 <Button onClick={() => handleLogout()}>로그아웃</Button>
 
-                <div style={{ backgroundColor: "#a78" }}>
+                <div style={{ }}>
                   <Button onClick={() => goDelete()}>회원탈퇴</Button>
                 </div>
               </div>
             </div>
-          </grd.Content1>
+          {/* <grd.Content1>
+            
+          </grd.Content1> */}
           {/* <grd.Content2>
             
           </grd.Content2> */}
         </grd.ContentBox>
+        <grd.Main>
+          
+          <div style={{justifyContent:'center', display:'flex', alignItems:'center', height:'80vh'}}>
+            <Myprd />
+          </div>
+        </grd.Main>
       </grd.Container>
     </>
   );
