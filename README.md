@@ -73,16 +73,16 @@ https://www.cellabor.com
 ### INF
 
 ```
-id:
-pw:
+id:inf@inf.com
+pw:12341234
 
 ```
 
 ### AD
 
 ```
-id:
-pw:
+id:ad@ad.com
+pw:12341234
 ```
 
 <br />
