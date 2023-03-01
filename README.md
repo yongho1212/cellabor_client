@@ -1,13 +1,13 @@
 ## 🚶🏻 Cellabor
 
 <p align="center">
-  <img width="600" alt="Logo" src="https://user-images.githubusercontent.com/68631561/183117506-0bf47293-732e-4a3f-9f42-fc558a6d527a.png">
+  
 </p>
 <p align="center">
 인플루언서-광고주 마케팅 플랫폼입니다.
 </p>
 <p align="center">
-갈림길에서 어느 방향으로 가야하는지 헷갈릴 때 AR 모드에 표시되는 화살표를 따라가보세요!
+
 원하는 조건에 맞는 인플루언서를 검색하고 협업을 제안해 보세요.
 </p>
 
