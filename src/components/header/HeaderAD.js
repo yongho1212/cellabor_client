@@ -19,6 +19,11 @@ import { bindActionCreators } from "redux";
 import { actionCreators } from "../../state/index";
 import { getAuth, signOut } from "firebase/auth";
 
+import { CgProfile } from "react-icons/cg";
+import { MdLogout, MdAddBusiness } from "react-icons/md";
+import { FaBars, FaTimes } from "react-icons/fa";
+
+import "./Header.css";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -28,6 +33,9 @@ const HeaderAD = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [userRole, setUserRole] = useState("");
   const [text, setText] = React.useState("");
+
+  const [click, setClick] = useState(false);
+  const handleClick = () => setClick(!click);
 
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -122,87 +130,47 @@ const HeaderAD = () => {
   return (
     <div position="static" className="headerSet">
       <Container style={{ width: "87vw" }}>
-      <div className="headerContainerSet">
-          
-            <Link
-              to="Main"
-              id="logoStyle"
-            >
-              Cellabor
-            </Link>
-          
+        <div className="headerContainerSet">
+          <Link to="Main" id="logoStyle">
+            Cellabor
+          </Link>
 
-          <div style={{ display:'flex', alignItems:'center', }}>
-            {/* <div style={{ display: "flex" }}>
-              <Input
-                variant="contained"
-                placeholder="검색어"
-                style={{
-                  width: "230px",
-                  display: "flex",
-                  color: "#03ff95",
-                  
-                  
-                }}
-                value={text}
-                onChange={(e) => {
-                  setText(e.target.value);
-                }}
-              />
-              <button
-              id="eachBtnStyleContained"
-              
-              onClick={handleClickSearch}
-            >
-              검색
-            </button>
-              <Link
-                to={`/SearchResult/${text}`}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "white",
-                  width: "50px",
-                  height: "50px",
-                  display: "flex",
-                  backgroundColor: "black",
-                }}
-                onClick={handleSearch}  
+          <div className="menu-icon" onClick={handleClick}>
+            {click ? <FaTimes /> : <FaBars />}
+          </div>
+
+          <div
+            className={
+              click
+                ? "mobile-drawer-container active"
+                : "mobile-drawer-container"
+            }
+          >
+            <div className="mobile-drawer-style">
+              <div className="mobile-drawer-style-each" 
+              onClick={handleClickUpload}>
+                상품 업로드
+              </div>
+              <div
+                className="mobile-drawer-style-each"
+                onClick={handleClickProfile}
               >
-                검색
-              </Link>
-            </div> */}
-            {/* <Button 
-              variant="contained"
-              style={{backgroundColor:"#03ff95", color:"#000", marginInline:10, height:'70px'}}
-              onClick={handleUploadProfile}
-            >
-              업로드 프로필2
-            </Button> */}
-            {/* <Button 
-                variant="contained"
-                style={{backgroundColor:"#03ff95", color:"#000", marginInline:10, height:'70px'}}
-                onClick={handleClickUpload}
-            >
-                업로드product
-            </Button> */}
+                프로필
+              </div>
+              <div className="mobile-drawer-style-each" onClick={handleLogout}>
+                로그아웃
+              </div>
+            </div>
+          </div>
 
-            {/* <Button 
-                variant="contained"
-                style={{backgroundColor:"#03ff95", color:"#000", marginInline:10, height:'70px'}}
-                onClick={handleClickSearch}
+          <div className="nav-btn-container">
+            {/* <button
+              onClick={handleClickUpload}
+              style={{ fontSize: "17px" }}
+              id="eachBtnStyleContained"
             >
-                검색
-            </Button> */}
-            <button
-                          //onClick={handleClickOpen("paper")}
-                          onClick={handleClickUpload}
-                          style={{ fontSize:'17px'}}
-                          id="eachBtnStyleContained"
-                        >
-                          Upload Product
-                        </button>
+              Upload Product
+            </button> */}
             {/* <Button
               variant="contained"
               style={{
@@ -215,13 +183,10 @@ const HeaderAD = () => {
             >
               채팅
             </Button> */}
-            <button
-              id="eachBtnStyleOutlined"
-              onClick={handleClickProfile}
-            >
+            {/* <button id="eachBtnStyleOutlined" onClick={handleClickProfile}>
               프로필
-            </button>
-            
+            </button> */}
+
             {/* <Button 
                 variant="contained"
                 style={{backgroundColor:"#03ff95", color:"#000", marginInline:10, height:'70px'}}
@@ -229,12 +194,61 @@ const HeaderAD = () => {
             >
                 WORK SPACE
             </Button> */}
-            <button
-              id="eachBtnStyleOutlined"
-              onClick={handleLogout}
-            >
+            {/* <button id="eachBtnStyleOutlined" onClick={handleLogout}>
               로그아웃
-            </button>
+            </button> */}
+
+            <ul className="nav-menu">
+
+              <li className="nav-item">
+                <div className="nav-item-each"
+                onClick={handleClickUpload}
+                style={{ }}
+                >
+                  <div style={{fontSize:'15px', marginTop:'11px'}}>
+                  상품 업로드
+                  </div>
+                  <MdAddBusiness 
+                  style={{
+                    fontSize: "29px",
+                    color: "#193c46",
+                    marginInline: "5px",
+                    marginTop: "9px",
+                  }}
+                  />
+                
+                </div>
+              </li>
+
+              <li className="nav-item">
+                <div className="nav-item-each">
+                  <CgProfile
+                    style={{
+                      fontSize: "29px",
+                      color: "#193c46",
+                      marginInline: "5px",
+                      marginTop: "9px",
+                    }}
+                    onClick={handleClickProfile}
+                  />
+                  
+                </div>
+              </li>
+              <li className="nav-item">
+                <div className="nav-item-each">
+                  <MdLogout
+                    style={{
+                      fontSize: "29px",
+                      color: "#193c46",
+                      marginInline: "5px",
+                      marginTop: "9px",
+                    }}
+                    onClick={handleLogout}
+                  />
+                  
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
       </Container>

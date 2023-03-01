@@ -18,6 +18,10 @@ import { IconContext } from "react-icons/lib";
 import { QueryClient, useQuery } from "@tanstack/react-query";
 
 import "./HeaderINF.css";
+import "./Header.css";
+
+import {CgProfile} from 'react-icons/cg'
+import {MdLogout} from 'react-icons/md'
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -126,51 +130,39 @@ const HeaderINF = () => {
   // 500이하, 900 이상에서만 활성화됨 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   return (
-    <>
-      <IconContext.Provider value={{ color: "#fff" }}>
-        <nav className="navbar">
-          <div className="navbar-container">
-            <div >
-              <Link
-                to="Main"
-                className="navbar-logo"
-                onClick={closeMobileMenu}
-                style={{
-                  textDecoration: "none",
-                  color: "#000",
-                  fontSize: 31,
-                  fontWeight: "bold",
-                  marginInline: 10,
-                  
-                }}
-              >
-                Cellabor
-              </Link>
-            </div>
-            
+    <div position="static" className="headerSet">
+      <Container style={{ width: "87vw" }}>
+        <div className="headerContainerSet">
+          <Link to="Main" id="logoStyle">
+            Cellabor
+          </Link>
 
-            <div className="menu-icon" onClick={handleClick}>
-              {click ? <FaTimes /> : <FaBars />}
+          <div className="menu-icon" onClick={handleClick}>
+            {click ? <FaTimes /> : <FaBars />}
+          </div>
+        
+          <div className={click? "mobile-drawer-container active" : "mobile-drawer-container"}>
+            <div className="mobile-drawer-style">
+              <div 
+                className="mobile-drawer-style-each"
+                onClick={handleClickProfile}
+              >
+                프로필 
+              </div>
+              <div 
+              className="mobile-drawer-style-each"
+              onClick={handleLogout}
+              >
+                로그아웃
+              </div>
             </div>
-            <div className='nav-btn-container'>
-            <ul className={click ? "nav-menu active" : "nav-menu"}>
-              {/* <li className="nav-item">
-              <Input
-                variant="contained"
-                placeholder="검색어"
-                style={{
-                  width: "230px",
-                  display: "flex",
-                  color: "#03ff95",
-                  backgroundColor: "#03ff95",
-                  color: "#000",
-                }}
-                value={text}
-                onChange={(e) => {
-                  setText(e.target.value);
-                }}
-              />
-            </li>
+          </div>
+
+
+
+          <div className="nav-btn-container">
+            <ul className="nav-menu">
+              {/* 
             <li className="nav-item">
               <Link
                 to={`/SearchResult/${text}`}
@@ -189,52 +181,54 @@ const HeaderINF = () => {
                 검색
               </Link>
             </li> */}
-              <li className="nav-item">
+            
+              {/* <li className="nav-item">
                 <Button
                   variant="contained"
                   style={{
                     backgroundColor: "#03ff95",
                     color: "#000",
-                    marginInline:'10px'
+                    marginInline: "10px",
                   }}
                   onClick={handleClickChat}
                 >
                   채팅
                 </Button>
-              </li>
+              </li> */}
               <li className="nav-item">
-                <Button
-                  variant="contained"
-                  style={{
-                    backgroundColor: "#03ff95",
-                    color: "#000",
-                    marginInline:'10px'
-                  }}
-                  onClick={handleClickProfile}
-                >
-                  프로필
-                </Button>
+                <div className="nav-item-each">
+                  <CgProfile 
+                    style={{
+                      fontSize:'29px',
+                      color:'#193c46',
+                      marginInline:'5px',
+                      marginTop:'9px'
+                    }}
+                    onClick={handleClickProfile}
+                  />
+                </div>
               </li>
+
               <li className="nav-item">
-                <Button
-                  variant="contained"
+                <div className="nav-item-each">
+                <MdLogout 
                   style={{
-                    backgroundColor: "#03ff95",
-                    color: "#000",
-                    marginInline:'10px'
+                    fontSize:'29px',
+                      color:'#193c46',
+                      marginInline:'5px',
+                      marginTop:'9px'
                   }}
                   onClick={handleLogout}
-                >
-                  로그아웃
-                </Button>
+                  /> 
+                </div>
+                  
+                
               </li>
             </ul>
-            </div>
-            
           </div>
-        </nav>
-      </IconContext.Provider>
-    </>
+        </div>
+      </Container>
+    </div>
   );
 };
 export default HeaderINF;

@@ -32,7 +32,7 @@ const DetailPage = () => {
         setMytags(datas.tags);
       });
   };
-  console.log(mytags);
+  
 
   const youtubeData = {
     title: "youtube",
@@ -69,7 +69,7 @@ const DetailPage = () => {
     }
   };
 
-  console.log(myage);
+  
 
   return (
     <>
@@ -98,7 +98,7 @@ const DetailPage = () => {
                   mytags.map(items => {
                     return (
                       <div key={items.id} style={{ marginInline:'3px',justifyContent:'center',alignItems:'center',display:'flex' }}>
-                        <div style={{border:'1px solid #000', padding:'3px',paddingInline:'5px', justifyContent:'center', alignItems:'center',borderRadius:'10px' }}>
+                        <div style={{border:'1px solid #000', padding:'3px',paddingInline:'5px', justifyContent:'center', alignItems:'center',borderRadius:'10px', fontWeight:'bold' }}>
                             {items}
                         </div>
                       </div>
@@ -120,7 +120,7 @@ const DetailPage = () => {
                 <div className="headerCategory">{item.targetPlatform}</div>
                 <div>
                   <a href={instaData.url} target="_blank">
-                    <BsInstagram style={{ fontSize: "40px", color: "red" }} />
+                    <BsInstagram style={{ fontSize: "40px", color: "#F502AC" }} />
                   </a>
                 </div>
                 <div className="headerCategory">{item.targetPlatform}</div>
