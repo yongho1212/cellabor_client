@@ -12,6 +12,7 @@ import {
 import { BsYoutube, BsInstagram, BsFacebook, BsTwitter } from "react-icons/bs";
 import {FaBlog} from 'react-icons/fa'
 
+
 import { getAuth, updateProfile, signOut } from "firebase/auth";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -161,10 +162,11 @@ const INFProfile = () => {
 
                   {infQuery?.data?.data?.sns?.verify ? (
                     <>
-                      <div className="sns_disconnect">connected</div>
-                      <div className="sns_connect">
+                      <div className="sns_connect">connected</div>
+                      <div className="sns_disconnect">
                         <button
                           variant="contained"
+                          className="disconnectBtn"
                           onClick={handleDisconnetClick}
                         >
                           disconnect
@@ -174,7 +176,10 @@ const INFProfile = () => {
                   ) : (
                     <>
                       <div className="sns_connect">
-                        <button variant="contained" onClick={() => console.log(sns)}>
+                        <button 
+                        variant="contained" 
+                        className="connectBtn"
+                        onClick={() => console.log(sns)}>
                           connect
                         </button>
                       </div>
@@ -198,10 +203,10 @@ const INFProfile = () => {
               sx={{ width: 179, height: 179 }}
               style={{ marginTop: "15px",  }}
             />
-            <div>{infQuery?.data?.data?.nickname}</div>
+            <div className="infDataNickname">{infQuery?.data?.data?.nickname}</div>
             <div>{infQuery?.data?.data?.sex}</div>
-            <div>{infQuery?.data?.data?.facebook}</div>
-            <div>{infQuery?.data?.data?.aboutme}</div>
+            <div>{infQuery?.data?.data?.role}</div>
+            <div>{infQuery?.data?.data?.about}</div>
           </div>
         </grd.SideBar>
         <grd.Main>
@@ -310,11 +315,13 @@ const INFProfile = () => {
 
                   {infQuery?.data?.data?.youtube?.verify ? (
                     <>
-                      <div className="sns_disconnect">connected</div>
-                      <div className="sns_connect">
+                      <div className="sns_connect">connected</div>
+                      
+                      <div className="sns_disconnect">
                         <button
                           variant="contained"
                           onClick={handleDisconnetClick}
+                          className="disconnectBtn"
                         >
                           disconnect
                         </button>

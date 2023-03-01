@@ -216,7 +216,7 @@ const ADProfile = () => {
                                 scroll={scroll}
                                 aria-labelledby="scroll-dialog-title"
                                 aria-describedby="scroll-dialog-description"
-                                fullWidth="true"
+                                fullWidth={true}
                                 maxWidth="40px"
                               >
                                 <DialogTitle id="scroll-dialog-title">
