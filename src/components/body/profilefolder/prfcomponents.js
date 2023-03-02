@@ -19,9 +19,9 @@ export const Container = styled.div`
   gap: 30px;
 
   @media only screen and (max-width: 700px) {
-    width: 100%;
+    width: 70vw;
     min-width: 300px;
-    /* width: 100%; */
+    
     grid-template-areas:
       "nav"
       "sidebar"

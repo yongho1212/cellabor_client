@@ -61,6 +61,8 @@
     font-size: 17px;
     color: grey;
     margin-block: 2px;
+    margin-left: 11px;
+    margin-top: 7px;
 }
 
 .headerCategory{
@@ -115,6 +117,7 @@ display: flex;
     margin-left: 11px;
     margin-block: 10px;
     width: 100%;
+    align-items: center;
 }
 
 .sns_logo{

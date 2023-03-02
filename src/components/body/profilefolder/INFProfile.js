@@ -11,6 +11,9 @@ import {
 
 import { BsYoutube, BsInstagram, BsFacebook, BsTwitter } from "react-icons/bs";
 import {FaBlog} from 'react-icons/fa'
+import {VscDebugDisconnect} from 'react-icons/vsc';
+import {AiOutlineDisconnect} from 'react-icons/ai';
+import { GrConnect } from 'react-icons/gr'
 
 
 import { getAuth, updateProfile, signOut } from "firebase/auth";
@@ -169,8 +172,9 @@ const INFProfile = () => {
                           className="disconnectBtn"
                           onClick={handleDisconnetClick}
                         >
-                          disconnect
+                          끊기
                         </button>
+                        
                       </div>
                     </>
                   ) : (
@@ -180,10 +184,15 @@ const INFProfile = () => {
                         variant="contained" 
                         className="connectBtn"
                         onClick={() => console.log(sns)}>
-                          connect
+                          연결
                         </button>
                       </div>
-                      <div className="sns_disconnect">disconnected</div>
+                      <div className="sns_disconnect">
+                        <AiOutlineDisconnect 
+                        style={{
+                          fontSize:'25px', fontWeight:'bold'}}
+                        />
+                      </div>
                     </>
                   )}
                 </div>
@@ -315,7 +324,13 @@ const INFProfile = () => {
 
                   {infQuery?.data?.data?.youtube?.verify ? (
                     <>
-                      <div className="sns_connect">connected</div>
+                      <div className="sns_connect">
+                      <GrConnect 
+                      style={{
+                        fontSize:'25px'
+                      }}
+                      />
+                      </div>
                       
                       <div className="sns_disconnect">
                         <button
@@ -323,7 +338,7 @@ const INFProfile = () => {
                           onClick={handleDisconnetClick}
                           className="disconnectBtn"
                         >
-                          disconnect
+                          끊기
                         </button>
                       </div>
                     </>
@@ -370,6 +385,7 @@ const INFProfile = () => {
                 <StatusBtn 
                 sns='blog'
                 />
+                
               </div>
               {/* 트위터 */}
               <div className="sns_box">
