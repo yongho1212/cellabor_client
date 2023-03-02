@@ -97,10 +97,10 @@
 .sns_textContainer {
     display: flex;
     flex-direction: row;
-    justify-content: right;
     
-    width: 60%;
-    align-items: center;
+    
+    
+    
 }
 .sns_logo {
     width: 17%;
@@ -172,6 +172,6 @@
 
 
 
-@media screen and (max-width: 900px) {
-
+@media screen and (max-width: 700px) {
+    
   }

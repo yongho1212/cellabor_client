@@ -103,8 +103,9 @@ function App() {
           </>  
           :
           <>
-           {!emailVerified ? <Route path="/Emailverify/*" element={<Emailverify />} />
-          : 
+          {/* ============이메일 인증 다시 복구 해놓기 ==================================== */}
+           {/* {!emailVerified ? <Route path="/Emailverify/*" element={<Emailverify />} />
+          :  */}
           
           
           <Route  element={<Layout />}>
@@ -139,7 +140,7 @@ function App() {
             <Route path="/DashMain/" element={<DashMain />} />
             <Route path="/InfluencerProfile/:id" element={<InfluencerProfile />} />
           </Route>
-          }
+          {/* } */}
           </>
           }
         </Routes>

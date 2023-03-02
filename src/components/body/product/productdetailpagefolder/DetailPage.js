@@ -77,6 +77,8 @@ const applyChecker = async() => {
         //applyChecker();
     }, []);
 
+    console.log(item)
+
     return (
         <>
         <grd.Container>
@@ -88,7 +90,8 @@ const applyChecker = async() => {
                     {item.name}
                     </div>
                     <div className="headerBrand">
-                    {item.brand}    
+                    {item.brand}
+                    {item.brand_name}
                     </div>
                     <div className="headerDescription">
                     This is description
@@ -103,8 +106,8 @@ const applyChecker = async() => {
                     <div className="picContainer">
                     <img
                         src={item.photo}
-                        width='100'
-                        height='100'
+                        width='300px'
+                        
                         alt='testA' 
                     />
                     </div>
@@ -118,14 +121,14 @@ const applyChecker = async() => {
                             2...ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ<br/>
                         </div>
                     </div>
-                    <div className="infoDescription">
+                    {/* <div className="infoDescription">
                         <div className="textTitle">
 
                         </div>
                         <div className="textDescription">
                             
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 
