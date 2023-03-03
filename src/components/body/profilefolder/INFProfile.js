@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 
 import { BsYoutube, BsInstagram, BsFacebook, BsTwitter } from "react-icons/bs";
-import {FaBlog} from 'react-icons/fa'
+import {FaBlog, FaTiktok} from 'react-icons/fa'
 import {VscDebugDisconnect} from 'react-icons/vsc';
 import {AiOutlineDisconnect} from 'react-icons/ai';
 import { GrConnect } from 'react-icons/gr'
@@ -97,9 +97,9 @@ const INFProfile = () => {
       title: "youtube",
       url: `https://www.youtube.com/channel/${infQuery?.data?.data?.youtube?.channelId}`,
     },
-    blogdata:{
-      title: "blog",
-      url: `https://www.tistory.com`,
+    tiktokdata:{
+      title: "tiktok",
+      url: `https://www.tiktok.com`,
     },
     twitterdata:{
       title: "twitter",
@@ -219,7 +219,7 @@ const INFProfile = () => {
           </div>
         </grd.SideBar>
         <grd.Main>
-          <div>
+          <div style={{backgroundColor:"red", width:'100%', height:'100%'}}>
             <div className="btm-box-info-container">
               {/* 수정버튼 및 클릭시 다이얼로그  */}
               <div className="bottom-box-container">
@@ -302,6 +302,18 @@ const INFProfile = () => {
                     {infQuery?.data?.data?.location}
                   </div>
                 </div>
+                <div className="line-items">
+                  <div className="section-name">위치</div>
+                  <div className="section-value">
+                    {infQuery?.data?.data?.nickname}
+                  </div>
+                </div>
+                <div className="line-items">
+                  <div className="section-name">위치</div>
+                  <div className="section-value">
+                    {infQuery?.data?.data?.about}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -372,18 +384,18 @@ const INFProfile = () => {
                 sns='insta'
                 />
               </div>
-              {/* 블로그 */}
+              {/* 틱톡 */}
               <div className="sns_box">
               <div className="sns_logo">
                   <a 
-                  href={snsUrlData.blogdata.url}
+                  href={snsUrlData.tiktokdata.url}
                   style={{display:'flex'}}
                   >
-                    <FaBlog style={{ fontSize: "40px", color: "#2db400" }} />
+                    <FaTiktok style={{ fontSize: "40px", color: "#000" }} />
                   </a>
                 </div>
                 <StatusBtn 
-                sns='blog'
+                sns='tiktok'
                 />
                 
               </div>

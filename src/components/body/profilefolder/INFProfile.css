@@ -144,7 +144,7 @@
 
 
 .information-container{
-    width: 100%;
+    background-color: blue;
 }
 .info-row-cntainer{
     flex-direction: row;

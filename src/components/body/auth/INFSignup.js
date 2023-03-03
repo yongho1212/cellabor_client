@@ -52,6 +52,7 @@ const INFSignup = () => {
   const [avatar, setAvatar] = useState("");
   const [location, setLocation] = useState("");
   
+  // console.log(new Date(birthday))
 
   useEffect(() => {
     if (state.loggedin) {
