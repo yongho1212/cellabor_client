@@ -142,146 +142,130 @@ const ADProfile = () => {
                 marginLeft: "1vh",
               }}
             />
-            <div style={{justifyContent:'flex-start'}}> 
+            <div style={{ justifyContent: "flex-start" }}>
+              <div className="sidebarInfoContainer">
+                <div className="sidebarInfoName">브랜드 이름</div>
+                <div className="sidebarInfoInfo">
+                  {adQuery?.data?.data?.brand_name}
+                </div>
+              </div>
 
-            <div className="sidebarInfoContainer">
-              <div className="sidebarInfoName">브랜드 이름</div>
-              <div className="sidebarInfoInfo">{adQuery?.data?.data?.brand_name}</div>
-            </div>
+              <div className="sidebarInfoContainer">
+                <div className="sidebarInfoName">카테고리</div>
+                <div className="sidebarInfoInfo">카테고리 업종</div>
+              </div>
 
-            <div className="sidebarInfoContainer">
-              <div className="sidebarInfoName">카테고리</div>
-              <div className="sidebarInfoInfo">카테고리 업종</div>
-            </div>
-
-            <div className="sidebarInfoContainer">
-              <div className="sidebarInfoName">위치</div>
-              <div className="sidebarInfoInfo">{adQuery?.data?.data?.location}</div>
-            </div>
-              
-              
+              <div className="sidebarInfoContainer">
+                <div className="sidebarInfoName">위치</div>
+                <div className="sidebarInfoInfo">
+                  {adQuery?.data?.data?.location}
+                </div>
+              </div>
             </div>
           </div>
         </grd.SideBar>
 
-       
         <grd.ContentBox>
-        <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                backgroundColor: "#667",
-              }}
-            >
-              <div style={{ width: "100%" }}>
-                <Box
+          <div
+            style={{
+              display: "flex",
+              backgroundColor: "green",
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <div style={{ width: "100%", display:'flex',flexDirection:'column' }}>
+              <div style={{flex:9}}>
+                <div
                   style={{
-                    backgroundColor: "#fff",
+                    backgroundColor: "red",
+                    width: "100%",
+                    height: "100%",
                   }}
-                  sx={{ flexGrow: 1 }}
                 >
-                  <Grid style={{}}>
-                    <div style={{ backgroundColor:'grey', width:'100%',height:'100%' }}>
-                      {/* 프로필 수정 다이얼로그 */}
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          alignItems: "flex-end",
-                          backgroundColor: "blue",
-                        }}
-                      >
-                        <div
-                          style={{
-                            
-                            width: "100%",
-                            height: "170",
-                            backgroundColor: "#fff",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-end",
-                            }}
-                          >
-                            <div>
-                              <Button onClick={handleClickOpen("paper")}>
-                                수정
-                              </Button>
-
-                              <Dialog
-                                open={open}
-                                onClose={handleClose}
-                                scroll={scroll}
-                                aria-labelledby="scroll-dialog-title"
-                                aria-describedby="scroll-dialog-description"
-                                fullWidth={true}
-                                maxWidth="40px"
-                              >
-                                <DialogTitle id="scroll-dialog-title">
-                                  Subscribe
-                                </DialogTitle>
-                                <DialogContent dividers={scroll === "paper"}>
-                                  <ADEditProfile />
-                                </DialogContent>
-                                <DialogActions>
-                                  <Button onClick={handleClose}>Cancel</Button>
-
-                                  <Button
-                                    positive
-                                    form="my-form"
-                                    content="Submit"
-                                    value="Submit"
-                                    type="Submit"
-                                  >
-                                    저장
-                                  </Button>
-                                </DialogActions>
-                              </Dialog>
-                            </div>
-                          </div>
-                          <Typography style={{ fontSize: "40px" }}>
-                            brand name// {adQuery?.data?.data?.brand_name}
-                          </Typography>
-                          <Typography
-                            style={{ fontSize: "25px", color: "grey" }}
-                          >
-                            details
-                          </Typography>
-                        </div>
-                      </div>
-
+                  {/* 프로필 수정 다이얼로그 */}
+                  <div
+                    style={{
+                      width: "100%",
+                      backgroundColor: "#ff0",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                      }}
+                    >
                       <div>
-                        <br />
-                        인스타
-                        {adQuery?.data?.data?.insta}
-                        <br />
-                        이메일
-                        {adQuery?.data?.data?.email}
-                        <br />
-                        조인체널
-                        {adQuery?.data?.data?.joined_channel}
-                        <br />
-                        번호
-                        {adQuery?.data?.data?.mobile}
-                        <br />
-                        태그
-                        {adQuery?.data?.data?.tags}
-                        <br />
+                        <Button onClick={handleClickOpen("paper")}>수정</Button>
+
+                        <Dialog
+                          open={open}
+                          onClose={handleClose}
+                          scroll={scroll}
+                          aria-labelledby="scroll-dialog-title"
+                          aria-describedby="scroll-dialog-description"
+                          fullWidth={true}
+                          maxWidth="40px"
+                        >
+                          <DialogTitle id="scroll-dialog-title">
+                            Subscribe
+                          </DialogTitle>
+                          <DialogContent dividers={scroll === "paper"}>
+                            <ADEditProfile />
+                          </DialogContent>
+                          <DialogActions>
+                            <Button onClick={handleClose}>Cancel</Button>
+
+                            <Button
+                              positive
+                              form="my-form"
+                              content="Submit"
+                              value="Submit"
+                              type="Submit"
+                            >
+                              저장
+                            </Button>
+                          </DialogActions>
+                        </Dialog>
                       </div>
                     </div>
-                  </Grid>
+                    <Typography style={{ fontSize: "40px" }}>
+                      {adQuery?.data?.data?.brand_name}
+                    </Typography>
+                  </div>
 
-                  {/* <FacebookLoginButton/> */}
-                </Box>
-                <Button onClick={() => handleLogout()}>로그아웃</Button>
-
-                <div style={{ }}>
-                  <Button onClick={() => goDelete()}>회원탈퇴</Button>
+                  <div style={{backgroundColor:'pink', height:''}}>
+                  <br />
+                  인스타
+                  {adQuery?.data?.data?.insta}
+                  <br />
+                  이메일
+                  {adQuery?.data?.data?.email}
+                  <br />
+                  조인체널
+                  {adQuery?.data?.data?.joined_channel}
+                  <br />
+                  번호
+                  {adQuery?.data?.data?.mobile}
+                  <br />
+                  태그
+                  {adQuery?.data?.data?.tags}
+                  <br />
+                  </div>
+                  
                 </div>
+
+                
+              </div>
+              
+              {/* 하단 로그아웃 회원탈퇴 버튼 */}
+              <div style={{display:'flex', justifyContent:'flex-end', flex:1}}>
+                <Button onClick={() => handleLogout()}>로그아웃</Button>
+                <Button onClick={() => goDelete()}>회원탈퇴</Button>
               </div>
             </div>
+          </div>
           {/* <grd.Content1>
             
           </grd.Content1> */}
@@ -290,8 +274,14 @@ const ADProfile = () => {
           </grd.Content2> */}
         </grd.ContentBox>
         <grd.Main>
-          
-          <div style={{justifyContent:'center', display:'flex', alignItems:'center', height:'80vh'}}>
+          <div
+            style={{
+              justifyContent: "center",
+              display: "flex",
+              alignItems: "center",
+              height: "80vh",
+            }}
+          >
             <Myprd />
           </div>
         </grd.Main>

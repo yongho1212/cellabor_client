@@ -303,13 +303,13 @@ const INFProfile = () => {
                   </div>
                 </div>
                 <div className="line-items">
-                  <div className="section-name">위치</div>
+                  <div className="section-name">닉네임</div>
                   <div className="section-value">
                     {infQuery?.data?.data?.nickname}
                   </div>
                 </div>
                 <div className="line-items">
-                  <div className="section-name">위치</div>
+                  <div className="section-name">설명</div>
                   <div className="section-value">
                     {infQuery?.data?.data?.about}
                   </div>
